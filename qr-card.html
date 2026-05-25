@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doneer — Run for Huntington</title>
+  <style>
+    @font-face { font-family: 'GeistMono'; src: url('../uploads/GeistMono-ExtraLight.otf') format('opentype'); font-weight: 200; }
+    @font-face { font-family: 'GeistMono'; src: url('../uploads/GeistMono-Light.otf') format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'GeistMono'; src: url('../uploads/GeistMono-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'GeistMono'; src: url('../uploads/GeistMono-Medium.otf') format('opentype'); font-weight: 500; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0e0e12;
+      font-family: 'GeistMono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 40px;
+    }
+
+    .cards-row {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 44px;
+      flex-wrap: nowrap;
+    }
+
+    .scene {
+      position: relative;
+      padding: 72px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .scene.tier-heart { --accent: #E84393; }
+    .scene.tier-25    { --accent: #3B82F6; }
+    .scene.tier-50    { --accent: #F97316; }
+    .scene.tier-free  { --accent: #FBBF24; }
+
+    .beam {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 52%;
+      height: 100%;
+      transform: translateX(-50%) rotate(-11deg);
+      border-radius: 16px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .beam::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--beam);
+    }
+    .beam::after {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border-radius: 24px;
+      background: var(--beam);
+      filter: blur(32px);
+      opacity: 0.5;
+    }
+    .scene.tier-heart .beam { --beam: linear-gradient(165deg, #ff00aa 0%, #E84393 45%, #ff6090 80%, #ffaac8 100%); }
+    .scene.tier-25    .beam { --beam: linear-gradient(165deg, #1A4DB5 0%, #2563EB 40%, #3B82F6 70%, #60b0f0 100%); }
+    .scene.tier-50    .beam { --beam: linear-gradient(165deg, #C82010 0%, #E84030 35%, #F97316 70%, #FBBF24 100%); }
+    .scene.tier-free  .beam { --beam: linear-gradient(165deg, #D4A000 0%, #FBBF24 40%, #FDE68A 70%, #fff0b0 100%); }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 268px;
+      border-radius: 18px;
+      background: rgba(12, 12, 18, 0.88);
+      backdrop-filter: blur(36px);
+      -webkit-backdrop-filter: blur(36px);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      color: #f0f0f0;
+      flex: 1;
+    }
+
+    .amount-top {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--accent);
+      text-align: center;
+      padding: 4px 0;
+    }
+
+    .custom-amount-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #FBBF24;
+      padding: 4px 0;
+    }
+    .custom-input {
+      font-family: 'GeistMono', monospace;
+      font-size: 32px;
+      font-weight: 500;
+      color: #FBBF24;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px dashed rgba(251,191,36,0.3);
+      outline: none;
+      width: 100px;
+      letter-spacing: -0.04em;
+      text-align: center;
+    }
+    .custom-input::placeholder { color: rgba(251,191,36,0.2); }
+
+    .qr-wrap {
+      flex: 1;
+      min-height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #111118;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qr-wrap canvas,
+    .qr-wrap img {
+      display: block;
+      width: 100% !important;
+      height: auto !important;
+      border-radius: 6px;
+    }
+
+    .heart-zone {
+      flex: 1;
+      min-height: 140px;
+      border-radius: 10px;
+      background: #111118;
+      position: relative;
+      overflow: hidden;
+    }
+    #pinkboard {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .heart-zone::before {
+      content: '';
+      position: absolute;
+      inset: 28%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,67,147,0.18) 0%, transparent 70%);
+      animation: pulseRing 1.4s ease-in-out infinite;
+      z-index: 0;
+    }
+    @keyframes pulseRing {
+      0%,100% { transform: scale(1); opacity: 0.5; }
+      50%      { transform: scale(1.8); opacity: 0.08; }
+    }
+
+    .tikkie-row {
+      display: flex;
+      align-items: center;
+    }
+    .tikkie-logo {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    .tier-desc {
+      font-size: 10.5px;
+      font-weight: 200;
+      line-height: 1.75;
+      color: #606070;
+      letter-spacing: 0.01em;
+    }
+
+    .tier-btn {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      background: var(--btn-gradient);
+      color: #fff;
+      font-family: 'GeistMono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: auto;
+    }
+    .tier-btn:hover  { opacity: 1; transform: translateY(-1px); }
+    .tier-btn:active { transform: translateY(0); }
+
+    .scene.tier-heart .tier-btn { --btn-gradient: linear-gradient(135deg, #c0006a, #E84393); }
+    .scene.tier-25    .tier-btn { --btn-gradient: linear-gradient(135deg, #1A4DB5, #3B82F6); }
+    .scene.tier-50    .tier-btn { --btn-gradient: linear-gradient(135deg, #C82010, #F97316); }
+    .scene.tier-free  .tier-btn { --btn-gradient: linear-gradient(135deg, #C4900A, #FBBF24); color: #1a1000; }
+  </style>
+</head>
+<body>
+
+<!-- Tikkie SVG — embedded as text, blob URL per card (works on file://) -->
+<script type="text/plain" id="tikkie-tpl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2500 1082.284" xml:space="preserve"><switch><foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1"/><g><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#d6d6d6" d="M2004.082 78.824c-236.73 0-427.861 191.902-427.861 428.632 0 79.381 21.451 153.753 59.985 217.591v12.716c0 145.147-106.612 192.159-106.612 192.159s150.67 1.541 230.436-69.105c.771 0 1.67-1.028 2.697-1.028s1.927 1.028 2.697 1.028h.128c68.206 51.379 150.156 73.858 238.528 73.858 236.73 0 428.632-191.26 428.632-427.861s-191.9-427.99-428.63-427.99"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fafdfa" d="M1800.492 558.193c-16.827 0-24.919-7.45-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h.642v-11.817c0-6.808 0-14.386.642-21.708h-1.285c-16.827 0-24.919-7.578-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h8.092c8.863-36.993 27.36-70.903 53.563-98.391 41.746-44.186 94.024-66.022 156.835-66.022 36.736 0 69.105 7.45 96.465 22.992 28.002 14.9 41.746 32.883 42.388 53.563 0 26.717-16.827 50.994-41.104 51.636-11.817.642-25.561-4.367-41.103-13.744-15.542-9.89-34.296-14.9-56.004-14.9-35.452 0-63.453 12.459-84.005 36.736-6.936 8.606-12.845 17.983-17.469 28.002h95.18c15.542 0 24.919 8.735 24.919 22.992 0 16.827-9.377 24.277-24.919 24.277h-107.126c-.642 7.45-1.284 14.9-1.284 21.708v11.817h72.188c14.9 0 24.277 8.735 24.277 22.992 0 16.827-9.377 24.277-24.277 24.277h-62.297c4.881 12.845 11.817 24.791 20.552 35.452 20.552 24.277 48.553 36.736 84.005 36.736 21.836 0 40.461-5.01 56.003-14.386 15.542-9.89 29.286-14.9 41.104-14.258 24.277.642 41.103 25.561 41.103 50.994-.642 21.194-14.258 39.177-42.388 54.719-27.359 14.9-59.728 22.478-96.465 22.478-62.94 0-115.218-21.836-156.835-66.022-28.002-29.929-46.113-65.38-55.361-105.841h-6.037z"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff" d="M210.815 355.63H143.38c-33.782 0-53.691-17.854-53.691-50.866 0-33.782 19.909-51.636 53.691-51.636h245.593c33.653 0 53.691 17.854 53.691 50.866 0 33.782-19.909 51.636-53.691 51.636h-66.665v319.194c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V355.63zm334.994-102.502c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c0-55.618 22.735-73.601 55.747-73.601m247.776 296.587v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.554-34.424 83.877-17.212 22.093 17.212 27.488 52.278-3.468 85.29L873.994 493.327l159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm444.432 0v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.683-34.424 84.005-17.212 21.965 17.212 27.488 52.278-3.468 85.29l-149.257 140.394 159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm388.684-296.587c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c.129-55.618 22.736-73.601 55.747-73.601"/></g></switch></svg></script>
+
+<div class="cards-row">
+
+  <!-- ═══ TIER 1: Liefde ═══ -->
+  <div class="scene tier-heart">
+    <div class="beam"></div>
+    <div class="card">
+      <div class="amount-top">♥</div>
+      <div class="heart-zone" id="heart-zone">
+        <canvas id="pinkboard"></canvas>
+      </div>
+      <div class="divider"></div>
+      <p class="tier-desc">Ik kan even niks missen, maar wil wel pure liefde sturen. Elk hartje telt en laat zien dat je er bent.</p>
+      <button class="tier-btn">Stuur pure liefde ♥</button>
+    </div>
+  </div>
+
+  <!-- ═══ TIER 2: €25 ═══ -->
+  <div class="scene tier-25">
+    <div class="beam"></div>
+    <div class="card">
+      <div class="amount-top">€25,-</div>
+      <div class="qr-wrap"><div id="qr-25"></div></div>
+      <div class="tikkie-row">
+        <img class="tikkie-logo" id="tikkie-25" alt="Tikkie">
+      </div>
+      <div class="divider"></div>
+      <p class="tier-desc">Financiert direct onderzoek naar Huntington. Je naam op de wall of fame.</p>
+      <button class="tier-btn">Doneer via Tikkie</button>
+    </div>
+  </div>
+
+  <!-- ═══ TIER 3: €50 ═══ -->
+  <div class="scene tier-50">
+    <div class="beam"></div>
+    <div class="card">
+      <div class="amount-top">€50,-</div>
+      <div class="qr-wrap"><div id="qr-50"></div></div>
+      <div class="tikkie-row">
+        <img class="tikkie-logo" id="tikkie-50" alt="Tikkie">
+      </div>
+      <div class="divider"></div>
+      <p class="tier-desc">Dubbele impact. Persoonlijk bedankje en foto-update na de finish op km&#160;42.</p>
+      <button class="tier-btn">Doneer via Tikkie</button>
+    </div>
+  </div>
+
+  <!-- ═══ TIER 4: Eigen bedrag ═══ -->
+  <div class="scene tier-free">
+    <div class="beam"></div>
+    <div class="card">
+      <div class="custom-amount-row">
+        <span>€</span>
+        <input class="custom-input" type="number" placeholder="..." min="1" id="customAmt">
+      </div>
+      <div class="qr-wrap"><div id="qr-free"></div></div>
+      <div class="tikkie-row">
+        <img class="tikkie-logo" id="tikkie-free" alt="Tikkie">
+      </div>
+      <div class="divider"></div>
+      <p class="tier-desc">Elke euro helpt. Kies zelf wat je wilt geven — geen bedrag is te klein.</p>
+      <button class="tier-btn">Doneer via Tikkie</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ── QR codes ── */
+const qrBase = {
+  text: 'https://tikkie.me/runforhuntington',
+  width: 240, height: 240,
+  colorDark: '#ffffff', colorLight: '#111118',
+  correctLevel: QRCode.CorrectLevel.H
+};
+new QRCode(document.getElementById('qr-25'),   qrBase);
+new QRCode(document.getElementById('qr-50'),   qrBase);
+new QRCode(document.getElementById('qr-free'), qrBase);
+
+/* ── Tikkie — blob URL per card, no fetch needed ── */
+const svgTpl = document.getElementById('tikkie-tpl').textContent;
+[
+  { id: 'tikkie-25',   color: '#3B82F6' },
+  { id: 'tikkie-50',   color: '#F97316' },
+  { id: 'tikkie-free', color: '#FBBF24' },
+].forEach(function(c) {
+  var svg  = svgTpl.replace(/fill:#d6d6d6/gi, 'fill:' + c.color);
+  var blob = new Blob([svg], { type: 'image/svg+xml' });
+  document.getElementById(c.id).src = URL.createObjectURL(blob);
+});
+
+/* ── Heart particle component ── */
+var S = { length: 1500, duration: 2, velocity: 80, effect: -1.3, size: 11 };
+
+(function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}}());
+
+function HP(x,y){this.x=x||0;this.y=y||0;}
+HP.prototype.clone=function(){return new HP(this.x,this.y);};
+HP.prototype.length=function(l){if(l===undefined)return Math.sqrt(this.x*this.x+this.y*this.y);this.normalize();this.x*=l;this.y*=l;return this;};
+HP.prototype.normalize=function(){var l=this.length();this.x/=l;this.y/=l;return this;};
+
+function Pt(){this.pos=new HP();this.vel=new HP();this.acc=new HP();this.age=0;}
+Pt.prototype.init=function(x,y,dx,dy){this.pos.x=x;this.pos.y=y;this.vel.x=dx;this.vel.y=dy;this.acc.x=dx*S.effect;this.acc.y=dy*S.effect;this.age=0;};
+Pt.prototype.update=function(dt){this.pos.x+=this.vel.x*dt;this.pos.y+=this.vel.y*dt;this.vel.x+=this.acc.x*dt;this.vel.y+=this.acc.y*dt;this.age+=dt;};
+Pt.prototype.draw=function(ctx,img){var sz=img.width*(function(t){return(--t)*t*t+1;})(this.age/S.duration);ctx.globalAlpha=1-this.age/S.duration;ctx.drawImage(img,this.pos.x-sz/2,this.pos.y-sz/2,sz,sz);};
+
+function Pool(n){this.pts=new Array(n);for(var i=0;i<n;i++)this.pts[i]=new Pt();this.fa=0;this.ff=0;}
+Pool.prototype.add=function(x,y,dx,dy){this.pts[this.ff].init(x,y,dx,dy);this.ff++;if(this.ff==this.pts.length)this.ff=0;if(this.fa==this.ff)this.fa++;if(this.fa==this.pts.length)this.fa=0;};
+Pool.prototype.update=function(dt){var i,p=this.pts,fa=this.fa,ff=this.ff;if(fa<ff)for(i=fa;i<ff;i++)p[i].update(dt);if(ff<fa){for(i=fa;i<p.length;i++)p[i].update(dt);for(i=0;i<ff;i++)p[i].update(dt);}while(p[this.fa].age>=S.duration&&this.fa!=this.ff){this.fa++;if(this.fa==p.length)this.fa=0;}};
+Pool.prototype.draw=function(ctx,img){var i,p=this.pts,fa=this.fa,ff=this.ff;if(fa<ff)for(i=fa;i<ff;i++)p[i].draw(ctx,img);if(ff<fa){for(i=fa;i<p.length;i++)p[i].draw(ctx,img);for(i=0;i<ff;i++)p[i].draw(ctx,img);}};
+
+(function(canvas){
+  var ctx=canvas.getContext('2d'), pool=new Pool(S.length), rate=S.length/S.duration, time;
+
+  function poh(t){return new HP(128*Math.pow(Math.sin(t),3),104*Math.cos(t)-40*Math.cos(2*t)-16*Math.cos(3*t)-8*Math.cos(4*t)+20);}
+
+  var img=(function(){
+    var c=document.createElement('canvas'),cx=c.getContext('2d'),sz=S.size;
+    c.width=sz;c.height=sz;
+    function to(t){var p=poh(t);p.x=sz/2+p.x*sz/350;p.y=sz/2-p.y*sz/350;return p;}
+    cx.beginPath();var t=-Math.PI,p=to(t);cx.moveTo(p.x,p.y);
+    while(t<Math.PI){t+=0.01;p=to(t);cx.lineTo(p.x,p.y);}
+    cx.closePath();cx.fillStyle='#FF5CA4';cx.fill();
+    var i=new Image();i.src=c.toDataURL();return i;
+  })();
+
+  function render(){
+    requestAnimationFrame(render);
+    var nt=new Date().getTime()/1000,dt=nt-(time||nt);time=nt;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    var amt=rate*dt;
+    for(var i=0;i<amt;i++){var pos=poh(Math.PI-2*Math.PI*Math.random());var dir=pos.clone().length(S.velocity);pool.add(canvas.width/2+pos.x,canvas.height/2-pos.y,dir.x,-dir.y);}
+    pool.update(dt);pool.draw(ctx,img);
+  }
+
+  function resize(){
+    canvas.width=canvas.parentElement.clientWidth||canvas.offsetWidth||200;
+    canvas.height=canvas.parentElement.clientHeight||canvas.offsetHeight||200;
+  }
+
+  if(window.ResizeObserver){new ResizeObserver(resize).observe(canvas.parentElement);}
+  else{window.addEventListener('resize',resize);}
+  setTimeout(function(){resize();render();},50);
+
+})(document.getElementById('pinkboard'));
+</script>
+
+</body>
+</html>
