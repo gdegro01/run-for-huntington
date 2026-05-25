@@ -51,10 +51,8 @@
     /* section headings */
     .section-heading { font-size: 80px; line-height: 1.3; }
 
-    /* === NAV === */
-    .nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:flex-end; padding:20px 48px; transition:background 0.3s; }
-    .nav.scrolled { background:rgba(250,250,248,0.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(0,0,0,0.06); }
-    .nav .btn-donate { background:#4CAF50; color:white; border:none; padding:12px 28px; border-radius:8px; font-family:'HeronSansCond'; font-weight:700; font-size:15px; cursor:pointer; box-shadow:0 2px 12px rgba(76,175,80,0.35); letter-spacing:0.02em; text-transform:uppercase; }
+    /* === NAV (empty, no scrolled bar) === */
+    .nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:flex-end; padding:20px 48px; pointer-events:none; }
 
     /* === HERO === */
     .hero {
@@ -62,16 +60,19 @@
       background:url('Header2.webp') center top/cover no-repeat;
     }
     .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:160px; background:linear-gradient(transparent,#FAFAF8); }
-    .hero-glass {
+    .hero-card-group {
       position:absolute; z-index:10;
-      right:0; margin-right:120px; top:25%;
-      width:560px; height:500px; padding:44px;
+      right:0; margin-right:120px; top:18%;
+      width:560px;
+    }
+    .hero-glass {
+      padding:44px;
       background:rgba(255,255,255,0.65);
       backdrop-filter:blur(20px) saturate(1.2); -webkit-backdrop-filter:blur(20px) saturate(1.2);
       border:1px solid rgba(255,255,255,0.8);
       border-top:2px solid rgba(255,255,255,0.9);
-      border-radius:20px;
-      box-shadow:0px 20px 30px rgba(0,0,0,0.25);
+      border-radius:20px 20px 0 0;
+      box-shadow:0px 10px 20px rgba(0,0,0,0.15);
       display:flex; flex-direction:column; justify-content:center;
     }
     .hero-glass h2 {
@@ -92,60 +93,53 @@
     .hs-number { font-family:'HeronSansCond'; font-size:24px; font-weight:700; color:#1A1A1A; line-height:1; margin-bottom:4px; }
     .hs-label { font-size:11px; color:#555; line-height:1.3; }
 
-    /* Hero CTA button — rotating conic gradient border + glow */
+    /* Hero CTA strip — dark bar below glass card */
     .hero-glass { overflow:visible; }
-
-    @property --a {
-      syntax: "<angle>";
-      inherits: false;
-      initial-value: 0deg;
-    }
-    @keyframes rotating {
-      0% { --a: 0deg; }
-      100% { --a: 360deg; }
+    .hero-cta-strip {
+      background:linear-gradient(180deg,#1b1b1b,#111);
+      border-radius:0 0 20px 20px;
+      padding:24px 44px;
+      display:flex; justify-content:center;
+      box-shadow:0px 20px 30px rgba(0,0,0,0.3);
     }
 
-    .hero-cta-btn {
-      position:absolute; z-index:11;
-      left:50%; bottom:-28px; transform:translateX(-50%);
-      text-decoration:none; cursor:pointer;
-      border:none; border-radius:14px;
+    /* Gradient button (iconsax style) */
+    .button-gradient {
+      align-items:center; background:transparent;
+      border:none; border-radius:28px; box-sizing:border-box; color:#fff;
+      cursor:pointer; display:flex; font-family:'DMMono',monospace; font-size:24px; font-weight:400;
+      height:60px; justify-content:center; letter-spacing:0.02em;
+      outline:none; overflow:hidden; padding:12px 52px;
+      position:relative; transition:all .4s ease; user-select:none; z-index:10;
+      text-decoration:none;
     }
-    .hero-cta-btn::before {
-      content:''; position:absolute; inset:0;
-      background:repeating-conic-gradient(from var(--a), #833ab4, #fd1d1d, #fcb045, #4CAF50, #42a5f5, #833ab4);
-      border-radius:14px;
-      animation:rotating 4s linear infinite;
-      box-shadow:
-        0 0 12px 4px rgba(232,67,147,0.8),
-        0 0 24px 8px rgba(131,58,180,0.6),
-        0 0 24px 8px rgba(66,165,245,0.5),
-        0 0 24px 8px rgba(76,175,80,0.5),
-        0 0 40px 14px rgba(232,67,147,0.3),
-        0 0 40px 14px rgba(66,165,245,0.25);
+    /* Rainbow gradient layer — always visible, IS the border + hover fill */
+    .button-gradient .gradient-bg {
+      position:absolute; inset:0; border-radius:inherit; z-index:1;
+      background:conic-gradient(from var(--mouse-angle,180deg) at var(--mouse-x,50%) var(--mouse-y,50%),
+        #fc0197,#f47319,#fdf301,#7ffe00,#02defc,#fe9efb,#fc0197);
+      opacity:1; transition:filter .4s ease;
     }
-    .hero-cta-btn span {
-      position:relative; z-index:1; display:block;
-      margin:4px;
+    /* Dark inner — creates the "border" effect by being slightly smaller */
+    .button-gradient .gradient-inner {
+      position:absolute; inset:3px; border-radius:25px; z-index:2;
       background:#1b1b1b;
-      border-radius:10px;
-      padding:18px 48px;
-      font-family:'HeronSansCond'; font-weight:700; font-size:28px;
-      letter-spacing:0.03em;
-      color:rgba(255,255,255,0.9);
-      white-space:nowrap;
-      transition:background 0.3s;
+      transition:opacity .4s ease, inset .4s ease;
     }
-    .hero-cta-btn:hover span { background:#2a2a2a; color:white; }
-    .hero-cta-btn:hover::before {
-      box-shadow:
-        0 0 16px 6px rgba(232,67,147,0.9),
-        0 0 30px 12px rgba(131,58,180,0.7),
-        0 0 30px 12px rgba(66,165,245,0.6),
-        0 0 30px 12px rgba(76,175,80,0.6),
-        0 0 50px 18px rgba(232,67,147,0.35),
-        0 0 50px 18px rgba(66,165,245,0.3);
+    .button-gradient .btn-content {
+      align-items:center; display:flex; justify-content:center;
+      position:relative; z-index:20; color:#fff;
+      text-shadow:0 0 12px rgba(0,0,0,.7);
+      transition:text-shadow .4s ease;
     }
+    /* Normal: slow rotation */
+    @keyframes borderRotate { 0%{--mouse-angle:0deg} 100%{--mouse-angle:360deg} }
+    @property --mouse-angle { syntax:"<angle>"; inherits:false; initial-value:180deg; }
+    .button-gradient .gradient-bg { animation:borderRotate 4s linear infinite; }
+    /* Hover: inner fades, gradient fills button */
+    .button-gradient:hover .gradient-inner { opacity:0; }
+    .button-gradient:hover .gradient-bg { filter:blur(6px) brightness(1.2); animation:none; }
+    .button-gradient:hover .btn-content { text-shadow:0 1px 16px rgba(0,0,0,.5); }
 
     /* === PROGRESS === */
     .progress-section { padding:0 48px; margin-top:40px; }
@@ -361,18 +355,26 @@
 
   <!-- HERO full width -->
   <section class="hero">
-    <div class="hero-glass">
-      <h2>
-        <span class="hg-light">Steun G&eacute;rieke en Robert in</span>
-        <span class="hg-bold">Run for Huntington</span>
-      </h2>
-      <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
-      <a href="#pricing" class="hero-cta-btn"><span>Doneer</span></a>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="hs-number">&euro;1.247</div><div class="hs-label">opgehaald</div></div>
-        <div class="hero-stat"><div class="hs-number">48</div><div class="hs-label">supporters</div></div>
-        <div class="hero-stat"><div class="hs-number">72</div><div class="hs-label">dagen te gaan</div></div>
-        <div class="hero-stat"><div class="hs-number">8%</div><div class="hs-label">van doel</div></div>
+    <div class="hero-card-group">
+      <div class="hero-glass">
+        <h2>
+          <span class="hg-light">Steun G&eacute;rieke en Robert in</span>
+          <span class="hg-bold">Run for Huntington</span>
+        </h2>
+        <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hs-number">&euro;1.247</div><div class="hs-label">opgehaald</div></div>
+          <div class="hero-stat"><div class="hs-number">48</div><div class="hs-label">supporters</div></div>
+          <div class="hero-stat"><div class="hs-number">72</div><div class="hs-label">dagen te gaan</div></div>
+          <div class="hero-stat"><div class="hs-number">8%</div><div class="hs-label">van doel</div></div>
+        </div>
+      </div>
+      <div class="hero-cta-strip">
+        <a href="#pricing" class="button-gradient" id="heroGradientBtn">
+          <div class="gradient-bg"></div>
+          <div class="gradient-inner"></div>
+          <div class="btn-content">Doneer</div>
+        </a>
       </div>
     </div>
   </section>
@@ -612,7 +614,27 @@
   <script type="text/plain" id="tikkie-tpl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2500 1082.284" xml:space="preserve"><switch><foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1"/><g><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#d6d6d6" d="M2004.082 78.824c-236.73 0-427.861 191.902-427.861 428.632 0 79.381 21.451 153.753 59.985 217.591v12.716c0 145.147-106.612 192.159-106.612 192.159s150.67 1.541 230.436-69.105c.771 0 1.67-1.028 2.697-1.028s1.927 1.028 2.697 1.028h.128c68.206 51.379 150.156 73.858 238.528 73.858 236.73 0 428.632-191.26 428.632-427.861s-191.9-427.99-428.63-427.99"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fafdfa" d="M1800.492 558.193c-16.827 0-24.919-7.45-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h.642v-11.817c0-6.808 0-14.386.642-21.708h-1.285c-16.827 0-24.919-7.578-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h8.092c8.863-36.993 27.36-70.903 53.563-98.391 41.746-44.186 94.024-66.022 156.835-66.022 36.736 0 69.105 7.45 96.465 22.992 28.002 14.9 41.746 32.883 42.388 53.563 0 26.717-16.827 50.994-41.104 51.636-11.817.642-25.561-4.367-41.103-13.744-15.542-9.89-34.296-14.9-56.004-14.9-35.452 0-63.453 12.459-84.005 36.736-6.936 8.606-12.845 17.983-17.469 28.002h95.18c15.542 0 24.919 8.735 24.919 22.992 0 16.827-9.377 24.277-24.919 24.277h-107.126c-.642 7.45-1.284 14.9-1.284 21.708v11.817h72.188c14.9 0 24.277 8.735 24.277 22.992 0 16.827-9.377 24.277-24.277 24.277h-62.297c4.881 12.845 11.817 24.791 20.552 35.452 20.552 24.277 48.553 36.736 84.005 36.736 21.836 0 40.461-5.01 56.003-14.386 15.542-9.89 29.286-14.9 41.104-14.258 24.277.642 41.103 25.561 41.103 50.994-.642 21.194-14.258 39.177-42.388 54.719-27.359 14.9-59.728 22.478-96.465 22.478-62.94 0-115.218-21.836-156.835-66.022-28.002-29.929-46.113-65.38-55.361-105.841h-6.037z"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff" d="M210.815 355.63H143.38c-33.782 0-53.691-17.854-53.691-50.866 0-33.782 19.909-51.636 53.691-51.636h245.593c33.653 0 53.691 17.854 53.691 50.866 0 33.782-19.909 51.636-53.691 51.636h-66.665v319.194c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V355.63zm334.994-102.502c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c0-55.618 22.735-73.601 55.747-73.601m247.776 296.587v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.554-34.424 83.877-17.212 22.093 17.212 27.488 52.278-3.468 85.29L873.994 493.327l159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm444.432 0v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.683-34.424 84.005-17.212 21.965 17.212 27.488 52.278-3.468 85.29l-149.257 140.394 159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm388.684-296.587c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c.129-55.618 22.736-73.601 55.747-73.601"/></g></switch></svg></script>
 
   <script>
-    window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>100)});
+    /* Gradient button — mouse tracking */
+    (function(){
+      var btn=document.getElementById('heroGradientBtn');
+      if(!btn) return;
+      var bg=btn.querySelector('.gradient-bg');
+      btn.addEventListener('mousemove',function(e){
+        var r=btn.getBoundingClientRect();
+        var x=((e.clientX-r.left)/r.width*100).toFixed(1);
+        var y=((e.clientY-r.top)/r.height*100).toFixed(1);
+        var cx=e.clientX-r.left-r.width/2;
+        var cy=e.clientY-r.top-r.height/2;
+        var angle=(Math.atan2(cy,cx)*180/Math.PI+360)%360;
+        bg.style.setProperty('--mouse-x',x+'%');
+        bg.style.setProperty('--mouse-y',y+'%');
+        bg.style.setProperty('--mouse-angle',angle+'deg');
+        bg.style.animation='none';
+      });
+      btn.addEventListener('mouseleave',function(){
+        bg.style.animation='';
+      });
+    })();
     function showHeartPopup(){const c=document.getElementById('floatingHearts');for(let i=0;i<40;i++){const h=document.createElement('div');h.className='float-heart';h.innerHTML=['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC97','\u2764\uFE0F','\uD83E\uDE77'][Math.floor(Math.random()*5)];h.style.left=(10+Math.random()*80)+'%';h.style.bottom=(10+Math.random()*40)+'%';h.style.fontSize=(28+Math.random()*48)+'px';h.style.animationDelay=(Math.random()*1.2)+'s';h.style.animationDuration=(2.5+Math.random()*3)+'s';c.appendChild(h)}setTimeout(()=>document.getElementById('heartOverlay').classList.add('show'),800);setTimeout(()=>c.innerHTML='',5000)}
     function submitHeart(){
       var name=document.getElementById('heartName').value.trim()||'Anoniem';
