@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v5b — 380px breed, top 5%</title>
+  <style>
+    @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond Bold_1.otf') format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond SemiBold_1.otf') format('opentype'); font-weight: 600; }
+    @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond Medium_1.otf') format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond Regular_1.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond Light_1.otf') format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'DMMono'; src: url('font-DM_Mono/DMMono-Regular.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'DMMono'; src: url('font-DM_Mono/DMMono-Medium.ttf') format('truetype'); font-weight: 500; }
+    @font-face { font-family: 'DMMono'; src: url('font-DM_Mono/DMMono-Light.ttf') format('truetype'); font-weight: 300; }
+    @font-face { font-family: 'STGrotesk'; src: url('stgroteskgrotesquedemosemibold-na22v.otf') format('opentype'); font-weight: 600; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DMMono', monospace; background: #FAFAF8; color: #1A1A1A; letter-spacing: -0.02em; font-size: 14px; line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'HeronSansCond', sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+
+    /* animated gradient headings */
+    .gh-pink {
+      background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045, #833ab4);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      animation: AG 5s ease infinite;
+    }
+    .gh-green {
+      background: linear-gradient(to right, #4CAF50, #81C784, #FBBF24, #4CAF50);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      animation: AG 5s ease infinite;
+    }
+    .gh-warm {
+      background: linear-gradient(to right, #7C3AED, #E84393, #F97316, #7C3AED);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      animation: AG 5s ease infinite;
+    }
+    @keyframes AG { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    /* section headings */
+    .section-heading { font-size: 80px; line-height: 1.3; }
+
+    /* === NAV (empty, no scrolled bar) === */
+    .nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:flex-end; padding:20px 48px; pointer-events:none; }
+
+    /* === HERO === */
+    .hero {
+      position:relative; width:100%; height:88vh; overflow:hidden;
+      background:url('Header4.webp') center top/cover no-repeat;
+    }
+    .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:160px; background:linear-gradient(transparent,#FAFAF8); }
+    .hero-card-group {
+      position:absolute; z-index:10;
+      right:0; margin-right:170px; top:calc(5% + 150px);
+      width:380px;
+    }
+    .hero-glass {
+      padding:44px;
+      background:rgba(255,255,255,0.65);
+      backdrop-filter:blur(20px) saturate(1.2); -webkit-backdrop-filter:blur(20px) saturate(1.2);
+      border:1px solid rgba(255,255,255,0.8);
+      border-top:2px solid rgba(255,255,255,0.9);
+      border-radius:20px 20px 0 0;
+      box-shadow:0px 10px 20px rgba(0,0,0,0.15);
+      display:flex; flex-direction:column; justify-content:center;
+    }
+    .hero-glass h2 {
+      font-size:36px; line-height:1.2; color:#333; margin-bottom:16px;
+    }
+    .hero-glass h2 .hg-light { font-weight:400; display:block; font-size:28px; margin-bottom:4px; color:#555; }
+    .hero-glass h2 .hg-bold {
+      font-weight:800; display:block;
+      background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045, #833ab4);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      animation: AG 5s ease infinite;
+    }
+    .hero-glass p { font-size:14px; color:#555; line-height:1.7; margin-bottom:28px; }
+    .hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:44px; }
+    .hero-stat {
+      background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,0.9); border-radius:12px; padding:14px 16px; text-align:center;
+    }
+    .hs-number { font-family:'HeronSansCond'; font-size:24px; font-weight:700; color:#1A1A1A; line-height:1; margin-bottom:4px; }
+    .hs-label { font-size:11px; color:#555; line-height:1.3; }
+
+    /* Hero CTA strip — dark bar below glass card */
+    .hero-glass { overflow:visible; }
+    .hero-cta-strip {
+      background:linear-gradient(180deg,#1b1b1b,#111);
+      border-radius:0 0 20px 20px;
+      padding:24px 44px;
+      display:flex; justify-content:center;
+      box-shadow:0px 20px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Gradient button (iconsax style) */
+    .button-gradient {
+      align-items:center; background:transparent;
+      border:none; border-radius:28px; box-sizing:border-box; color:#fff;
+      cursor:pointer; display:flex; font-family:'DMMono',monospace; font-size:24px; font-weight:400;
+      height:60px; justify-content:center; letter-spacing:0.02em;
+      outline:none; overflow:hidden; padding:12px 52px;
+      position:relative; transition:all .4s ease; user-select:none; z-index:10;
+      text-decoration:none;
+    }
+    /* Rainbow gradient layer — always visible, IS the border + hover fill */
+    .button-gradient .gradient-bg {
+      position:absolute; inset:0; border-radius:inherit; z-index:1;
+      background:conic-gradient(from var(--mouse-angle,180deg) at var(--mouse-x,50%) var(--mouse-y,50%),
+        #fc0197,#f47319,#fdf301,#7ffe00,#02defc,#fe9efb,#fc0197);
+      opacity:1; transition:filter .4s ease;
+    }
+    /* Dark inner — creates the "border" effect by being slightly smaller */
+    .button-gradient .gradient-inner {
+      position:absolute; inset:3px; border-radius:25px; z-index:2;
+      background:#1b1b1b;
+      transition:opacity .4s ease, inset .4s ease;
+    }
+    .button-gradient .btn-content {
+      align-items:center; display:flex; justify-content:center;
+      position:relative; z-index:20; color:#fff;
+      text-shadow:0 0 12px rgba(0,0,0,.7);
+      transition:text-shadow .4s ease;
+    }
+    /* Normal: slow rotation */
+    @keyframes borderRotate { 0%{--mouse-angle:0deg} 100%{--mouse-angle:360deg} }
+    @property --mouse-angle { syntax:"<angle>"; inherits:false; initial-value:180deg; }
+    .button-gradient .gradient-bg { animation:borderRotate 4s linear infinite; }
+    /* Hover: inner fades, gradient fills button */
+    .button-gradient:hover .gradient-inner { opacity:0; }
+    .button-gradient:hover .gradient-bg { filter:blur(6px) brightness(1.2); animation:none; }
+    .button-gradient:hover .btn-content { text-shadow:0 1px 16px rgba(0,0,0,.5); }
+
+    /* === PROGRESS === */
+    .progress-section { padding:0 48px; margin-top:40px; margin-bottom:80px; }
+    .progress-bar-track { height:20px; background:#d8d8d8; border-radius:99px; position:relative; box-shadow:inset 0 4px 4px rgba(0,0,0,0.26); }
+    .progress-bar-fill { width:12%; height:100%; background:linear-gradient(90deg,#16a34a,#22c55e,#4ade80); border-radius:99px; position:relative; box-shadow:0 0 24px rgba(34,197,94,0.5),0 0 48px rgba(34,197,94,0.25); animation:glow 2s ease-in-out infinite alternate; }
+    @keyframes glow { 0%{box-shadow:0 0 18px rgba(34,197,94,0.45),0 0 36px rgba(34,197,94,0.2)} 100%{box-shadow:0 0 28px rgba(34,197,94,0.7),0 0 56px rgba(34,197,94,0.35)} }
+    .progress-dot { position:absolute; right:-10px; top:-6px; width:32px; height:32px; background:#22c55e; border:4px solid white; border-radius:50%; box-shadow:0 2px 12px rgba(34,197,94,0.4); }
+    .milestones { display:flex; justify-content:space-between; margin-top:20px; padding:0 4px; }
+    .milestone { text-align:center; font-size:13px; color:#888; max-width:130px; }
+    .milestone::before { content:''; display:block; width:2px; height:10px; background:#D1D5DB; margin:0 auto 6px; }
+    .milestone.passed { color:#16a34a; } .milestone.passed::before { background:#22c55e; }
+    .milestone.active { color:#E84393; font-weight:500; } .milestone.active::before { background:#E84393; width:3px; }
+    .milestone .m-date { font-weight:500; display:block; margin-bottom:1px; }
+
+    /* === BELOW HERO GRID === */
+    .page-below-hero { display:grid; grid-template-columns:1fr 360px; }
+    .main-content { min-width:0; }
+
+    /* === LOGO SECTION (white) === */
+    .logo-section {
+      padding:80px 48px 60px; background:#fff; overflow:hidden;
+      border-top:1px solid #e0e0e0;
+      box-shadow:0 -20px 40px rgba(0,0,0,0.04);
+    }
+    .logo-inner {
+      max-width:1000px; margin:0 auto;
+      display:flex; align-items:center; gap:20px; justify-content:center;
+    }
+    .logo-section h2 {
+      font-family:'STGrotesk',sans-serif; font-size:72px; font-weight:600;
+      color:#444; white-space:nowrap; line-height:1;
+    }
+    .logo-parallax-wrap { display:inline-block; position:relative; flex-shrink:0; }
+    .logo-parallax-wrap img { width:420px; height:auto; transition:transform 0.1s ease-out; will-change:transform; }
+
+    /* === STORY SECTION (grey) === */
+    .story { background:#ececec; padding:80px 48px; }
+    .story-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:400px 1fr; gap:64px; align-items:start; }
+
+    /* 3D tilt card */
+    .story-card-wrap {
+      position:relative;
+      display:flex; justify-content:center;
+    }
+    .story-card {
+      width:380px; border-radius:20px; overflow:visible;
+      transform-style:preserve-3d;
+      will-change:transform;
+      padding:12px; background:#fff;
+      box-shadow:0 8px 32px rgba(0,0,0,0.12);
+      animation:cardSway 4s ease-in-out infinite;
+    }
+    @keyframes cardSway {
+      0%,100% { transform:perspective(1800px) rotateY(-2deg) rotateX(1deg); }
+      50% { transform:perspective(1800px) rotateY(2deg) rotateX(-1deg); }
+    }
+    .story-card:hover { animation-play-state:paused; }
+    .story-card img { width:100%; height:auto; display:block; border-radius:12px; }
+
+    .story-text {}
+    .story-pullquote {
+      font-family:'HeronSansCond'; font-size:28px; font-weight:600; line-height:1.4;
+      color:#ff1650; margin-bottom:20px; letter-spacing:0;
+    }
+    .story-intro { font-size:15px; color:#4B5563; line-height:1.8; margin-bottom:20px; }
+    .story-expandable {
+      position:relative; max-height:0; overflow:hidden;
+      transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity:0;
+    }
+    .story-expandable.open { max-height:800px; opacity:1; }
+    .story-expandable p { font-size:14px; color:#4B5563; line-height:1.8; margin-bottom:16px; }
+    .story-fade { position:relative; margin-top:4px; }
+    .story-fade::before {
+      content:''; position:absolute; top:-40px; left:0; right:0; height:40px;
+      background:linear-gradient(transparent, #ececec);
+      pointer-events:none; transition:opacity 0.4s;
+    }
+    .story-fade.open::before { opacity:0; }
+    .story-toggle {
+      font-family:'DMMono'; font-size:13px; color:#E84393;
+      background:none; border:none; padding:0; cursor:pointer;
+      text-decoration:underline; text-underline-offset:3px;
+      transition:color 0.2s; letter-spacing:0.01em;
+    }
+    .story-toggle:hover { color:#c0005a; }
+    .story-cta {
+      font-family:'HeronSansCond'; font-size:32px; font-weight:400;
+      color:#1A1A1A; margin-top:32px; margin-bottom:16px;
+      line-height:1.3;
+    }
+    .story-cta .marker {
+      background:linear-gradient(180deg, transparent 35%, rgba(251,191,36,0.55) 35%, rgba(251,191,36,0.55) 85%, transparent 85%);
+      padding:0 6px;
+    }
+    /* Doneer button — glow style matching hero */
+    .story-donate-wrap {
+      position:relative; display:inline-flex; border-radius:28px;
+      overflow:hidden; text-decoration:none;
+    }
+    .story-donate-wrap .gradient-bg {
+      position:absolute; inset:0; border-radius:inherit; z-index:1;
+      background:conic-gradient(from var(--mouse-angle,180deg) at 50% 50%,
+        #fc0197,#f47319,#fdf301,#7ffe00,#02defc,#fe9efb,#fc0197);
+      animation:borderRotate 4s linear infinite;
+    }
+    .story-donate-wrap .gradient-inner {
+      position:absolute; inset:3px; border-radius:25px; z-index:2;
+      background:#1b1b1b; transition:opacity .4s ease;
+    }
+    .story-donate-wrap .btn-content {
+      position:relative; z-index:20; color:#fff; padding:14px 44px;
+      font-family:'DMMono'; font-size:18px; font-weight:400;
+      letter-spacing:0.02em; text-shadow:0 0 12px rgba(0,0,0,.7);
+    }
+    .story-donate-wrap:hover .gradient-inner { opacity:0; }
+    .story-donate-wrap:hover .gradient-bg { filter:blur(6px) brightness(1.2); animation:none; }
+
+    /* === HUNTINGTON FACTS === */
+    .hunt { background:#e8e8e8; padding:80px 48px; }
+    .hunt-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+    .hunt-photo { border-radius:16px; overflow:hidden; min-height:500px; background:#aaa center/cover no-repeat; }
+    .hunt-photo img { width:100%; height:100%; object-fit:cover; display:block; min-height:500px; border-radius:16px; }
+    .hunt-right {}
+    .hunt-text { margin-bottom:32px; }
+    .hunt-text h2 { font-size:36px; font-weight:700; margin-bottom:12px; color:#1A1A1A; }
+    .hunt-text p { font-size:14px; color:#4B5563; line-height:1.7; }
+    .hunt-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .hunt-card { background:white; border-radius:16px; padding:28px 24px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+    .hunt-card .hc-number { font-family:'HeronSansCond'; font-size:44px; font-weight:300; line-height:1; margin-bottom:8px; color:#1A1A1A; }
+    .hunt-card .hc-title { font-family:'HeronSansCond'; font-size:16px; font-weight:700; margin-bottom:4px; }
+    .hunt-card .hc-desc { font-size:12px; color:#6B7280; line-height:1.5; }
+
+    /* === SIDEBAR (animated notification list) === */
+    .sidebar-col { background:transparent !important; position:relative; z-index:20; }
+    .sidebar { position:sticky; top:0; height:100vh; background:#fff; display:flex; flex-direction:column; overflow:hidden; margin:0 12px 0 20px; border-radius:0 0 16px 16px; box-shadow:-6px 0 20px rgba(0,0,0,0.06), 6px 0 20px rgba(0,0,0,0.04), 0 8px 20px rgba(0,0,0,0.06); }
+    .sidebar-header { padding:24px 20px 16px; }
+    .sidebar-header strong { font-family:'HeronSansCond'; font-size:24px; display:block; }
+    .sidebar-header .sh-gradient { background:linear-gradient(to right,#E84393,#F97316,#E84393); background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:transparent; animation:AG 5s ease infinite; }
+    .sidebar-header small { color:#9CA3AF; font-size:12px; display:block; margin-top:4px; }
+    .sidebar-list { flex:1; overflow:hidden; position:relative; mask-image:linear-gradient(black,black calc(100% - 60px),transparent); -webkit-mask-image:linear-gradient(black,black calc(100% - 60px),transparent); }
+    .sidebar-scroll { animation:tick 80s linear infinite; }
+    @keyframes tick { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
+    .si {
+      display:flex; align-items:center; gap:14px;
+      margin:0 24px 12px 24px; padding:16px 18px;
+      background:white; border-radius:14px;
+      border:1px solid rgba(0,0,0,0.06);
+      box-shadow:0 3px 10px rgba(0,0,0,0.07);
+      transition:box-shadow 0.3s, transform 0.3s;
+    }
+    .si:hover { box-shadow:0 6px 16px rgba(0,0,0,0.1); transform:translateX(-2px); }
+    .si .si-content { display:flex; align-items:center; gap:14px; width:100%; }
+    .sa { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:600; color:white; flex-shrink:0; }
+    .sa.h { background:linear-gradient(135deg,#E84393,#ff6eb4); }
+    .sa.d { background:linear-gradient(135deg,#22c55e,#4ade80); }
+    .si b { font-family:'HeronSansCond'; font-size:17px; font-weight:600; display:block; color:#1A1A1A; line-height:1.2; }
+    .si .si-sub { font-size:13px; color:#6B7280; display:block; margin-top:2px; }
+    .si .si-time { margin-left:auto; font-size:12px; color:#B0B0B0; flex-shrink:0; white-space:nowrap; }
+
+    /* === BLOG === */
+    .updates { padding:80px 48px; background:#F9FAFB; }
+    .updates-inner { max-width:1200px; margin:0 auto; }
+    .updates-header { text-align:center; margin-bottom:48px; }
+    .updates-header h2 { font-size:80px; line-height:1.3; }
+    .updates-header p { color:#6B7280; margin-top:8px; font-size:16px; }
+    .updates-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+    .update-card { background:white; border-radius:16px; overflow:hidden; border:1px solid #EBEBEB; transition:box-shadow 0.2s,transform 0.2s; }
+    .update-card:hover { box-shadow:0 12px 32px rgba(0,0,0,0.08); transform:translateY(-4px); }
+    .update-img { height:220px; background-size:cover; background-position:center; }
+    .update-body { padding:24px; }
+    .update-date { font-size:12px; color:#9CA3AF; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; }
+    .update-card h3 { font-size:28px; margin-bottom:10px; line-height:1.3; letter-spacing:0.01em; }
+    .update-card p { font-size:14px; color:#6B7280; line-height:1.6; }
+    .update-tag { display:inline-block; margin-top:14px; font-size:12px; font-weight:500; padding:4px 12px; border-radius:99px; }
+    .update-tag.green { background:#F0FDF4; color:#4CAF50; }
+    .update-tag.pink { background:#FDF2F8; color:#E84393; }
+    .update-tag.blue { background:#EFF6FF; color:#3B82F6; }
+
+    /* === DONATE SECTION (dark, qr cards) === */
+    .donate { background:#0e0e12; padding:80px 48px; }
+    .donate-header { text-align:center; margin-bottom:48px; }
+    .donate-header h2 { font-family:'HeronSansCond'; font-size:80px; line-height:1.3; margin-bottom:8px; color:white; }
+    .donate-header p { color:#606070; font-size:16px; }
+    .cards-row { display:flex; align-items:stretch; gap:80px; justify-content:center; flex-wrap:nowrap; }
+    .scene { position:relative; padding:72px 0; display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+    .scene.tier-heart { --accent:#E84393; } .scene.tier-25 { --accent:#3B82F6; } .scene.tier-50 { --accent:#F97316; } .scene.tier-free { --accent:#FBBF24; }
+    .beam { position:absolute; top:0; left:50%; width:52%; height:100%; transform:translateX(-50%) rotate(-11deg); border-radius:16px; pointer-events:none; z-index:0; }
+    .beam::before { content:''; position:absolute; inset:0; border-radius:inherit; background:var(--beam); }
+    .beam::after { content:''; position:absolute; inset:-14px; border-radius:24px; background:var(--beam); filter:blur(32px); opacity:0.5; }
+    .scene.tier-heart .beam { --beam:linear-gradient(165deg,#ff00aa 0%,#E84393 45%,#ff6090 80%,#ffaac8 100%); }
+    .scene.tier-25 .beam { --beam:linear-gradient(165deg,#1A4DB5 0%,#2563EB 40%,#3B82F6 70%,#60b0f0 100%); }
+    .scene.tier-50 .beam { --beam:linear-gradient(165deg,#C82010 0%,#E84030 35%,#F97316 70%,#FBBF24 100%); }
+    .scene.tier-free .beam { --beam:linear-gradient(165deg,#D4A000 0%,#FBBF24 40%,#FDE68A 70%,#fff0b0 100%); }
+    .card { position:relative; z-index:1; width:192px; border-radius:16px; background:rgba(12,12,18,0.88); backdrop-filter:blur(36px); -webkit-backdrop-filter:blur(36px); border:1px solid rgba(255,255,255,0.07); padding:16px; display:flex; flex-direction:column; gap:10px; color:#f0f0f0; flex:1; }
+    .amount-top { font-family:'DMMono'; font-size:26px; font-weight:500; letter-spacing:-0.04em; line-height:1; color:var(--accent); text-align:center; padding:4px 0; }
+    .custom-amount-row { display:flex; align-items:baseline; justify-content:center; gap:3px; font-family:'DMMono'; font-size:26px; font-weight:500; letter-spacing:-0.04em; line-height:1; color:#FBBF24; padding:4px 0; }
+    .custom-input { font-family:'DMMono'; font-size:26px; font-weight:500; color:#FBBF24; background:transparent; border:none; border-bottom:1.5px dashed rgba(251,191,36,0.3); outline:none; width:100px; letter-spacing:-0.04em; text-align:center; }
+    .custom-input::placeholder { color:rgba(251,191,36,0.2); }
+    .qr-wrap { flex:1; min-height:112px; border-radius:10px; overflow:hidden; background:#111118; padding:6px; display:flex; align-items:center; justify-content:center; }
+    .qr-wrap canvas, .qr-wrap img { display:block; width:100% !important; height:auto !important; border-radius:6px; }
+    .heart-zone { flex:1; min-height:112px; border-radius:10px; background:#111118; position:relative; overflow:hidden; }
+    #pinkboard { position:absolute; top:0; left:0; width:100%; height:100%; display:block; }
+    .heart-zone::before { content:''; position:absolute; inset:28%; border-radius:50%; background:radial-gradient(circle,rgba(232,67,147,0.18) 0%,transparent 70%); animation:pulseRing 1.4s ease-in-out infinite; z-index:0; }
+    @keyframes pulseRing { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.8);opacity:0.08} }
+    .tikkie-row { display:flex; align-items:center; }
+    .tikkie-logo { width:100%; height:auto; display:block; }
+    .card .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent); }
+    .tier-desc { font-size:10.5px; font-weight:300; line-height:1.75; color:#606070; letter-spacing:0.01em; }
+    .tier-btn { width:100%; padding:9px; border:none; border-radius:8px; background:var(--btn-gradient); color:#fff; font-family:'DMMono'; font-size:13px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; opacity:0.9; transition:opacity 0.2s,transform 0.15s; margin-top:auto; }
+    .tier-btn:hover { opacity:1; transform:translateY(-1px); } .tier-btn:active { transform:translateY(0); }
+    .scene.tier-heart .tier-btn { --btn-gradient:linear-gradient(135deg,#c0006a,#E84393); }
+    .scene.tier-25 .tier-btn { --btn-gradient:linear-gradient(135deg,#1A4DB5,#3B82F6); }
+    .scene.tier-50 .tier-btn { --btn-gradient:linear-gradient(135deg,#C82010,#F97316); }
+    .scene.tier-free .tier-btn { --btn-gradient:linear-gradient(135deg,#C4900A,#FBBF24); color:#1a1000; }
+
+    /* === FAQ (accordion-tabs style) === */
+    .faq { padding:80px 48px; max-width:1000px; margin:0 auto; }
+    .faq > h2 { font-size:80px; line-height:1.3; text-align:center; margin-bottom:8px; }
+    .faq > h2.gh-warm { display:inline-block; width:100%; }
+    .faq > .subtitle { text-align:center; color:#6B7280; margin-bottom:40px; font-size:16px; }
+    .faq-tabs { display:flex; gap:8px; margin-bottom:24px; justify-content:center; flex-wrap:wrap; }
+    .faq-tab { padding:8px 20px; border-radius:99px; border:1px solid #E5E7EB; background:white; font-family:'DMMono'; font-size:12px; cursor:pointer; transition:all 0.15s; }
+    .faq-tab.active { background:#1A1A1A; color:white; border-color:#1A1A1A; }
+    .faq-group { display:none; }
+    .faq-group.active { display:block; }
+    .faq-item { border:1px solid #EBEBEB; border-radius:12px; margin-bottom:8px; background:white; overflow:hidden; }
+    .faq-q {
+      font-family:'HeronSansCond'; font-size:24px; font-weight:400; cursor:pointer;
+      padding:20px 24px; display:flex; justify-content:space-between; align-items:center; transition:background 0.15s;
+    }
+    .faq-q:hover { background:#FAFAFA; }
+    .faq-q .faq-icon { width:24px; height:24px; position:relative; flex-shrink:0; }
+    .faq-q .faq-icon::before, .faq-q .faq-icon::after {
+      content:''; position:absolute; background:#9CA3AF; transition:transform 0.3s;
+    }
+    .faq-q .faq-icon::before { width:16px; height:2px; top:11px; left:4px; }
+    .faq-q .faq-icon::after { width:2px; height:16px; top:4px; left:11px; }
+    .faq-item.open .faq-q .faq-icon::after { transform:rotate(90deg); }
+    .faq-a {
+      max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s cubic-bezier(0.4,0,0.2,1);
+      color:#4B5563; font-size:14px; line-height:1.7; padding:0 24px;
+    }
+    .faq-item.open .faq-a { max-height:300px; padding:0 24px 20px; }
+
+    /* === MESSAGE FORM === */
+    .message-section { padding:80px 48px; background:#F9FAFB; }
+    .message-inner { max-width:700px; margin:0 auto; }
+    .message-inner h2 { font-size:80px; line-height:1.3; margin-bottom:8px; text-align:center; }
+    .message-inner .form-desc { font-size:14px; color:#6B7280; margin-bottom:24px; text-align:center; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+    .form-input { padding:14px 16px; border:1px solid #E5E7EB; border-radius:10px; font-family:'DMMono'; font-size:13px; outline:none; background:white; transition:border-color 0.15s; }
+    .form-input:focus { border-color:#E84393; }
+    .form-textarea { width:100%; padding:14px 16px; border:1px solid #E5E7EB; border-radius:10px; font-family:'DMMono'; font-size:13px; outline:none; resize:vertical; min-height:120px; background:white; transition:border-color 0.15s; margin-bottom:16px; }
+    .form-textarea:focus { border-color:#E84393; }
+    .form-submit { padding:14px 36px; background:#1A1A1A; color:white; border:none; border-radius:8px; font-family:'HeronSansCond'; font-weight:700; font-size:15px; cursor:pointer; text-transform:uppercase; letter-spacing:0.03em; }
+
+    /* === FOOTER === */
+    .footer { background:#111; color:#777; padding:64px 48px 40px; }
+    .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px; }
+    .footer h3 { font-family:'HeronSansCond'; color:white; font-size:16px; margin-bottom:16px; }
+    .footer p { font-size:13px; line-height:1.6; }
+    .footer-links { list-style:none; }
+    .footer-links li { margin-bottom:10px; }
+    .footer-links a { color:#777; text-decoration:none; font-size:13px; } .footer-links a:hover { color:white; }
+    .footer-bottom { max-width:1100px; margin:40px auto 0; padding-top:24px; border-top:1px solid #222; font-size:12px; text-align:center; }
+
+    /* === SIDEBAR === */
+    .sidebar { position:sticky; top:0; height:100vh; border-left:1px solid #EBEBEB; background:#FAFAF8; display:flex; flex-direction:column; overflow:hidden; }
+    .sidebar-header { padding:20px 16px 14px; border-bottom:1px solid #EBEBEB; }
+    .sidebar-header strong { font-family:'HeronSansCond'; font-size:28px; display:block; }
+    .sidebar-header .sh-gradient { background:linear-gradient(to right,#E84393,#F97316,#E84393); background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:transparent; animation:AG 5s ease infinite; }
+    .sidebar-header small { color:#6B7280; font-size:14px; display:block; margin-top:4px; }
+    .sidebar-list { flex:1; overflow:hidden; position:relative; mask-image:linear-gradient(transparent,black 30px,black calc(100% - 30px),transparent); -webkit-mask-image:linear-gradient(transparent,black 30px,black calc(100% - 30px),transparent); }
+    .sidebar-scroll { animation:tick 80s linear infinite; }
+    @keyframes tick { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
+    .si { display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:14px; border-bottom:1px solid #E5E7EB; }
+    .sa { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:white; flex-shrink:0; }
+    .sa.h { background:#E84393; } .sa.d { background:#4CAF50; }
+
+    /* heart popup */
+    .heart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; align-items:center; justify-content:center; }
+    .heart-overlay.show { display:flex; }
+    .heart-popup { background:white; border-radius:20px; padding:40px; text-align:center; max-width:400px; width:90%; box-shadow:0 24px 64px rgba(0,0,0,0.2); }
+    .heart-popup h3 { font-size:24px; margin-bottom:6px; }
+    .heart-popup .h-sub { color:#6B7280; font-size:13px; margin-bottom:24px; }
+    .heart-popup input { width:100%; padding:14px; border:2px solid #E5E7EB; border-radius:10px; font-family:'DMMono'; font-size:14px; outline:none; text-align:center; }
+    .heart-popup input:focus { border-color:#E84393; }
+    .heart-popup .h-btn { margin-top:16px; width:100%; padding:14px; background:#E84393; color:white; border:none; border-radius:10px; font-family:'HeronSansCond'; font-weight:700; font-size:16px; cursor:pointer; }
+    .floating-hearts { position:fixed; inset:0; pointer-events:none; z-index:199; overflow:hidden; }
+    .float-heart { position:absolute; font-size:28px; animation:fUp 3s ease-out forwards; }
+    @keyframes fUp { 0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)} 100%{opacity:0;transform:translateY(-400px) scale(0.5) rotate(20deg)} }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav"></nav>
+
+  <!-- HERO full width -->
+  <section class="hero">
+    <div class="hero-card-group">
+      <div class="hero-glass">
+        <h2>
+          <span class="hg-light">Steun G&eacute;rieke en Robert in</span>
+          <span class="hg-bold">Run for Huntington</span>
+        </h2>
+        <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hs-number">&euro;1.247</div><div class="hs-label">opgehaald</div></div>
+          <div class="hero-stat"><div class="hs-number">48</div><div class="hs-label">supporters</div></div>
+          <div class="hero-stat"><div class="hs-number">72</div><div class="hs-label">dagen te gaan</div></div>
+          <div class="hero-stat"><div class="hs-number">8%</div><div class="hs-label">van doel</div></div>
+        </div>
+      </div>
+      <div class="hero-cta-strip">
+        <a href="#pricing" class="button-gradient" id="heroGradientBtn">
+          <div class="gradient-bg"></div>
+          <div class="gradient-inner"></div>
+          <div class="btn-content">Doneer</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <section class="progress-section">
+    <div class="progress-bar-track"><div class="progress-bar-fill"><div class="progress-dot"></div></div></div>
+    <div class="milestones">
+      <div class="milestone passed"><span class="m-date">01/09</span>Start campagne</div>
+      <div class="milestone active"><span class="m-date">Nu</span>Week 2</div>
+      <div class="milestone"><span class="m-date">???</span>Eerste blessure</div>
+      <div class="milestone"><span class="m-date">???</span>Bijna opgegeven</div>
+      <div class="milestone"><span class="m-date">???</span>Doel bereikt!</div>
+      <div class="milestone"><span class="m-date">???</span>Nieuwe PR</div>
+      <div class="milestone"><span class="m-date">???</span>Laatste training</div>
+      <div class="milestone"><span class="m-date">15/11</span>Marathon</div>
+    </div>
+  </section>
+
+  <div class="page-below-hero">
+  <div class="main-content">
+
+    <!-- LOGO SECTION -->
+    <section class="logo-section">
+      <div class="logo-inner">
+        <h2>Welkom bij</h2>
+        <div class="logo-parallax-wrap" id="logoParallax">
+          <img src="run_logo.png" alt="Run for Huntington">
+        </div>
+      </div>
+    </section>
+
+    <!-- MIJN VERHAAL -->
+    <section class="story">
+      <div class="story-inner">
+        <div class="story-card-wrap">
+          <div class="story-card" id="storyCard" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-perspective="1800" data-tilt-glare data-tilt-max-glare="0.08" data-tilt-scale="1.02" data-tilt-reset="true">
+            <img src="story_portrait.png" alt="">
+          </div>
+        </div>
+        <div class="story-text">
+          <div class="story-pullquote">Ik had nooit een heel duidelijke bucketlist, maar ziek worden stond er in ieder geval niet op.</div>
+          <p class="story-intro">Ik ben drager van de ziekte van Huntington. Een behoorlijk waardeloze, erfelijke hersenziekte die helaas veel impact heeft op mijn familie. Maar in plaats van bij de pakken neer te zitten, komen we in beweging. Want er is hoop.</p>
+          <div class="story-fade" id="storyFade">
+            <div class="story-expandable" id="storyExpand">
+              <p>De klachten ontstaan gemiddeld tussen het 30ste en 50ste levensjaar, waarbij de ziekte langzaam controle krijgt over je bewegingen, gedrag en geheugen. Geen fijn vooruitzicht, zul je denken.</p>
+              <p>Op dit moment is er nog geen behandeling die de ziekte kan vertragen of genezen, maar de medische wetenschap zit de ziekte dicht op de hielen. Er lopen op dit moment verschillende onderzoeken die veelbelovend zijn en een doorbraak is dichterbij dan ooit.</p>
+              <p>Huntington is een relatief onbekende, zeldzame ziekte. Onderzoek is hierdoor grotendeels afhankelijk van subsidies en donaties. Hoe meer geld er naar onderzoek gaat, hoe groter de kans dat die doorbraak er binnenkort gaat komen.</p>
+              <p>Daarom komen wij in beweging! Mijn vriend Robert en mijn zus G&eacute;rieke gaan de sportieve strijd aan tijdens de Zevenheuvelenloop. Jouw bijdrage gaat 100% naar onderzoek dat deze ziekte de wereld uit helpt.</p>
+            </div>
+            <button class="story-toggle" id="storyToggle" onclick="toggleStory()">Lees het hele verhaal</button>
+          </div>
+          <div class="story-cta">Kom jij ook <span class="marker">in beweging</span>?</div>
+          <a href="#pricing" class="story-donate-wrap">
+            <div class="gradient-bg"></div>
+            <div class="gradient-inner"></div>
+            <div class="btn-content">Doneer</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUNTINGTON FACTS -->
+    <section class="hunt">
+      <div class="hunt-inner">
+        <div class="hunt-photo"><img src="run.png" alt="Runner"></div>
+        <div class="hunt-right">
+          <div class="hunt-text">
+            <h2>Wat is Huntington?</h2>
+            <p>Huntington tast langzaam alle hersenfuncties aan. Bewegen, denken en emoties worden steeds moeilijker. Er is momenteel geen behandeling. Onderzoek is cruciaal. En daarom rennen wij om dit te versnellen.</p>
+          </div>
+          <div class="hunt-cards">
+            <div class="hunt-card">
+              <div class="hc-title">Stichting Huntington</div>
+              <div class="hc-desc">Financiert onderzoek en biedt directe ondersteuning aan families die ermee te maken krijgen.</div>
+            </div>
+            <div class="hunt-card">
+              <div class="hc-number">30.000</div>
+              <div class="hc-desc">Nederlanders krijgen ermee te maken op een manier. Er is nog geen genezing.</div>
+            </div>
+            <div class="hunt-card">
+              <div class="hc-number">50%</div>
+              <div class="hc-desc">kans op overerving als een ouder drager is. Kinderen leven met onzekerheid.</div>
+            </div>
+            <div class="hunt-card">
+              <div class="hc-title">Stichting Huntington</div>
+              <div class="hc-desc">Financiert onderzoek en biedt directe ondersteuning aan families.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="updates">
+      <div class="updates-inner">
+        <div class="updates-header">
+          <h2 class="gh-green">Updates van de weg</h2>
+          <p>Volg ons trainingsavontuur richting de marathon</p>
+        </div>
+        <div class="updates-grid">
+          <div class="update-card">
+            <div class="update-img" style="background-image:url('blog1.jpg')"></div>
+            <div class="update-body">
+              <div class="update-date">18 oktober 2026</div>
+              <h3>Nieuwe PR gehaald!</h3>
+              <p>Na weken van twijfel liepen we allebei een persoonlijk record op de 10 km.</p>
+              <span class="update-tag green">Training</span>
+            </div>
+          </div>
+          <div class="update-card">
+            <div class="update-img" style="background-image:url('blog2.jpg')"></div>
+            <div class="update-body">
+              <div class="update-date">12 september 2026</div>
+              <h3>De eerste blessure</h3>
+              <p>Robert zijn knie speelde op. Even schrikken, maar de fysio geeft groen licht.</p>
+              <span class="update-tag pink">Persoonlijk</span>
+            </div>
+          </div>
+          <div class="update-card">
+            <div class="update-img" style="background-image:url('blog3.jpg')"></div>
+            <div class="update-body">
+              <div class="update-date">1 september 2026</div>
+              <h3>De campagne is live!</h3>
+              <p>Vandaag lanceren we onze crowdfunding. Het doel: 15.000 euro voor Stichting Huntington.</p>
+              <span class="update-tag blue">Mijlpaal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DONATE (dark, qr cards) -->
+    <section class="donate" id="pricing">
+      <div class="donate-header">
+        <h2 class="gh-pink">Doneer wat je wilt en kunt</h2>
+        <p>Elke bijdrage maakt verschil</p>
+      </div>
+      <div class="cards-row">
+
+        <div class="scene tier-heart">
+          <div class="beam"></div>
+          <div class="card">
+            <div class="amount-top">&hearts;</div>
+            <div class="heart-zone" id="heart-zone"><canvas id="pinkboard"></canvas></div>
+            <div class="divider"></div>
+            <p class="tier-desc">Ik kan even niks missen, maar wil wel pure liefde sturen. Elk hartje telt en laat zien dat je er bent.</p>
+            <button class="tier-btn" onclick="showHeartPopup()">Stuur pure liefde &hearts;</button>
+          </div>
+        </div>
+
+        <div class="scene tier-25">
+          <div class="beam"></div>
+          <div class="card">
+            <div class="amount-top">&euro;25,-</div>
+            <div class="qr-wrap"><div id="qr-25"></div></div>
+            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-25" alt="Tikkie"></div>
+            <div class="divider"></div>
+            <p class="tier-desc">Financiert direct onderzoek naar Huntington. Je naam op de wall of fame.</p>
+            <button class="tier-btn">Doneer via Tikkie</button>
+          </div>
+        </div>
+
+        <div class="scene tier-50">
+          <div class="beam"></div>
+          <div class="card">
+            <div class="amount-top">&euro;50,-</div>
+            <div class="qr-wrap"><div id="qr-50"></div></div>
+            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-50" alt="Tikkie"></div>
+            <div class="divider"></div>
+            <p class="tier-desc">Dubbele impact. Persoonlijk bedankje en foto-update na de finish op km&nbsp;42.</p>
+            <button class="tier-btn">Doneer via Tikkie</button>
+          </div>
+        </div>
+
+        <div class="scene tier-free">
+          <div class="beam"></div>
+          <div class="card">
+            <div class="custom-amount-row"><span>&euro;</span><input class="custom-input" type="number" placeholder="..." min="1" id="customAmt"></div>
+            <div class="qr-wrap"><div id="qr-free"></div></div>
+            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-free" alt="Tikkie"></div>
+            <div class="divider"></div>
+            <p class="tier-desc">Elke euro helpt. Kies zelf wat je wilt geven &mdash; geen bedrag is te klein.</p>
+            <button class="tier-btn">Doneer via Tikkie</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <h2 class="gh-warm">Veelgestelde vragen</h2>
+      <p class="subtitle">Alles wat je wilt weten</p>
+      <div class="faq-tabs">
+        <button class="faq-tab active" onclick="switchTab(this,'general')">Algemeen</button>
+        <button class="faq-tab" onclick="switchTab(this,'donate')">Doneren</button>
+        <button class="faq-tab" onclick="switchTab(this,'marathon')">De marathon</button>
+      </div>
+      <div class="faq-group active" id="faq-general">
+        <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)">Wat is de ziekte van Huntington?<span class="faq-icon"></span></div><div class="faq-a">De ziekte van Huntington is een erfelijke hersenziekte die alle functies langzaam aantast. Bewegen, denken en emoties worden steeds moeilijker. Er is momenteel geen genezing. Wetenschappelijk onderzoek is onze grootste hoop.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wie zijn G&eacute;rieke en Robert?<span class="faq-icon"></span></div><div class="faq-a">Twee gepassioneerde lopers die de marathon rennen om geld en bewustwording op te halen voor Stichting Huntington. Ze trainen al maanden voor dit doel.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wat doet Stichting Huntington?<span class="faq-icon"></span></div><div class="faq-a">De stichting financiert wetenschappelijk onderzoek en biedt directe ondersteuning aan families die met de ziekte van Huntington leven.</div></div>
+      </div>
+      <div class="faq-group" id="faq-donate">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Waar gaat mijn donatie naartoe?<span class="faq-icon"></span></div><div class="faq-a">100% van de donaties gaat naar Stichting Huntington voor onderzoek en familieondersteuning.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Kan ik ook zonder geld steunen?<span class="faq-icon"></span></div><div class="faq-a">Ja! Stuur een hartje. Je naam verschijnt in de supporters lijst. Delen op social media helpt ook enorm.</div></div>
+      </div>
+      <div class="faq-group" id="faq-marathon">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wanneer is de marathon?<span class="faq-icon"></span></div><div class="faq-a">De marathon vindt plaats op 15 november 2026. De campagne loopt tot die dag.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Hoe blijf ik op de hoogte?<span class="faq-icon"></span></div><div class="faq-a">Volg onze updates op deze pagina en social media. Na de marathon delen we foto's en een persoonlijk verslag met alle supporters.</div></div>
+      </div>
+    </section>
+
+    <!-- MESSAGE -->
+    <section class="message-section">
+      <div class="message-inner">
+        <h2 class="gh-green">Laat een bericht achter</h2>
+        <p class="form-desc">Een aanmoediging, vraag, of gewoon een lief woord.</p>
+        <div class="form-row"><input class="form-input" type="text" placeholder="Je naam"><input class="form-input" type="email" placeholder="E-mailadres"></div>
+        <textarea class="form-textarea" placeholder="Je bericht..."></textarea>
+        <button class="form-submit">Verstuur bericht</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div><h3>Run for Huntington</h3><p>Een initiatief van G&eacute;rieke en Robert voor Stichting Huntington.</p></div>
+        <div><h3>Links</h3><ul class="footer-links"><li><a href="#">Stichting Huntington</a></li><li><a href="#">Marathon event</a></li><li><a href="#">Contact</a></li></ul></div>
+        <div><h3>Volg ons</h3><ul class="footer-links"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">Twitter / X</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">Gemaakt met liefde door G&eacute;rieke en Robert &middot; 2026</div>
+    </footer>
+
+  </div>
+
+  <!-- SIDEBAR (speech bubbles) -->
+  <aside class="sidebar">
+    <div class="sidebar-header"><strong class="sh-gradient">Recente supporters</strong><small>48 mensen steunen ons</small></div>
+    <div class="sidebar-list"><div class="sidebar-scroll">
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">2 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Marco</b><span class="si-sub">doneerde &euro;50</span></div><span class="si-time">5 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">8 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Piet</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">12 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">15 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Jan</b><span class="si-sub">doneerde &euro;100</span></div><span class="si-time">18 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">22 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Thomas</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">30 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">35 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Bram</b><span class="si-sub">doneerde &euro;50</span></div><span class="si-time">42 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Roos</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">48 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Daan</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">55 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Mila</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">1 uur</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Sem</b><span class="si-sub">doneerde &euro;100</span></div><span class="si-time">1 uur</span></div></div>
+      <!-- repeat -->
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">2 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Marco</b><span class="si-sub">doneerde &euro;50</span></div><span class="si-time">5 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">8 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Piet</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">12 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">15 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Jan</b><span class="si-sub">doneerde &euro;100</span></div><span class="si-time">18 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">22 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Thomas</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">30 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">35 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Bram</b><span class="si-sub">doneerde &euro;50</span></div><span class="si-time">42 min</span></div></div>
+    </div></div>
+  </aside>
+  </div>
+
+  <div class="heart-overlay" id="heartOverlay">
+    <div class="heart-popup"><h3>Wat lief!</h3><p class="h-sub">Wat is je naam? Dan voegen we je toe aan de supporters.</p><input type="text" placeholder="Je naam" id="heartName"><button class="h-btn" onclick="submitHeart()">Verstuur hartje</button></div>
+  </div>
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+  <!-- Tikkie SVG template -->
+  <script type="text/plain" id="tikkie-tpl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2500 1082.284" xml:space="preserve"><switch><foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1"/><g><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#d6d6d6" d="M2004.082 78.824c-236.73 0-427.861 191.902-427.861 428.632 0 79.381 21.451 153.753 59.985 217.591v12.716c0 145.147-106.612 192.159-106.612 192.159s150.67 1.541 230.436-69.105c.771 0 1.67-1.028 2.697-1.028s1.927 1.028 2.697 1.028h.128c68.206 51.379 150.156 73.858 238.528 73.858 236.73 0 428.632-191.26 428.632-427.861s-191.9-427.99-428.63-427.99"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fafdfa" d="M1800.492 558.193c-16.827 0-24.919-7.45-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h.642v-11.817c0-6.808 0-14.386.642-21.708h-1.285c-16.827 0-24.919-7.578-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h8.092c8.863-36.993 27.36-70.903 53.563-98.391 41.746-44.186 94.024-66.022 156.835-66.022 36.736 0 69.105 7.45 96.465 22.992 28.002 14.9 41.746 32.883 42.388 53.563 0 26.717-16.827 50.994-41.104 51.636-11.817.642-25.561-4.367-41.103-13.744-15.542-9.89-34.296-14.9-56.004-14.9-35.452 0-63.453 12.459-84.005 36.736-6.936 8.606-12.845 17.983-17.469 28.002h95.18c15.542 0 24.919 8.735 24.919 22.992 0 16.827-9.377 24.277-24.919 24.277h-107.126c-.642 7.45-1.284 14.9-1.284 21.708v11.817h72.188c14.9 0 24.277 8.735 24.277 22.992 0 16.827-9.377 24.277-24.277 24.277h-62.297c4.881 12.845 11.817 24.791 20.552 35.452 20.552 24.277 48.553 36.736 84.005 36.736 21.836 0 40.461-5.01 56.003-14.386 15.542-9.89 29.286-14.9 41.104-14.258 24.277.642 41.103 25.561 41.103 50.994-.642 21.194-14.258 39.177-42.388 54.719-27.359 14.9-59.728 22.478-96.465 22.478-62.94 0-115.218-21.836-156.835-66.022-28.002-29.929-46.113-65.38-55.361-105.841h-6.037z"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff" d="M210.815 355.63H143.38c-33.782 0-53.691-17.854-53.691-50.866 0-33.782 19.909-51.636 53.691-51.636h245.593c33.653 0 53.691 17.854 53.691 50.866 0 33.782-19.909 51.636-53.691 51.636h-66.665v319.194c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V355.63zm334.994-102.502c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c0-55.618 22.735-73.601 55.747-73.601m247.776 296.587v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.554-34.424 83.877-17.212 22.093 17.212 27.488 52.278-3.468 85.29L873.994 493.327l159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm444.432 0v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.683-34.424 84.005-17.212 21.965 17.212 27.488 52.278-3.468 85.29l-149.257 140.394 159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm388.684-296.587c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c.129-55.618 22.736-73.601 55.747-73.601"/></g></switch></svg></script>
+
+  <script>
+    /* Gradient button — mouse tracking */
+    (function(){
+      var btn=document.getElementById('heroGradientBtn');
+      if(!btn) return;
+      var bg=btn.querySelector('.gradient-bg');
+      btn.addEventListener('mousemove',function(e){
+        var r=btn.getBoundingClientRect();
+        var x=((e.clientX-r.left)/r.width*100).toFixed(1);
+        var y=((e.clientY-r.top)/r.height*100).toFixed(1);
+        var cx=e.clientX-r.left-r.width/2;
+        var cy=e.clientY-r.top-r.height/2;
+        var angle=(Math.atan2(cy,cx)*180/Math.PI+360)%360;
+        bg.style.setProperty('--mouse-x',x+'%');
+        bg.style.setProperty('--mouse-y',y+'%');
+        bg.style.setProperty('--mouse-angle',angle+'deg');
+        bg.style.animation='none';
+      });
+      btn.addEventListener('mouseleave',function(){
+        bg.style.animation='';
+      });
+    })();
+    /* === Logo parallax on scroll === */
+    (function(){
+      var logo=document.querySelector('#logoParallax img');
+      if(!logo) return;
+      window.addEventListener('scroll',function(){
+        var r=logo.parentElement.getBoundingClientRect();
+        var center=r.top+r.height/2;
+        var vh=window.innerHeight;
+        var offset=(center-vh/2)/vh;
+        logo.style.transform='translateY('+offset*40+'px) rotate('+offset*-3+'deg)';
+      },{passive:true});
+    })();
+
+    /* Vanilla Tilt init + pause sway on hover */
+    (function(){
+      var card=document.getElementById('storyCard');
+      if(!card||typeof VanillaTilt==='undefined') return;
+      VanillaTilt.init(card,{max:8,speed:500,perspective:1800,glare:true,'max-glare':0.08,scale:1.02,reset:true});
+      card.addEventListener('mouseenter',function(){ card.style.animation='none'; });
+      card.addEventListener('mouseleave',function(){
+        setTimeout(function(){ card.style.animation=''; },600);
+      });
+    })();
+
+    /* === Story expand/collapse === */
+    function toggleStory(){
+      var ex=document.getElementById('storyExpand');
+      var fade=document.getElementById('storyFade');
+      var btn=document.getElementById('storyToggle');
+      var isOpen=ex.classList.contains('open');
+      ex.classList.toggle('open');
+      fade.classList.toggle('open');
+      btn.textContent=isOpen?'Lees het hele verhaal':'Inklappen';
+    }
+
+    function showHeartPopup(){const c=document.getElementById('floatingHearts');for(let i=0;i<40;i++){const h=document.createElement('div');h.className='float-heart';h.innerHTML=['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC97','\u2764\uFE0F','\uD83E\uDE77'][Math.floor(Math.random()*5)];h.style.left=(10+Math.random()*80)+'%';h.style.bottom=(10+Math.random()*40)+'%';h.style.fontSize=(28+Math.random()*48)+'px';h.style.animationDelay=(Math.random()*1.2)+'s';h.style.animationDuration=(2.5+Math.random()*3)+'s';c.appendChild(h)}setTimeout(()=>document.getElementById('heartOverlay').classList.add('show'),800);setTimeout(()=>c.innerHTML='',5000)}
+    function submitHeart(){
+      var name=document.getElementById('heartName').value.trim()||'Anoniem';
+      document.getElementById('heartOverlay').classList.remove('show');
+      /* Nog een ronde hartjes na sluiten popup */
+      setTimeout(function(){
+        var c=document.getElementById('floatingHearts');
+        for(var i=0;i<25;i++){var h=document.createElement('div');h.className='float-heart';h.innerHTML=['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC97'][Math.floor(Math.random()*3)];h.style.left=(10+Math.random()*80)+'%';h.style.bottom=(10+Math.random()*40)+'%';h.style.fontSize=(32+Math.random()*52)+'px';h.style.animationDelay=(Math.random()*0.8)+'s';h.style.animationDuration=(2+Math.random()*2.5)+'s';c.appendChild(h)}
+        setTimeout(function(){c.innerHTML='';},4000);
+      },100);
+      /* Voeg toe aan ticker + scroll ernaartoe */
+      var scroll=document.querySelector('.sidebar-scroll');
+      if(scroll){
+        scroll.style.animation='none'; /* pauzeer auto-scroll */
+        var el=document.createElement('div');
+        el.className='si';
+        el.style.background='#FFF0F6';
+        el.style.boxShadow='0 0 20px rgba(232,67,147,0.4)';
+        el.style.transform='scale(1.05)';
+        el.innerHTML='<div class="si-content"><div class="sa h">&#10084;</div><div><b>'+name+'</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">nu</span></div>';
+        scroll.prepend(el);
+        /* Scroll sidebar into view */
+        var sidebar=document.querySelector('.sidebar');
+        if(sidebar) sidebar.scrollIntoView({behavior:'smooth',block:'start'});
+        /* Fade uit na 3s */
+        el.style.transition='background 2s, box-shadow 2s, transform 0.5s';
+        setTimeout(function(){el.style.background='white';el.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)';el.style.transform='scale(1)';},2500);
+        /* Hervat auto-scroll na 5s */
+        setTimeout(function(){scroll.style.animation='';},5000);
+      }
+      document.getElementById('heartName').value='';
+    }
+    document.getElementById('heartOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
+    function switchTab(btn,group){document.querySelectorAll('.faq-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.faq-group').forEach(g=>g.classList.remove('active'));btn.classList.add('active');document.getElementById('faq-'+group).classList.add('active')}
+    function toggleFaq(el){el.parentElement.classList.toggle('open')}
+  </script>
+
+  <!-- QR codes + Tikkie logos + Heart particles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    /* QR codes */
+    var qrBase={text:'https://tikkie.me/runforhuntington',width:180,height:180,colorDark:'#ffffff',colorLight:'#111118',correctLevel:QRCode.CorrectLevel.H};
+    new QRCode(document.getElementById('qr-25'),qrBase);
+    new QRCode(document.getElementById('qr-50'),qrBase);
+    new QRCode(document.getElementById('qr-free'),qrBase);
+
+    /* Tikkie SVG logos */
+    var svgTpl=document.getElementById('tikkie-tpl').textContent;
+    [{id:'tikkie-25',color:'#3B82F6'},{id:'tikkie-50',color:'#F97316'},{id:'tikkie-free',color:'#FBBF24'}].forEach(function(c){
+      var svg=svgTpl.replace(/fill:#d6d6d6/gi,'fill:'+c.color);
+      var blob=new Blob([svg],{type:'image/svg+xml'});
+      document.getElementById(c.id).src=URL.createObjectURL(blob);
+    });
+
+    /* Heart particle canvas */
+    var S={length:1500,duration:2,velocity:55,effect:-1.3,size:7};
+    (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}})();
+    function HP(x,y){this.x=x||0;this.y=y||0;}
+    HP.prototype.clone=function(){return new HP(this.x,this.y);};
+    HP.prototype.length=function(l){if(l===undefined)return Math.sqrt(this.x*this.x+this.y*this.y);this.normalize();this.x*=l;this.y*=l;return this;};
+    HP.prototype.normalize=function(){var l=this.length();this.x/=l;this.y/=l;return this;};
+    function Pt(){this.pos=new HP();this.vel=new HP();this.acc=new HP();this.age=0;}
+    Pt.prototype.init=function(x,y,dx,dy){this.pos.x=x;this.pos.y=y;this.vel.x=dx;this.vel.y=dy;this.acc.x=dx*S.effect;this.acc.y=dy*S.effect;this.age=0;};
+    Pt.prototype.update=function(dt){this.pos.x+=this.vel.x*dt;this.pos.y+=this.vel.y*dt;this.vel.x+=this.acc.x*dt;this.vel.y+=this.acc.y*dt;this.age+=dt;};
+    Pt.prototype.draw=function(ctx,img){var sz=img.width*(function(t){return(--t)*t*t+1;})(this.age/S.duration);ctx.globalAlpha=1-this.age/S.duration;ctx.drawImage(img,this.pos.x-sz/2,this.pos.y-sz/2,sz,sz);};
+    function Pool(n){this.pts=new Array(n);for(var i=0;i<n;i++)this.pts[i]=new Pt();this.fa=0;this.ff=0;}
+    Pool.prototype.add=function(x,y,dx,dy){this.pts[this.ff].init(x,y,dx,dy);this.ff++;if(this.ff==this.pts.length)this.ff=0;if(this.fa==this.ff)this.fa++;if(this.fa==this.pts.length)this.fa=0;};
+    Pool.prototype.update=function(dt){var i,p=this.pts,fa=this.fa,ff=this.ff;if(fa<ff)for(i=fa;i<ff;i++)p[i].update(dt);if(ff<fa){for(i=fa;i<p.length;i++)p[i].update(dt);for(i=0;i<ff;i++)p[i].update(dt);}while(p[this.fa].age>=S.duration&&this.fa!=this.ff){this.fa++;if(this.fa==this.pts.length)this.fa=0;}};
+    Pool.prototype.draw=function(ctx,img){var i,p=this.pts,fa=this.fa,ff=this.ff;if(fa<ff)for(i=fa;i<ff;i++)p[i].draw(ctx,img);if(ff<fa){for(i=fa;i<p.length;i++)p[i].draw(ctx,img);for(i=0;i<ff;i++)p[i].draw(ctx,img);}};
+    (function(canvas){
+      var ctx=canvas.getContext('2d'),pool=new Pool(S.length),rate=S.length/S.duration,time;
+      function poh(t){return new HP(128*Math.pow(Math.sin(t),3),104*Math.cos(t)-40*Math.cos(2*t)-16*Math.cos(3*t)-8*Math.cos(4*t)+20);}
+      var img=(function(){var c=document.createElement('canvas'),cx=c.getContext('2d'),sz=S.size;c.width=sz;c.height=sz;function to(t){var p=poh(t);p.x=sz/2+p.x*sz/350;p.y=sz/2-p.y*sz/350;return p;}cx.beginPath();var t=-Math.PI,p=to(t);cx.moveTo(p.x,p.y);while(t<Math.PI){t+=0.01;p=to(t);cx.lineTo(p.x,p.y);}cx.closePath();cx.fillStyle='#FF5CA4';cx.fill();var i=new Image();i.src=c.toDataURL();return i;})();
+      function render(){requestAnimationFrame(render);var nt=new Date().getTime()/1000,dt=nt-(time||nt);time=nt;ctx.clearRect(0,0,canvas.width,canvas.height);var amt=rate*dt;var sc=Math.min(canvas.width,canvas.height)/300;var vel=S.velocity*sc;for(var i=0;i<amt;i++){var pos=poh(Math.PI-2*Math.PI*Math.random());var spos=new HP(pos.x*sc,pos.y*sc);var dir=pos.clone().length(vel);pool.add(canvas.width/2+spos.x,canvas.height/2-spos.y,dir.x,-dir.y);}pool.update(dt);pool.draw(ctx,img);}
+      function resize(){canvas.width=canvas.parentElement.clientWidth||canvas.offsetWidth||200;canvas.height=canvas.parentElement.clientHeight||canvas.offsetHeight||200;}
+      if(window.ResizeObserver){new ResizeObserver(resize).observe(canvas.parentElement);}else{window.addEventListener('resize',resize);}
+      setTimeout(function(){resize();render();},50);
+    })(document.getElementById('pinkboard'));
+  </script>
+
+</body>
+</html>
