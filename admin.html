@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Run for Huntington</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0f1117; --surface:#1a1d27; --surface2:#232733; --border:#2e3340;
+      --text:#e4e4e7; --text2:#9ca3af; --accent:#E84393; --accent2:#F97316;
+      --green:#22c55e; --blue:#3b82f6; --red:#ef4444; --yellow:#fbbf24;
+    }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); font-size:14px; line-height:1.5; }
+
+    /* Layout */
+    .app { display:grid; grid-template-columns:240px 1fr; min-height:100vh; }
+
+    /* Sidebar nav */
+    .sidebar { background:var(--surface); border-right:1px solid var(--border); padding:24px 0; display:flex; flex-direction:column; }
+    .sidebar-logo { padding:0 24px 24px; font-size:18px; font-weight:700; color:var(--accent); border-bottom:1px solid var(--border); margin-bottom:16px; }
+    .sidebar-logo span { color:var(--text2); font-weight:400; font-size:12px; display:block; margin-top:2px; }
+    .nav-item {
+      padding:10px 24px; cursor:pointer; display:flex; align-items:center; gap:10px;
+      color:var(--text2); font-size:13px; font-weight:500; transition:all 0.15s;
+      border-left:3px solid transparent;
+    }
+    .nav-item:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+    .nav-item.active { color:var(--accent); background:rgba(232,67,147,0.08); border-left-color:var(--accent); }
+    .nav-item .nav-icon { width:18px; text-align:center; font-size:15px; }
+    .nav-item .nav-badge { margin-left:auto; background:var(--accent); color:#fff; font-size:10px; padding:2px 7px; border-radius:99px; font-weight:600; }
+    .sidebar-footer { margin-top:auto; padding:16px 24px; border-top:1px solid var(--border); }
+    .sidebar-footer a { color:var(--text2); font-size:12px; text-decoration:none; }
+    .sidebar-footer a:hover { color:var(--accent); }
+
+    /* Main content */
+    .main { padding:32px; overflow-y:auto; max-height:100vh; }
+    .page { display:none; }
+    .page.active { display:block; }
+    .page-header { margin-bottom:28px; }
+    .page-header h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+    .page-header p { color:var(--text2); font-size:13px; }
+
+    /* Cards */
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+    .stat-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px;
+    }
+    .stat-card .sc-label { font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; }
+    .stat-card .sc-value { font-size:32px; font-weight:700; line-height:1; }
+    .stat-card .sc-value.green { color:var(--green); }
+    .stat-card .sc-value.pink { color:var(--accent); }
+    .stat-card .sc-value.blue { color:var(--blue); }
+    .stat-card .sc-value.yellow { color:var(--yellow); }
+    .stat-card .sc-change { font-size:11px; color:var(--green); margin-top:6px; }
+
+    /* Tables */
+    .panel { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:20px; }
+    .panel-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .panel-header h2 { font-size:15px; font-weight:600; }
+    .panel-body { padding:16px 20px; }
+    table { width:100%; border-collapse:collapse; }
+    th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); padding:8px 12px; border-bottom:1px solid var(--border); }
+    td { padding:10px 12px; border-bottom:1px solid var(--border); font-size:13px; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:rgba(255,255,255,0.02); }
+    .badge { font-size:11px; padding:3px 10px; border-radius:99px; font-weight:500; }
+    .badge.heart { background:rgba(232,67,147,0.15); color:var(--accent); }
+    .badge.donation { background:rgba(34,197,94,0.15); color:var(--green); }
+
+    /* Buttons */
+    .btn {
+      padding:8px 18px; border-radius:8px; font-size:13px; font-weight:500;
+      cursor:pointer; border:none; transition:all 0.15s; font-family:inherit;
+    }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-primary:hover { background:#c0005a; }
+    .btn-secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+    .btn-secondary:hover { border-color:var(--text2); }
+    .btn-success { background:var(--green); color:#fff; }
+    .btn-danger { background:var(--red); color:#fff; }
+    .btn-sm { padding:5px 12px; font-size:12px; }
+    .btn-group { display:flex; gap:8px; }
+
+    /* Forms */
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group { margin-bottom:16px; }
+    .form-group.full { grid-column:1/-1; }
+    .form-label { display:block; font-size:12px; font-weight:500; color:var(--text2); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.03em; }
+    .form-input, .form-textarea, .form-select {
+      width:100%; padding:10px 14px; background:var(--bg); border:1px solid var(--border);
+      border-radius:8px; color:var(--text); font-family:inherit; font-size:13px;
+      outline:none; transition:border-color 0.15s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color:var(--accent); }
+    .form-textarea { resize:vertical; min-height:80px; }
+    .form-select { cursor:pointer; }
+    .form-hint { font-size:11px; color:var(--text2); margin-top:4px; }
+    .form-row { display:flex; gap:12px; align-items:end; }
+
+    /* Content editor blocks */
+    .content-block {
+      background:var(--surface2); border:1px solid var(--border); border-radius:10px;
+      padding:20px; margin-bottom:16px;
+    }
+    .content-block h3 { font-size:14px; font-weight:600; margin-bottom:12px; color:var(--accent); }
+    .content-block .cb-preview { font-size:13px; color:var(--text2); margin-bottom:12px; line-height:1.6; }
+
+    /* Blog cards */
+    .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .blog-card {
+      background:var(--surface2); border:1px solid var(--border); border-radius:10px;
+      overflow:hidden; cursor:pointer; transition:border-color 0.15s;
+    }
+    .blog-card:hover { border-color:var(--accent); }
+    .blog-card-img { height:140px; background-size:cover; background-position:center; background-color:var(--border); }
+    .blog-card-body { padding:14px; }
+    .blog-card-date { font-size:11px; color:var(--text2); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.03em; }
+    .blog-card-title { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .blog-card-text { font-size:12px; color:var(--text2); line-height:1.5; }
+    .blog-card-tag { display:inline-block; font-size:10px; padding:2px 8px; border-radius:99px; margin-top:8px; }
+    .blog-card-tag.green { background:rgba(34,197,94,0.15); color:var(--green); }
+    .blog-card-tag.pink { background:rgba(232,67,147,0.15); color:var(--accent); }
+    .blog-card-tag.blue { background:rgba(59,130,246,0.15); color:var(--blue); }
+
+    /* Email composer */
+    .email-preview {
+      background:var(--bg); border:1px solid var(--border); border-radius:8px;
+      padding:20px; min-height:200px; margin-top:12px;
+    }
+    .email-preview .ep-subject { font-weight:600; margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .email-preview .ep-body { color:var(--text2); font-size:13px; line-height:1.7; white-space:pre-wrap; }
+
+    /* Modal */
+    .modal-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
+      z-index:100; align-items:center; justify-content:center;
+    }
+    .modal-overlay.show { display:flex; }
+    .modal {
+      background:var(--surface); border:1px solid var(--border); border-radius:16px;
+      padding:28px; width:90%; max-width:540px; max-height:90vh; overflow-y:auto;
+    }
+    .modal h2 { font-size:18px; font-weight:700; margin-bottom:20px; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:20px; }
+
+    /* Activity feed */
+    .activity-item { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
+    .activity-item:last-child { border-bottom:none; }
+    .activity-dot { width:8px; height:8px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+    .activity-dot.heart { background:var(--accent); }
+    .activity-dot.money { background:var(--green); }
+    .activity-dot.blog { background:var(--blue); }
+    .activity-text { font-size:13px; }
+    .activity-text span { color:var(--text2); }
+    .activity-time { margin-left:auto; font-size:11px; color:var(--text2); flex-shrink:0; }
+
+    /* Toast */
+    .toast {
+      position:fixed; bottom:24px; right:24px; background:var(--green); color:#fff;
+      padding:12px 24px; border-radius:10px; font-size:13px; font-weight:500;
+      box-shadow:0 8px 24px rgba(0,0,0,0.3); z-index:200;
+      transform:translateY(80px); opacity:0; transition:all 0.3s;
+    }
+    .toast.show { transform:translateY(0); opacity:1; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      Run for Huntington
+      <span>Admin Panel</span>
+    </div>
+    <div class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">&#9632;</span> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('content')">
+      <span class="nav-icon">&#9998;</span> Content
+    </div>
+    <div class="nav-item" onclick="showPage('donations')">
+      <span class="nav-icon">&#8364;</span> Donaties
+      <span class="nav-badge" id="donationCount">12</span>
+    </div>
+    <div class="nav-item" onclick="showPage('blog')">
+      <span class="nav-icon">&#9776;</span> Blog / Updates
+    </div>
+    <div class="nav-item" onclick="showPage('supporters')">
+      <span class="nav-icon">&#9829;</span> Supporters
+    </div>
+    <div class="nav-item" onclick="showPage('email')">
+      <span class="nav-icon">&#9993;</span> E-mail
+    </div>
+    <div class="sidebar-footer">
+      <a href="mockup-resp-c.html" target="_blank">Bekijk site &rarr;</a>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- ==================== DASHBOARD ==================== -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Overzicht van de campagne</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="sc-label">Opgehaald</div>
+          <div class="sc-value green" id="statTotal">&euro;1.247</div>
+          <div class="sc-change">+&euro;125 deze week</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Supporters</div>
+          <div class="sc-value pink" id="statSupporters">48</div>
+          <div class="sc-change">+6 deze week</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Dagen te gaan</div>
+          <div class="sc-value blue">72</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">Doelbedrag</div>
+          <div class="sc-value yellow">&euro;15.000</div>
+          <div class="sc-change">8% bereikt</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="panel">
+          <div class="panel-header"><h2>Recente activiteit</h2></div>
+          <div class="panel-body" id="activityFeed">
+            <div class="activity-item"><div class="activity-dot heart"></div><div class="activity-text"><b>Lisa</b> stuurde een hartje <span>"Heel veel sterkte!"</span></div><div class="activity-time">2 min</div></div>
+            <div class="activity-item"><div class="activity-dot money"></div><div class="activity-text"><b>Marco</b> doneerde &euro;50 <span>"Go go go!"</span></div><div class="activity-time">5 min</div></div>
+            <div class="activity-item"><div class="activity-dot heart"></div><div class="activity-text"><b>Anna</b> stuurde een hartje</div><div class="activity-time">8 min</div></div>
+            <div class="activity-item"><div class="activity-dot money"></div><div class="activity-text"><b>Piet</b> doneerde &euro;25 <span>"Voor het onderzoek!"</span></div><div class="activity-time">12 min</div></div>
+            <div class="activity-item"><div class="activity-dot heart"></div><div class="activity-text"><b>Sophie</b> stuurde een hartje <span>"Mooi initiatief"</span></div><div class="activity-time">15 min</div></div>
+            <div class="activity-item"><div class="activity-dot money"></div><div class="activity-text"><b>Jan</b> doneerde &euro;100 <span>"Trots op jullie!"</span></div><div class="activity-time">18 min</div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><h2>Snelle acties</h2></div>
+          <div class="panel-body">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <button class="btn btn-primary" onclick="showPage('donations');openModal('donationModal')">+ Donatie toevoegen</button>
+              <button class="btn btn-secondary" onclick="showPage('blog');openModal('blogModal')">+ Blog post aanmaken</button>
+              <button class="btn btn-secondary" onclick="showPage('email')">Supporters e-mailen</button>
+              <button class="btn btn-secondary" onclick="showPage('content')">Bedragen bijwerken</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== CONTENT ==================== -->
+    <div class="page" id="page-content">
+      <div class="page-header">
+        <h1>Content beheer</h1>
+        <p>Teksten en afbeeldingen op de site aanpassen</p>
+      </div>
+
+      <div class="content-block">
+        <h3>Hero — Glass Panel</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Subtitel</label>
+            <input class="form-input" value="Steun G&eacute;rieke en Robert in" id="contentHeroSub">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titel</label>
+            <input class="form-input" value="Run for Huntington" id="contentHeroTitle">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Beschrijving</label>
+            <textarea class="form-textarea" id="contentHeroDesc">Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h3>Campagne statistieken</h3>
+        <div class="form-hint" style="margin-bottom:12px">Deze cijfers verschijnen in het glass panel en op de progress bar.</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Opgehaald bedrag (&euro;)</label>
+            <input class="form-input" type="number" value="1247" id="contentAmount">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Doelbedrag (&euro;)</label>
+            <input class="form-input" type="number" value="15000" id="contentGoal">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Aantal supporters</label>
+            <input class="form-input" type="number" value="48" id="contentSupporters">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Dagen te gaan</label>
+            <input class="form-input" type="number" value="72" id="contentDays">
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h3>Margit's verhaal</h3>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Pull-quote</label>
+            <input class="form-input" value="Ik had nooit een heel duidelijke bucketlist, maar ziek worden stond er in ieder geval ni&eacute;t op." id="contentQuote">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Intro alinea 1</label>
+            <textarea class="form-textarea" id="contentStory1">Ik ben drager van de ziekte van Huntington. Een behoorlijk waardeloze, erfelijke hersenziekte die helaas veel impact heeft op mijn familie.</textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Intro alinea 2</label>
+            <textarea class="form-textarea" id="contentStory2">Maar in plaats van bij de pakken neer te zitten, komen we in beweging. Want er is hoop. Er zijn veelbelovende ontwikkelingen, maar onderzoek heeft meer geld en aandacht nodig om een echte doorbraak te forceren.</textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Foto</label>
+            <div class="form-row">
+              <input class="form-input" value="story_portrait.png" id="contentStoryImg">
+              <button class="btn btn-secondary btn-sm">Wijzig</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h3>Wat is Huntington?</h3>
+        <div class="form-group">
+          <label class="form-label">Intro tekst</label>
+          <textarea class="form-textarea" id="contentHuntIntro">Huntington tast langzaam alle hersenfuncties aan. Bewegen, denken en emoties worden steeds moeilijker. Er is momenteel geen behandeling, maar de wetenschap zit de ziekte op de hielen. En daarom rennen wij om dit te versnellen.</textarea>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveContent()">Opslaan</button>
+    </div>
+
+    <!-- ==================== DONATIES ==================== -->
+    <div class="page" id="page-donations">
+      <div class="page-header">
+        <h1>Donaties</h1>
+        <p>Beheer alle donaties — ook handmatige stortingen</p>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <button class="btn btn-primary" onclick="openModal('donationModal')">+ Donatie toevoegen</button>
+        <button class="btn btn-secondary">Exporteer CSV</button>
+      </div>
+
+      <div class="panel">
+        <table>
+          <thead>
+            <tr><th>Naam</th><th>Bedrag</th><th>Bron</th><th>Bericht</th><th>Datum</th><th>Acties</th></tr>
+          </thead>
+          <tbody id="donationTable">
+            <tr><td><b>Jan</b></td><td>&euro;100</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Trots op jullie, rennen maar!</td><td>27 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Marco</b></td><td>&euro;50</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Go go go!</td><td>27 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Bram</b></td><td>&euro;50</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Samen sterk tegen Huntington</td><td>27 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Oma de Groot</b></td><td>&euro;200</td><td style="color:var(--yellow)">Handmatig</td><td style="color:var(--text2);font-style:italic">Via bankoverschrijving</td><td>26 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Piet</b></td><td>&euro;25</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Voor het onderzoek!</td><td>26 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Thomas</b></td><td>&euro;25</td><td><span class="badge donation">Tikkie</span></td><td></td><td>26 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Daan</b></td><td>&euro;25</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Elke euro telt!</td><td>25 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Sem</b></td><td>&euro;100</td><td><span class="badge donation">Tikkie</span></td><td style="color:var(--text2);font-style:italic">Ik ken iemand met Huntington</td><td>25 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+            <tr><td><b>Luuk</b></td><td>&euro;50</td><td style="color:var(--yellow)">Handmatig</td><td style="color:var(--text2);font-style:italic">Contant bij BBQ</td><td>24 mei 2026</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==================== BLOG ==================== -->
+    <div class="page" id="page-blog">
+      <div class="page-header">
+        <h1>Blog / Updates</h1>
+        <p>Mini-updates over de training en campagne</p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openModal('blogModal')" style="margin-bottom:20px">+ Nieuwe update</button>
+
+      <div class="blog-grid" id="blogGrid">
+        <div class="blog-card" onclick="openModal('blogEditModal')">
+          <div class="blog-card-img" style="background-image:url('blog1.jpg')"></div>
+          <div class="blog-card-body">
+            <div class="blog-card-date">18 oktober 2026</div>
+            <div class="blog-card-title">Nieuwe PR gehaald!</div>
+            <div class="blog-card-text">Na weken van twijfel liepen we allebei een persoonlijk record op de 10 km.</div>
+            <span class="blog-card-tag green">Training</span>
+          </div>
+        </div>
+        <div class="blog-card" onclick="openModal('blogEditModal')">
+          <div class="blog-card-img" style="background-image:url('blog2.jpg')"></div>
+          <div class="blog-card-body">
+            <div class="blog-card-date">12 september 2026</div>
+            <div class="blog-card-title">De eerste blessure</div>
+            <div class="blog-card-text">Robert zijn knie speelde op. Even schrikken, maar de fysio geeft groen licht.</div>
+            <span class="blog-card-tag pink">Persoonlijk</span>
+          </div>
+        </div>
+        <div class="blog-card" onclick="openModal('blogEditModal')">
+          <div class="blog-card-img" style="background-image:url('blog3.jpg')"></div>
+          <div class="blog-card-body">
+            <div class="blog-card-date">1 september 2026</div>
+            <div class="blog-card-title">De campagne is live!</div>
+            <div class="blog-card-text">Vandaag lanceren we onze crowdfunding. Het doel: 15.000 euro.</div>
+            <span class="blog-card-tag blue">Mijlpaal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SUPPORTERS ==================== -->
+    <div class="page" id="page-supporters">
+      <div class="page-header">
+        <h1>Supporters</h1>
+        <p>Iedereen die een hartje of donatie heeft gestuurd</p>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center;">
+        <input class="form-input" placeholder="Zoek op naam..." style="max-width:300px" id="supporterSearch" oninput="filterSupporters()">
+        <select class="form-select" style="max-width:160px" id="supporterFilter" onchange="filterSupporters()">
+          <option value="all">Alle types</option>
+          <option value="donation">Donaties</option>
+          <option value="heart">Hartjes</option>
+        </select>
+        <span style="margin-left:auto;color:var(--text2);font-size:13px" id="supporterCount">48 supporters</span>
+      </div>
+
+      <div class="panel">
+        <table>
+          <thead>
+            <tr><th>Naam</th><th>Type</th><th>Bedrag</th><th>Bericht</th><th>E-mail</th><th>Datum</th></tr>
+          </thead>
+          <tbody id="supporterTable">
+            <tr class="s-row" data-type="heart"><td><b>Lisa</b></td><td><span class="badge heart">Hartje</span></td><td>—</td><td style="color:var(--text2);font-style:italic">Heel veel sterkte en succes!</td><td>lisa@email.nl</td><td>27 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Marco</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;50</td><td style="color:var(--text2);font-style:italic">Go go go!</td><td>marco@gmail.com</td><td>27 mei</td></tr>
+            <tr class="s-row" data-type="heart"><td><b>Anna</b></td><td><span class="badge heart">Hartje</span></td><td>—</td><td></td><td>—</td><td>27 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Piet</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;25</td><td style="color:var(--text2);font-style:italic">Voor het onderzoek!</td><td>piet@live.nl</td><td>26 mei</td></tr>
+            <tr class="s-row" data-type="heart"><td><b>Sophie</b></td><td><span class="badge heart">Hartje</span></td><td>—</td><td style="color:var(--text2);font-style:italic">Wat een mooi initiatief</td><td>sophie@hotmail.com</td><td>26 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Jan</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;100</td><td style="color:var(--text2);font-style:italic">Trots op jullie!</td><td>jan@werk.nl</td><td>26 mei</td></tr>
+            <tr class="s-row" data-type="heart"><td><b>Emma</b></td><td><span class="badge heart">Hartje</span></td><td>—</td><td></td><td>emma@gmail.com</td><td>26 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Thomas</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;25</td><td></td><td>—</td><td>25 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Oma de Groot</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;200</td><td style="color:var(--text2);font-style:italic">Via bank</td><td>—</td><td>26 mei</td></tr>
+            <tr class="s-row" data-type="donation"><td><b>Sem</b></td><td><span class="badge donation">Donatie</span></td><td>&euro;100</td><td style="color:var(--text2);font-style:italic">Ik ken iemand met Huntington</td><td>sem@provider.nl</td><td>25 mei</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==================== EMAIL ==================== -->
+    <div class="page" id="page-email">
+      <div class="page-header">
+        <h1>E-mail versturen</h1>
+        <p>Stuur een update naar supporters</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div class="form-group">
+            <label class="form-label">Ontvangers</label>
+            <select class="form-select" id="emailRecipients">
+              <option value="all">Alle supporters met e-mail (32)</option>
+              <option value="donors">Alleen donateurs (18)</option>
+              <option value="hearts">Alleen hartjes (14)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Onderwerp</label>
+            <input class="form-input" placeholder="Onderwerp van je mail..." id="emailSubject" oninput="updateEmailPreview()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bericht</label>
+            <textarea class="form-textarea" style="min-height:200px" placeholder="Schrijf je bericht...
+
+Gebruik {naam} voor de naam van de ontvanger.
+Gebruik {bedrag} voor het gedoneerde bedrag." id="emailBody" oninput="updateEmailPreview()"></textarea>
+            <div class="form-hint">Variabelen: {naam}, {bedrag}, {type}</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-secondary" onclick="showToast('Testmail verstuurd naar je eigen adres')">Verstuur testmail</button>
+            <button class="btn btn-primary" onclick="showToast('Mail verstuurd naar 32 supporters!')">Verstuur naar allen</button>
+          </div>
+        </div>
+        <div>
+          <label class="form-label">Preview</label>
+          <div class="email-preview">
+            <div class="ep-subject" id="epSubject">Vul een onderwerp in...</div>
+            <div class="ep-body" id="epBody">Vul een bericht in...</div>
+          </div>
+          <div style="margin-top:12px;">
+            <label class="form-label">Eerder verstuurd</label>
+            <div class="panel" style="margin-top:8px">
+              <div class="panel-body" style="font-size:12px;color:var(--text2)">
+                <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--text)">Update: We hebben 8% bereikt!</b><br>Verstuurd op 25 mei aan 28 ontvangers</div>
+                <div style="padding:6px 0"><b style="color:var(--text)">Welkom bij Run for Huntington</b><br>Verstuurd op 1 sep aan 12 ontvangers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+<div class="modal-overlay" id="donationModal">
+  <div class="modal">
+    <h2>Donatie toevoegen</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Naam</label>
+        <input class="form-input" placeholder="Naam van donateur" id="newDonorName">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bedrag (&euro;)</label>
+        <input class="form-input" type="number" placeholder="25" id="newDonorAmount">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bron</label>
+        <select class="form-select" id="newDonorSource">
+          <option value="tikkie">Tikkie</option>
+          <option value="handmatig">Handmatig / Bank</option>
+          <option value="contant">Contant</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mailadres</label>
+        <input class="form-input" type="email" placeholder="optioneel" id="newDonorEmail">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Bericht</label>
+        <input class="form-input" placeholder="Optioneel berichtje" maxlength="50" id="newDonorMsg">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">Annuleer</button>
+      <button class="btn btn-success" onclick="addDonation()">Toevoegen</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="blogModal">
+  <div class="modal">
+    <h2>Nieuwe blog update</h2>
+    <div class="form-group">
+      <label class="form-label">Titel</label>
+      <input class="form-input" placeholder="Titel van je update" id="newBlogTitle">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tekst</label>
+      <textarea class="form-textarea" placeholder="Kort verhaal (2-3 zinnen)" id="newBlogText"></textarea>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Foto URL</label>
+        <input class="form-input" placeholder="afbeelding.jpg" id="newBlogImg">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tag</label>
+        <select class="form-select" id="newBlogTag">
+          <option value="green">Training</option>
+          <option value="pink">Persoonlijk</option>
+          <option value="blue">Mijlpaal</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModals()">Annuleer</button>
+      <button class="btn btn-success" onclick="addBlogPost()">Publiceer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* Navigation */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  /* Modals */
+  function openModal(id) { document.getElementById(id).classList.add('show'); }
+  function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show')); }
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', function(e) { if (e.target === this) closeModals(); });
+  });
+
+  /* Toast */
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  /* Save content */
+  function saveContent() {
+    var data = {
+      heroSub: document.getElementById('contentHeroSub').value,
+      heroTitle: document.getElementById('contentHeroTitle').value,
+      heroDesc: document.getElementById('contentHeroDesc').value,
+      amount: document.getElementById('contentAmount').value,
+      goal: document.getElementById('contentGoal').value,
+      supporters: document.getElementById('contentSupporters').value,
+      days: document.getElementById('contentDays').value,
+      quote: document.getElementById('contentQuote').value,
+      story1: document.getElementById('contentStory1').value,
+      story2: document.getElementById('contentStory2').value,
+    };
+    localStorage.setItem('rfh_content', JSON.stringify(data));
+    showToast('Content opgeslagen!');
+  }
+
+  /* Add donation */
+  function addDonation() {
+    var name = document.getElementById('newDonorName').value;
+    var amount = document.getElementById('newDonorAmount').value;
+    var source = document.getElementById('newDonorSource').value;
+    var msg = document.getElementById('newDonorMsg').value;
+    if (!name || !amount) return showToast('Vul naam en bedrag in');
+    var tr = document.createElement('tr');
+    var sourceLabel = source === 'tikkie' ? '<span class="badge donation">Tikkie</span>' : '<span style="color:var(--yellow)">' + source.charAt(0).toUpperCase() + source.slice(1) + '</span>';
+    tr.innerHTML = '<td><b>' + name + '</b></td><td>&euro;' + amount + '</td><td>' + sourceLabel + '</td><td style="color:var(--text2);font-style:italic">' + msg + '</td><td>' + new Date().toLocaleDateString('nl-NL', {day:'numeric',month:'short',year:'numeric'}) + '</td><td><button class="btn btn-secondary btn-sm">Bewerk</button></td>';
+    document.getElementById('donationTable').prepend(tr);
+    closeModals();
+    showToast('Donatie van \u20AC' + amount + ' door ' + name + ' toegevoegd!');
+    document.getElementById('newDonorName').value = '';
+    document.getElementById('newDonorAmount').value = '';
+    document.getElementById('newDonorMsg').value = '';
+  }
+
+  /* Add blog post */
+  function addBlogPost() {
+    var title = document.getElementById('newBlogTitle').value;
+    var text = document.getElementById('newBlogText').value;
+    var img = document.getElementById('newBlogImg').value;
+    var tag = document.getElementById('newBlogTag').value;
+    var tagLabels = { green: 'Training', pink: 'Persoonlijk', blue: 'Mijlpaal' };
+    if (!title) return showToast('Vul een titel in');
+    var card = document.createElement('div');
+    card.className = 'blog-card';
+    card.innerHTML = '<div class="blog-card-img" style="background-image:url(\'' + img + '\')"></div><div class="blog-card-body"><div class="blog-card-date">' + new Date().toLocaleDateString('nl-NL', {day:'numeric',month:'long',year:'numeric'}) + '</div><div class="blog-card-title">' + title + '</div><div class="blog-card-text">' + text + '</div><span class="blog-card-tag ' + tag + '">' + tagLabels[tag] + '</span></div>';
+    document.getElementById('blogGrid').prepend(card);
+    closeModals();
+    showToast('Blog post "' + title + '" gepubliceerd!');
+    document.getElementById('newBlogTitle').value = '';
+    document.getElementById('newBlogText').value = '';
+  }
+
+  /* Email preview */
+  function updateEmailPreview() {
+    var subj = document.getElementById('emailSubject').value || 'Vul een onderwerp in...';
+    var body = document.getElementById('emailBody').value || 'Vul een bericht in...';
+    body = body.replace(/{naam}/g, 'Lisa').replace(/{bedrag}/g, '\u20AC50').replace(/{type}/g, 'hartje');
+    document.getElementById('epSubject').textContent = subj;
+    document.getElementById('epBody').textContent = body;
+  }
+
+  /* Filter supporters */
+  function filterSupporters() {
+    var q = document.getElementById('supporterSearch').value.toLowerCase();
+    var type = document.getElementById('supporterFilter').value;
+    var rows = document.querySelectorAll('.s-row');
+    var visible = 0;
+    rows.forEach(function(r) {
+      var name = r.querySelector('td').textContent.toLowerCase();
+      var rType = r.dataset.type;
+      var show = name.includes(q) && (type === 'all' || rType === type);
+      r.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('supporterCount').textContent = visible + ' supporters';
+  }
+
+  /* Load saved content */
+  (function() {
+    var saved = localStorage.getItem('rfh_content');
+    if (saved) {
+      var d = JSON.parse(saved);
+      Object.keys(d).forEach(function(k) {
+        var el = document.getElementById('content' + k.charAt(0).toUpperCase() + k.slice(1));
+        if (el) el.value = d[k];
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
