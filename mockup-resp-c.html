@@ -452,19 +452,6 @@
     .footer-links a { color:#777; text-decoration:none; font-size:13px; } .footer-links a:hover { color:white; }
     .footer-bottom { max-width:1100px; margin:40px auto 0; padding-top:24px; border-top:1px solid #222; font-size:12px; text-align:center; }
 
-    /* === SIDEBAR === */
-    .sidebar { position:sticky; top:0; height:100vh; border-left:1px solid #EBEBEB; background:#FAFAF8; display:flex; flex-direction:column; overflow:hidden; }
-    .sidebar-header { padding:20px 16px 14px; border-bottom:1px solid #EBEBEB; }
-    .sidebar-header strong { font-family:'HeronSansCond'; font-size:28px; display:block; }
-    .sidebar-header .sh-gradient { background:linear-gradient(to right,#E84393,#F97316,#E84393); background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:transparent; animation:AG 5s ease infinite; }
-    .sidebar-header small { color:#6B7280; font-size:14px; display:block; margin-top:4px; }
-    .sidebar-list { flex:1; overflow:hidden; position:relative; mask-image:linear-gradient(transparent,black 30px,black calc(100% - 30px),transparent); -webkit-mask-image:linear-gradient(transparent,black 30px,black calc(100% - 30px),transparent); }
-    .sidebar-scroll { animation:tick 80s linear infinite; }
-    @keyframes tick { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
-    .si { display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:14px; border-bottom:1px solid #E5E7EB; }
-    .sa { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:white; flex-shrink:0; }
-    .sa.h { background:#E84393; } .sa.d { background:#4CAF50; }
-
     /* heart popup */
     .heart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; align-items:center; justify-content:center; }
     .heart-overlay.show { display:flex; }
