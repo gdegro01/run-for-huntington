@@ -55,12 +55,32 @@
     /* === NAV (empty, no scrolled bar) === */
     .nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:flex-end; padding:20px 48px; pointer-events:none; }
 
-    /* === HERO === */
+    /* === HERO — layered composition === */
     .hero {
       position:relative; width:100%; height:88vh; overflow:hidden;
-      background:url('Header4.webp') center top/cover no-repeat;
     }
-    .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:160px; background:linear-gradient(transparent,#FAFAF8); }
+    .hero-layer {
+      position:absolute; inset:0; background-size:cover; background-position:center;
+      background-repeat:no-repeat;
+    }
+    .hero-bg { background-image:url('Seperates_0004_Background.jpg'); z-index:0; }
+    .hero-runner3 {
+      z-index:1; background-size:auto 65%; background-position:68% bottom;
+      background-image:url('Seperates_0002_Hardloper3.png');
+    }
+    .hero-runners12 {
+      z-index:2; background-size:auto 90%; background-position:30% bottom;
+      background-image:url('Seperates_0003_Hardlopers12.png');
+    }
+    .hero-finish {
+      z-index:3; background-size:100% auto; background-position:center 62%;
+      background-image:url('Seperates_0001_Finishlijn.png');
+    }
+    .hero-led {
+      z-index:4; background-size:100% auto; background-position:center top;
+      background-image:url('Seperates_0000_LED.png');
+    }
+    .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:160px; background:linear-gradient(transparent,#FAFAF8); z-index:5; }
     .hero-card-group {
       position:absolute; z-index:10;
       right:0; margin-right:170px; top:calc(5% + 150px);
@@ -181,36 +201,54 @@
     .logo-parallax-wrap { display:inline-block; position:relative; flex-shrink:0; }
     .logo-parallax-wrap img { width:420px; height:auto; transition:transform 0.1s ease-out; will-change:transform; }
 
-    /* === STORY SECTION (grey) === */
-    .story { background:#ececec; padding:80px 48px; }
-    .story-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:400px 1fr; gap:64px; align-items:start; }
-
-    /* 3D tilt card */
-    .story-card-wrap {
+    /* === STORY SECTION — geometric bg + frosted glass card === */
+    .story {
+      background:url('story-bg-desktop.png') center bottom/cover no-repeat;
+      background-color:#1a0a2e;
+      padding:100px 48px;
       position:relative;
-      display:flex; justify-content:center;
+    }
+    .story-inner {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:380px 1fr; gap:48px; align-items:center;
+    }
+
+    /* Photo in white tilted frame */
+    .story-card-wrap {
+      position:relative; display:flex; justify-content:center;
     }
     .story-card {
-      width:380px; border-radius:20px; overflow:visible;
-      transform-style:preserve-3d;
-      will-change:transform;
-      padding:12px; background:#fff;
-      box-shadow:0 8px 32px rgba(0,0,0,0.12);
-      animation:cardSway 4s ease-in-out infinite;
+      width:340px; border-radius:20px; overflow:visible;
+      transform-style:preserve-3d; will-change:transform;
+      padding:14px; background:#fff;
+      box-shadow:0 12px 40px rgba(0,0,0,0.3);
+      transform:rotate(-3deg);
+      animation:cardSway 5s ease-in-out infinite;
     }
     @keyframes cardSway {
-      0%,100% { transform:perspective(1800px) rotateY(-2deg) rotateX(1deg); }
-      50% { transform:perspective(1800px) rotateY(2deg) rotateX(-1deg); }
+      0%,100% { transform:rotate(-3deg) translateY(0); }
+      50% { transform:rotate(-1deg) translateY(-6px); }
     }
     .story-card:hover { animation-play-state:paused; }
-    .story-card img { width:100%; height:auto; display:block; border-radius:12px; }
+    .story-card img { width:100%; height:auto; display:block; border-radius:10px; }
 
-    .story-text {}
-    .story-pullquote {
-      font-family:'HeronSansCond'; font-size:28px; font-weight:600; line-height:1.4;
-      color:#ff1650; margin-bottom:20px; letter-spacing:0;
+    /* Frosted glass text panel */
+    .story-text {
+      background:rgba(255,255,255,0.65);
+      backdrop-filter:blur(20px) saturate(1.2); -webkit-backdrop-filter:blur(20px) saturate(1.2);
+      border:1px solid rgba(255,255,255,0.8);
+      border-radius:20px; padding:36px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.15);
     }
-    .story-intro { font-size:15px; color:#4B5563; line-height:1.8; margin-bottom:20px; }
+    .story-pullquote {
+      font-family:'HeronSansCond'; font-size:26px; font-weight:600; line-height:1.4;
+      color:#1A1A1A; margin-bottom:16px; letter-spacing:0;
+    }
+    .story-pullquote .marker-red {
+      background:linear-gradient(180deg, transparent 30%, rgba(255,22,80,0.25) 30%, rgba(255,22,80,0.25) 82%, transparent 82%);
+      padding:0 4px;
+    }
+    .story-intro { font-size:14px; color:#4B5563; line-height:1.8; margin-bottom:16px; }
     .story-expandable {
       position:relative; max-height:0; overflow:hidden;
       transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
@@ -221,7 +259,7 @@
     .story-fade { position:relative; margin-top:4px; }
     .story-fade::before {
       content:''; position:absolute; top:-40px; left:0; right:0; height:40px;
-      background:linear-gradient(transparent, #ececec);
+      background:linear-gradient(transparent, rgba(255,255,255,0.65));
       pointer-events:none; transition:opacity 0.4s;
     }
     .story-fade.open::before { opacity:0; }
@@ -233,8 +271,8 @@
     }
     .story-toggle:hover { color:#c0005a; }
     .story-cta {
-      font-family:'HeronSansCond'; font-size:32px; font-weight:400;
-      color:#1A1A1A; margin-top:32px; margin-bottom:16px;
+      font-family:'HeronSansCond'; font-size:28px; font-weight:600;
+      color:#1A1A1A; margin-top:24px; margin-bottom:14px;
       line-height:1.3;
     }
     .story-cta .marker {
@@ -493,13 +531,13 @@
       .sidebar { display:none; }
       .inline-supporters { display:block; margin-bottom:0; }
 
-      /* === HERO — puur de foto, geen overlay === */
-      .hero {
-        height:auto; aspect-ratio:4/3;
-        background-position:center center;
-      }
+      /* === HERO — layered, no glass overlay === */
+      .hero { height:auto; aspect-ratio:4/3; }
       .hero::after { height:80px; }
-      .hero-card-group { display:none; } /* glass panel weg op mobile */
+      .hero-card-group { display:none; }
+      .hero-led { display:none; }
+      .hero-runners12 { background-size:auto 85%; background-position:35% bottom; }
+      .hero-runner3 { background-size:auto 55%; background-position:75% bottom; }
 
       /* === MOBILE INTRO — vervangt glass panel === */
       .mobile-intro { display:block; }
@@ -537,11 +575,16 @@
       .milestone { font-size:11px; max-width:100px; }
 
       /* Story */
-      .story { padding:48px 24px; }
+      .story {
+        background-image:url('story-bg-mobile.png');
+        background-size:cover; background-position:center;
+        padding:48px 24px;
+      }
       .story-inner { grid-template-columns:1fr; gap:32px; justify-items:center; }
-      .story-card { width:min(320px,80vw); }
-      .story-pullquote { font-size:24px; }
-      .story-cta { font-size:28px; }
+      .story-card { width:min(280px,70vw); }
+      .story-text { padding:28px; }
+      .story-pullquote { font-size:22px; }
+      .story-cta { font-size:24px; }
 
       /* Huntington */
       .hunt { padding:48px 24px; }
@@ -612,10 +655,11 @@
       .logo-parallax-wrap img { width:240px; }
 
       .story { padding:36px 16px; }
-      .story-card { width:min(280px,85vw); }
-      .story-pullquote { font-size:20px; }
+      .story-card { width:min(260px,75vw); }
+      .story-text { padding:20px; }
+      .story-pullquote { font-size:18px; }
       .story-intro { font-size:13px; }
-      .story-cta { font-size:24px; }
+      .story-cta { font-size:22px; }
       .story-donate-wrap .btn-content { font-size:15px; padding:12px 32px; }
 
       .hunt { padding:36px 16px; }
@@ -647,8 +691,13 @@
 
   <nav class="nav" id="nav"></nav>
 
-  <!-- HERO full width -->
+  <!-- HERO full width — layered composition -->
   <section class="hero">
+    <div class="hero-layer hero-bg"></div>
+    <div class="hero-layer hero-runner3"></div>
+    <div class="hero-layer hero-runners12"></div>
+    <div class="hero-layer hero-finish"></div>
+    <div class="hero-layer hero-led"></div>
     <div class="hero-card-group">
       <div class="hero-glass">
         <h2>
@@ -738,7 +787,7 @@
           </div>
         </div>
         <div class="story-text">
-          <div class="story-pullquote">Ik had nooit een heel duidelijke bucketlist, maar ziek worden stond er in ieder geval niet op.</div>
+          <div class="story-pullquote"><span class="marker-red">Ik had nooit een heel duidelijke bucketlist, maar ziek worden stond er in ieder geval niet op.</span></div>
           <p class="story-intro">Ik ben drager van de ziekte van Huntington. Een behoorlijk waardeloze, erfelijke hersenziekte die helaas veel impact heeft op mijn familie. Maar in plaats van bij de pakken neer te zitten, komen we in beweging. Want er is hoop.</p>
           <div class="story-fade" id="storyFade">
             <div class="story-expandable" id="storyExpand">
@@ -749,7 +798,7 @@
             </div>
             <button class="story-toggle" id="storyToggle" onclick="toggleStory()">Lees het hele verhaal</button>
           </div>
-          <div class="story-cta">Kom jij ook <span class="marker">in beweging</span>?</div>
+          <div class="story-cta">Maar dan moet jij ook <span class="marker">in beweging</span> komen!</div>
           <a href="#pricing" class="story-donate-wrap">
             <div class="gradient-bg"></div>
             <div class="gradient-inner"></div>
