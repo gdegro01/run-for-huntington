@@ -444,6 +444,9 @@
        Sidebar verdwijnt, supporters inline
        ============================================= */
 
+    /* Mobile intro — hidden on desktop, replaces glass panel */
+    .mobile-intro { display:none; }
+
     /* Inline supporters strip — hidden on desktop */
     .inline-supporters { display:none; padding:24px; background:#fff; border-radius:16px; margin:0 24px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
     .inline-supporters h3 { font-family:'HeronSansCond'; font-size:18px; margin-bottom:12px; }
@@ -488,29 +491,50 @@
       /* Grid: single column, sidebar hidden */
       .page-below-hero { grid-template-columns:1fr; }
       .sidebar { display:none; }
-      .inline-supporters { display:block; margin-bottom:32px; }
+      .inline-supporters { display:block; margin-bottom:0; }
 
-      /* Hero */
-      .hero { height:65vh; }
-      .hero-card-group {
-        position:relative; right:auto; top:auto; margin:-60px auto 0;
-        width:calc(100% - 48px); max-width:480px;
+      /* === HERO — puur de foto, geen overlay === */
+      .hero {
+        height:auto; aspect-ratio:4/3;
+        background-position:center center;
       }
-      .hero-glass { padding:28px; }
-      .hero-glass h2 { font-size:28px; }
-      .hero-glass h2 .hg-light { font-size:20px; }
-      .hero-cta-strip { padding:18px 28px; }
+      .hero::after { height:80px; }
+      .hero-card-group { display:none; } /* glass panel weg op mobile */
+
+      /* === MOBILE INTRO — vervangt glass panel === */
+      .mobile-intro { display:block; }
+      .mobile-intro-inner {
+        max-width:480px; margin:0 auto; padding:0 24px 32px; text-align:center;
+      }
+      .mobile-intro h2 {
+        font-family:'HeronSansCond'; font-size:28px; font-weight:700;
+        line-height:1.3; margin-bottom:12px; color:#1A1A1A;
+      }
+      .mobile-intro p {
+        font-size:14px; color:#555; line-height:1.7; margin-bottom:24px;
+      }
+      .mobile-stats {
+        display:grid; grid-template-columns:1fr 1fr; gap:10px;
+      }
+      .mobile-stat {
+        background:#f5f5f5; border-radius:12px; padding:16px 12px; text-align:center;
+      }
+      .mobile-stat .ms-num {
+        font-family:'HeronSansCond'; font-size:28px; font-weight:700;
+        color:#1A1A1A; line-height:1; margin-bottom:4px;
+      }
+      .mobile-stat .ms-label { font-size:11px; color:#888; }
+
+      /* Logo onder hero, kleiner */
+      .logo-section { padding:32px 24px 24px; border-top:none; box-shadow:none; }
+      .logo-inner { flex-direction:column; gap:4px; }
+      .logo-section h2 { font-size:36px; }
+      .logo-parallax-wrap img { width:260px; }
 
       /* Progress */
-      .progress-section { padding:0 24px; margin-top:24px; margin-bottom:48px; }
+      .progress-section { padding:0 24px; margin-top:16px; margin-bottom:32px; }
       .milestones { flex-wrap:wrap; gap:8px; justify-content:center; }
       .milestone { font-size:11px; max-width:100px; }
-
-      /* Logo */
-      .logo-section { padding:48px 24px 40px; }
-      .logo-inner { flex-direction:column; gap:8px; }
-      .logo-section h2 { font-size:44px; }
-      .logo-parallax-wrap img { width:300px; }
 
       /* Story */
       .story { padding:48px 24px; }
@@ -525,10 +549,23 @@
       .hunt-photo img { min-height:300px; }
       .hunt-text h2 { font-size:28px; }
 
-      /* Blog */
-      .updates { padding:48px 24px; }
+      /* Blog — horizontal scroll carousel */
+      .updates { padding:48px 0; }
+      .updates-inner { max-width:none; }
+      .updates-header { padding:0 24px; }
       .updates-header h2 { font-size:48px; }
-      .updates-grid { grid-template-columns:1fr 1fr; }
+      .updates-grid {
+        display:flex; flex-wrap:nowrap; gap:16px;
+        overflow-x:auto; scroll-snap-type:x mandatory;
+        padding:0 24px 12px;
+        -webkit-overflow-scrolling:touch;
+      }
+      .updates-grid::-webkit-scrollbar { height:3px; }
+      .updates-grid::-webkit-scrollbar-thumb { background:#ddd; border-radius:3px; }
+      .update-card {
+        flex-shrink:0; scroll-snap-align:start;
+        width:min(300px, 80vw);
+      }
 
       /* Donate — horizontal scroll */
       .donate { padding:48px 0; }
@@ -544,6 +581,7 @@
       .cards-row::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:4px; }
       .scene { flex-shrink:0; scroll-snap-align:center; padding:32px 0; }
       .card { width:180px; }
+      .beam { display:none; }
 
       /* FAQ */
       .faq { padding:48px 24px; }
@@ -560,15 +598,11 @@
 
     /* --- MOBILE (max 480px) --- */
     @media (max-width:480px) {
-      .hero { height:55vh; }
-      .hero-card-group { width:calc(100% - 32px); margin-top:-40px; }
-      .hero-glass { padding:20px; }
-      .hero-glass h2 { font-size:22px; }
-      .hero-glass h2 .hg-light { font-size:16px; }
-      .hero-glass p { font-size:12px; }
-      .hs-number { font-size:18px; }
-      .button-gradient { font-size:16px; height:44px; padding:8px 28px; }
-      .hero-cta-strip { padding:14px 20px; }
+      .hero { aspect-ratio:3/2; }
+      .mobile-intro h2 { font-size:24px; }
+      .mobile-intro p { font-size:13px; }
+      .mobile-stat .ms-num { font-size:24px; }
+      .mobile-stats { gap:8px; }
 
       .progress-section { padding:0 16px; margin-bottom:32px; }
       .milestone { font-size:10px; max-width:80px; }
@@ -639,6 +673,34 @@
     </div>
   </section>
 
+  <!-- MOBILE INTRO (replaces glass panel on mobile) -->
+  <section class="mobile-intro">
+    <div class="mobile-intro-inner">
+      <h2>Steun G&eacute;rieke en Robert in <span class="gh-pink">Run for Huntington</span></h2>
+      <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
+      <div class="mobile-stats">
+        <div class="mobile-stat"><div class="ms-num">&euro;1.247</div><div class="ms-label">opgehaald</div></div>
+        <div class="mobile-stat"><div class="ms-num">48</div><div class="ms-label">supporters</div></div>
+        <div class="mobile-stat"><div class="ms-num">72</div><div class="ms-label">dagen te gaan</div></div>
+        <div class="mobile-stat"><div class="ms-num">8%</div><div class="ms-label">van doel</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INLINE SUPPORTERS — visible on mobile only, after progress -->
+  <div class="inline-supporters">
+    <h3><span>Recente supporters</span></h3>
+    <div class="inline-supporters-list">
+      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Lisa</b><div class="si-sub">hartje</div></div></div>
+      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Marco</b><div class="si-sub">&euro;50</div></div></div>
+      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Anna</b><div class="si-sub">hartje</div></div></div>
+      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Piet</b><div class="si-sub">&euro;25</div></div></div>
+      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Sophie</b><div class="si-sub">hartje</div></div></div>
+      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Jan</b><div class="si-sub">&euro;100</div></div></div>
+      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Emma</b><div class="si-sub">hartje</div></div></div>
+    </div>
+  </div>
+
   <!-- PROGRESS BAR -->
   <section class="progress-section">
     <div class="progress-bar-track"><div class="progress-bar-fill"><div class="progress-dot"></div></div></div>
@@ -653,20 +715,6 @@
       <div class="milestone"><span class="m-date">15/11</span>Marathon</div>
     </div>
   </section>
-
-  <!-- Inline supporters — visible on mobile only -->
-  <div class="inline-supporters">
-    <h3><span>Recente supporters</span></h3>
-    <div class="inline-supporters-list">
-      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Lisa</b><div class="si-sub">hartje</div></div></div>
-      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Marco</b><div class="si-sub">&euro;50</div></div></div>
-      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Anna</b><div class="si-sub">hartje</div></div></div>
-      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Piet</b><div class="si-sub">&euro;25</div></div></div>
-      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Sophie</b><div class="si-sub">hartje</div></div></div>
-      <div class="inline-si"><div class="sa d">&euro;</div><div><b>Jan</b><div class="si-sub">&euro;100</div></div></div>
-      <div class="inline-si"><div class="sa h">&#10084;</div><div><b>Emma</b><div class="si-sub">hartje</div></div></div>
-    </div>
-  </div>
 
   <div class="page-below-hero">
   <div class="main-content">
