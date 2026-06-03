@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive C — Sidebar verdwijnt, supporters inline</title>
+  <title>Run For Huntington</title>
+
+  <!-- Open Graph / WhatsApp / social share -->
+  <meta property="og:title" content="Run For Huntington">
+  <meta property="og:description" content="Samen rennen we voor onderzoek tegen de ziekte van Huntington. Kom ook in beweging!">
+  <meta property="og:image" content="https://gdegro01.github.io/run-for-huntington/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://gdegro01.github.io/run-for-huntington/mockup-resp-c.html">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Run For Huntington">
+  <meta name="twitter:description" content="Samen rennen we voor onderzoek tegen de ziekte van Huntington. Kom ook in beweging!">
+  <meta name="twitter:image" content="https://gdegro01.github.io/run-for-huntington/share.png">
   <style>
     @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond Bold_1.otf') format('opentype'); font-weight: 700; }
     @font-face { font-family: 'HeronSansCond'; src: url('font-HeronSansCond/HeronSansCond SemiBold_1.otf') format('opentype'); font-weight: 600; }
@@ -16,8 +31,8 @@
     @font-face { font-family: 'STGrotesk'; src: url('stgroteskgrotesquedemosemibold-na22v.otf') format('opentype'); font-weight: 600; }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DMMono', monospace; background: #FAFAF8; color: #1A1A1A; letter-spacing: -0.02em; font-size: 14px; line-height: 1.6; }
-    h1, h2, h3, h4 { font-family: 'HeronSansCond', sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+    body { font-family: 'DMMono', monospace; background: #FAFAF8; color: #1A1A1A; letter-spacing: -0.02em; font-size: 15px; line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'HeronSansCond', sans-serif; font-weight: 500; letter-spacing: -0.01em; }
 
     /* animated gradient headings */
     .gh-pink {
@@ -185,8 +200,9 @@
     .main-content { min-width:0; }
 
     /* === LOGO SECTION (white) === */
+    .logo-section-mobile { display:none; }
     .logo-section {
-      padding:80px 48px 60px; background:#fff; overflow:hidden;
+      padding:110px 48px 85px; background:#fff; overflow:hidden;
       border-top:1px solid #e0e0e0;
       box-shadow:0 -20px 40px rgba(0,0,0,0.04);
     }
@@ -199,17 +215,18 @@
       color:#444; white-space:nowrap; line-height:1;
     }
     .logo-parallax-wrap { display:inline-block; position:relative; flex-shrink:0; }
-    .logo-parallax-wrap img { width:520px; height:auto; transition:transform 0.1s ease-out; will-change:transform; }
+    .logo-parallax-wrap img { width:620px; height:auto; transition:transform 0.1s ease-out; will-change:transform; }
 
     /* === STORY SECTION — geometric bg + frosted glass card === */
     .story {
-      background:url('story-bg-desktop.png') center center/100% 100% no-repeat;
-      padding:80px 48px;
+      background:url('story-bg-desktop.png') center center/100% no-repeat;
+      background-color:#1a0a2e;
+      padding:100px 48px;
       position:relative;
     }
     .story-inner {
-      max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns:380px 1fr; gap:48px; align-items:center;
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:center;
     }
 
     /* Photo in white tilted frame */
@@ -217,19 +234,11 @@
       position:relative; display:flex; justify-content:center;
     }
     .story-card {
-      width:340px; border-radius:20px; overflow:visible;
-      transform-style:preserve-3d; will-change:transform;
-      padding:14px; background:#fff;
-      box-shadow:0 12px 40px rgba(0,0,0,0.3);
+      width:100%;
       transform:rotate(-3deg);
-      animation:cardSway 5s ease-in-out infinite;
+      filter:drop-shadow(0 12px 30px rgba(0,0,0,0.35));
     }
-    @keyframes cardSway {
-      0%,100% { transform:rotate(-3deg) translateY(0); }
-      50% { transform:rotate(-1deg) translateY(-6px); }
-    }
-    .story-card:hover { animation-play-state:paused; }
-    .story-card img { width:100%; height:auto; display:block; border-radius:10px; }
+    .story-card img { width:100%; height:auto; display:block; }
 
     /* Frosted glass text panel */
     .story-text {
@@ -240,13 +249,14 @@
       box-shadow:0 8px 32px rgba(0,0,0,0.15);
     }
     .story-pullquote {
-      font-family:'HeronSansCond'; font-size:26px; font-weight:600; line-height:1.4;
-      color:#1A1A1A; margin-bottom:16px; letter-spacing:0;
+      font-family:'HeronSansCond'; font-size:24px; font-weight:600; line-height:1.4;
+      color:#1A1A1A; margin-bottom:40px; letter-spacing:0;
     }
     .story-pullquote .accent-niet {
       color:#ff1650; font-weight:800;
     }
-    .story-intro { font-size:14px; color:#4B5563; line-height:1.8; margin-bottom:16px; }
+    .story-intro { font-size:15px; color:#4B5563; line-height:1.8; margin-bottom:20px; }
+    .story-intro:last-of-type { margin-bottom:50px; }
     .story-expandable {
       position:relative; max-height:0; overflow:hidden;
       transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
@@ -264,7 +274,7 @@
     .story-toggle:hover { color:#c0005a; }
     .story-cta {
       font-family:'HeronSansCond'; font-size:28px; font-weight:600;
-      color:#1A1A1A; margin-top:24px; margin-bottom:14px;
+      color:#1A1A1A; margin-top:0; margin-bottom:30px;
       line-height:1.3;
     }
     .story-cta .marker {
@@ -273,8 +283,8 @@
     }
     /* Doneer button — glow style matching hero */
     .story-donate-wrap {
-      position:relative; display:inline-flex; border-radius:28px;
-      overflow:hidden; text-decoration:none;
+      position:relative; display:flex; border-radius:28px;
+      overflow:hidden; text-decoration:none; width:100%;
     }
     .story-donate-wrap .gradient-bg {
       position:absolute; inset:0; border-radius:inherit; z-index:1;
@@ -287,8 +297,9 @@
       background:#1b1b1b; transition:opacity .4s ease;
     }
     .story-donate-wrap .btn-content {
-      position:relative; z-index:20; color:#fff; padding:14px 44px;
-      font-family:'DMMono'; font-size:18px; font-weight:400;
+      position:relative; z-index:20; color:#fff; padding:20px 44px;
+      font-family:'DMMono'; font-size:24px; font-weight:400;
+      width:100%; text-align:center;
       letter-spacing:0.02em; text-shadow:0 0 12px rgba(0,0,0,.7);
     }
     .story-donate-wrap:hover .gradient-inner { opacity:0; }
@@ -307,7 +318,25 @@
     .hunt-card { background:white; border-radius:16px; padding:24px 22px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
     .hunt-card .hc-number { font-family:'HeronSansCond'; font-size:44px; font-weight:300; line-height:1; margin-bottom:2px; color:#1A1A1A; }
     .hunt-card .hc-title { font-family:'HeronSansCond'; font-size:44px; font-weight:300; line-height:1.1; margin-bottom:12px; color:#1A1A1A; }
-    .hunt-card .hc-desc { font-size:12px; color:#6B7280; line-height:1.6; }
+    .hunt-card .hc-desc { font-size:15px; color:#6B7280; line-height:1.6; }
+
+    /* === EN NU? — quote sectie === */
+    .watnu {
+      background:url('bg-watnu.png') center/cover no-repeat;
+      background-color:#0a0a0a;
+      padding:80px 48px;
+      text-align:center;
+    }
+    .watnu-inner { max-width:min(1300px, 85%); margin:0 auto; }
+    .watnu h2 {
+      font-family:'HeronSansCond'; font-size:52px; font-weight:500;
+      color:#fff; margin-bottom:24px; letter-spacing:-0.01em;
+    }
+    .watnu p {
+      font-family:'HeronSansCond'; font-size:22px; font-weight:300;
+      font-style:italic; color:rgba(255,255,255,0.75);
+      line-height:1.7; max-width:90%; margin:0 auto;
+    }
 
     /* === SIDEBAR (animated notification list) === */
     .sidebar-col { background:transparent !important; position:relative; z-index:20; }
@@ -335,13 +364,14 @@
     }
     .si:hover { box-shadow:0 6px 16px rgba(0,0,0,0.1); transform:translateX(-2px); }
     .si .si-content { display:flex; align-items:center; gap:14px; width:100%; }
+    .si .si-icon-col { display:flex; flex-direction:column; align-items:center; flex-shrink:0; min-width:44px; }
     .sa { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:600; color:white; flex-shrink:0; }
     .sa.h { background:linear-gradient(135deg,#c0006a,#E84393,#ff6eb4); box-shadow:0 2px 8px rgba(232,67,147,0.3); }
     .sa.d { background:linear-gradient(135deg,#0d9444,#22c55e,#6ee7a0); box-shadow:0 2px 8px rgba(34,197,94,0.3); }
-    .si b { font-family:'HeronSansCond'; font-size:17px; font-weight:600; display:block; color:#1A1A1A; line-height:1.2; }
-    .si .si-sub { font-size:13px; color:#4f525a; display:block; margin-top:2px; line-height:1.4; }
-    .si .si-msg { font-size:12px; color:#a1a1a1; font-style:italic; display:block; margin-top:5px; line-height:1.3; }
-    .si .si-time { margin-left:auto; font-size:12px; color:#B0B0B0; flex-shrink:0; white-space:nowrap; }
+    .si b { font-family:'HeronSansCond'; font-size:20px; font-weight:600; display:block; color:#1A1A1A; line-height:1.2; letter-spacing:0; }
+    .si .si-sub { font-size:15px; color:#4f525a; display:block; margin-top:2px; line-height:1.4; }
+    .si .si-msg { font-size:15px; color:#a1a1a1; font-style:italic; display:block; margin-top:5px; line-height:1.3; }
+    .si .si-time { font-size:11px; color:#B0B0B0; text-align:center; margin-top:4px; white-space:nowrap; }
 
     /* === BLOG === */
     .updates { padding:80px 48px; background:#F9FAFB; }
@@ -355,53 +385,118 @@
     .update-img { height:220px; background-size:cover; background-position:center; }
     .update-body { padding:24px; }
     .update-date { font-size:12px; color:#9CA3AF; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; }
-    .update-card h3 { font-size:28px; margin-bottom:10px; line-height:1.3; letter-spacing:0.01em; }
-    .update-card p { font-size:14px; color:#6B7280; line-height:1.6; }
+    .update-card h3 { font-size:28px; font-weight:500; margin-bottom:10px; line-height:1.3; letter-spacing:0.01em; }
+    .update-card p { font-size:15px; color:#6B7280; line-height:1.6; }
     .update-tag { display:inline-block; margin-top:14px; font-size:12px; font-weight:500; padding:4px 12px; border-radius:99px; }
     .update-tag.green { background:#F0FDF4; color:#4CAF50; }
     .update-tag.pink { background:#FDF2F8; color:#E84393; }
     .update-tag.blue { background:#EFF6FF; color:#3B82F6; }
 
-    /* === DONATE SECTION (dark, qr cards) === */
-    .donate { background:#0e0e12; padding:80px 48px; }
-    .donate-header { text-align:center; margin-bottom:48px; }
-    .donate-header h2 { font-family:'HeronSansCond'; font-size:80px; line-height:1.3; margin-bottom:8px; color:white; }
-    .donate-header p { color:#606070; font-size:16px; }
-    .cards-row { display:flex; align-items:stretch; gap:80px; justify-content:center; flex-wrap:nowrap; }
-    .scene { position:relative; padding:72px 0; display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
-    .scene.tier-heart { --accent:#E84393; } .scene.tier-25 { --accent:#3B82F6; } .scene.tier-50 { --accent:#F97316; } .scene.tier-free { --accent:#FBBF24; }
-    .beam { position:absolute; top:0; left:50%; width:52%; height:100%; transform:translateX(-50%) rotate(-11deg); border-radius:16px; pointer-events:none; z-index:0; }
-    .beam::before { content:''; position:absolute; inset:0; border-radius:inherit; background:var(--beam); }
-    .beam::after { content:''; position:absolute; inset:-14px; border-radius:24px; background:var(--beam); filter:blur(32px); opacity:0.5; }
-    .scene.tier-heart .beam { --beam:linear-gradient(165deg,#ff00aa 0%,#E84393 45%,#ff6090 80%,#ffaac8 100%); }
-    .scene.tier-25 .beam { --beam:linear-gradient(165deg,#1A4DB5 0%,#2563EB 40%,#3B82F6 70%,#60b0f0 100%); }
-    .scene.tier-50 .beam { --beam:linear-gradient(165deg,#C82010 0%,#E84030 35%,#F97316 70%,#FBBF24 100%); }
-    .scene.tier-free .beam { --beam:linear-gradient(165deg,#D4A000 0%,#FBBF24 40%,#FDE68A 70%,#fff0b0 100%); }
-    .card { position:relative; z-index:1; width:192px; border-radius:16px; background:rgba(12,12,18,0.88); backdrop-filter:blur(36px); -webkit-backdrop-filter:blur(36px); border:1px solid rgba(255,255,255,0.07); padding:16px; display:flex; flex-direction:column; gap:10px; color:#f0f0f0; flex:1; }
-    .amount-top { font-family:'DMMono'; font-size:26px; font-weight:500; letter-spacing:-0.04em; line-height:1; color:var(--accent); text-align:center; padding:4px 0; }
-    .custom-amount-row { display:flex; align-items:baseline; justify-content:center; gap:3px; font-family:'DMMono'; font-size:26px; font-weight:500; letter-spacing:-0.04em; line-height:1; color:#FBBF24; padding:4px 0; }
-    .custom-input { font-family:'DMMono'; font-size:26px; font-weight:500; color:#FBBF24; background:transparent; border:none; border-bottom:1.5px dashed rgba(251,191,36,0.3); outline:none; width:100px; letter-spacing:-0.04em; text-align:center; }
-    .custom-input::placeholder { color:rgba(251,191,36,0.2); }
-    .qr-wrap { flex:1; min-height:112px; border-radius:10px; overflow:hidden; background:#111118; padding:6px; display:flex; align-items:center; justify-content:center; }
-    .qr-wrap canvas, .qr-wrap img { display:block; width:100% !important; height:auto !important; border-radius:6px; }
-    .heart-zone { flex:1; min-height:112px; border-radius:10px; background:#111118; position:relative; overflow:hidden; }
-    #pinkboard { position:absolute; top:0; left:0; width:100%; height:100%; display:block; }
-    .heart-zone::before { content:''; position:absolute; inset:28%; border-radius:50%; background:radial-gradient(circle,rgba(232,67,147,0.18) 0%,transparent 70%); animation:pulseRing 1.4s ease-in-out infinite; z-index:0; }
-    @keyframes pulseRing { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.8);opacity:0.08} }
-    .tikkie-row { display:flex; align-items:center; }
-    .tikkie-logo { width:100%; height:auto; display:block; }
-    .card .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent); }
-    .tier-desc { font-size:10.5px; font-weight:300; line-height:1.75; color:#606070; letter-spacing:0.01em; }
-    .tier-btn { width:100%; padding:9px; border:none; border-radius:8px; background:var(--btn-gradient); color:#fff; font-family:'DMMono'; font-size:13px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; opacity:0.9; transition:opacity 0.2s,transform 0.15s; margin-top:auto; }
-    .tier-btn:hover { opacity:1; transform:translateY(-1px); } .tier-btn:active { transform:translateY(0); }
-    .scene.tier-heart .tier-btn { --btn-gradient:linear-gradient(135deg,#c0006a,#E84393); }
-    .scene.tier-25 .tier-btn { --btn-gradient:linear-gradient(135deg,#1A4DB5,#3B82F6); }
-    .scene.tier-50 .tier-btn { --btn-gradient:linear-gradient(135deg,#C82010,#F97316); }
-    .scene.tier-free .tier-btn { --btn-gradient:linear-gradient(135deg,#C4900A,#FBBF24); color:#1a1000; }
+    /* === DONATE SECTION (street art on asphalt) === */
+    .donate {
+      position:relative; padding:160px 48px; overflow:hidden;
+      background:url('donate/donate-section.jpg') center/cover no-repeat;
+      background-color:#1a1a1a;
+    }
+    .donate-item {
+      position:relative;
+    }
+    .donate-item-glow {
+      position:absolute; inset:-19% -38%; z-index:0;
+      pointer-events:none; opacity:1;
+    }
+    .donate-item.pink .donate-item-glow { inset:-25% -45%; }
+    .donate-item-glow img {
+      width:100%; height:100%; object-fit:contain;
+    }
+    .donate-header { text-align:center; margin-bottom:72px; position:relative; z-index:1; }
+    .donate-header h2 { font-family:'HeronSansCond'; font-size:80px; line-height:1.3; margin-bottom:16px; color:white; }
+    .donate-header p { color:rgba(255,255,255,0.5); font-size:16px; }
+    .donate-grid {
+      display:flex; justify-content:center; gap:40px;
+      position:relative; z-index:1;
+    }
+    .donate-item {
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:flex-end;
+      width:240px; flex-shrink:0;
+    }
+    .donate-card-img {
+      width:100%; cursor:pointer; position:relative; z-index:1;
+      display:flex; align-items:center; justify-content:center;
+      aspect-ratio:0.77;
+      transition:filter 0.3s;
+    }
+    .donate-card-img:hover { filter:brightness(1.15); }
+    .donate-item.pink .donate-card-img:hover { filter:brightness(1.15) drop-shadow(0 0 8px rgba(236,72,153,0.6)); }
+    .donate-item.orange .donate-card-img:hover { filter:brightness(1.15) drop-shadow(0 0 8px rgba(249,115,22,0.6)); }
+    .donate-item.turq .donate-card-img:hover { filter:brightness(1.15) drop-shadow(0 0 8px rgba(6,182,212,0.6)); }
+    .donate-item.purple .donate-card-img:hover { filter:brightness(1.15) drop-shadow(0 0 8px rgba(168,85,247,0.6)); }
+    .donate-item:hover .donate-item-glow { opacity:0.7; }
+    .donate-item-glow { transition:opacity 0.3s; }
+    .donate-card-img img { width:100%; height:100%; object-fit:contain; display:block; }
+    .donate-btn-img {
+      width:100%; cursor:pointer; position:relative; z-index:1;
+      margin-top:30px;
+      transition:filter 0.2s;
+    }
+    .donate-btn-img:hover { filter:brightness(1.25) drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
+    .donate-btn-img:active { transform:translateY(1px); }
+    .donate-btn-img img { width:100%; height:auto; display:block; }
+
+    /* QR Modal */
+    .qr-modal-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);
+      z-index:200; align-items:center; justify-content:center;
+      padding-right:360px;
+    }
+    .qr-modal-overlay.show { display:flex; }
+    .qr-modal {
+      position:relative; text-align:center; max-width:680px; width:90%;
+      max-height:90vh;
+      border-radius:24px; overflow:hidden;
+      box-shadow:0 32px 80px rgba(0,0,0,0.6);
+    }
+    .qr-modal-bg { width:100%; display:block; }
+    .qr-modal-heading {
+      position:absolute; top:4%; left:8%; right:8%;
+      font-family:'HeronSansCond'; font-size:36px; font-weight:400; color:#fff;
+      text-shadow:0 2px 12px rgba(0,0,0,0.15);
+      text-align:left;
+    }
+    .qr-modal-qr {
+      position:absolute;
+      top:47%; left:31%; width:38%; height:44%;
+      display:flex; align-items:center; justify-content:center;
+      padding:2%;
+    }
+    .qr-modal-qr img { width:100%; height:100%; object-fit:contain; }
+    .qr-modal-link {
+      position:absolute; bottom:6%; right:6%;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:10px 18px; background:#1FC87E; color:#fff;
+      font-family:'DMMono'; font-size:13px; font-weight:500;
+      border-radius:8px; text-decoration:none;
+      transition:filter 0.15s; box-shadow:0 4px 16px rgba(31,200,126,0.3);
+    }
+    .qr-modal-link:hover { filter:brightness(1.15); }
+    .qr-modal-link .arrow { font-size:18px; line-height:1; }
+    .qr-modal .qr-close {
+      position:absolute; top:12px; right:12px; z-index:2;
+      width:36px; height:36px; border:none;
+      background:rgba(0,0,0,0.25); color:#fff; border-radius:50%;
+      font-size:20px; line-height:1; cursor:pointer; transition:background 0.15s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .qr-modal .qr-close:hover { background:rgba(0,0,0,0.4); }
+    @media(max-width:768px) {
+      .qr-modal-overlay { padding-right:0; }
+      .qr-modal-heading { font-size:24px; }
+    }
 
     /* === FAQ (accordion-tabs style) === */
     .faq { padding:80px 48px; max-width:1000px; margin:0 auto; }
-    .faq > h2 { font-size:80px; line-height:1.3; text-align:center; margin-bottom:8px; }
+    .faq > h2 { font-size:60px; line-height:1.3; text-align:center; margin-bottom:8px; }
     .faq > h2.gh-warm { display:inline-block; width:100%; }
     .faq > .subtitle { text-align:center; color:#6B7280; margin-bottom:40px; font-size:16px; }
     .faq-tabs { display:flex; gap:8px; margin-bottom:24px; justify-content:center; flex-wrap:wrap; }
@@ -411,7 +506,7 @@
     .faq-group.active { display:block; }
     .faq-item { border:1px solid #EBEBEB; border-radius:12px; margin-bottom:8px; background:white; overflow:hidden; }
     .faq-q {
-      font-family:'HeronSansCond'; font-size:24px; font-weight:400; cursor:pointer;
+      font-family:'HeronSansCond'; font-size:28px; font-weight:500; cursor:pointer;
       padding:20px 24px; display:flex; justify-content:space-between; align-items:center; transition:background 0.15s;
     }
     .faq-q:hover { background:#FAFAFA; }
@@ -426,7 +521,7 @@
       max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s cubic-bezier(0.4,0,0.2,1);
       color:#4B5563; font-size:14px; line-height:1.7; padding:0 24px;
     }
-    .faq-item.open .faq-a { max-height:300px; padding:0 24px 20px; }
+    .faq-item.open .faq-a { max-height:500px; padding:0 24px 20px; }
 
     /* === MESSAGE FORM === */
     .message-section { padding:80px 48px; background:#F9FAFB; }
@@ -441,14 +536,17 @@
     .form-submit { padding:14px 36px; background:#1A1A1A; color:white; border:none; border-radius:8px; font-family:'HeronSansCond'; font-weight:700; font-size:15px; cursor:pointer; text-transform:uppercase; letter-spacing:0.03em; }
 
     /* === FOOTER === */
-    .footer { background:#111; color:#777; padding:64px 48px 40px; }
-    .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px; }
-    .footer h3 { font-family:'HeronSansCond'; color:white; font-size:16px; margin-bottom:16px; }
+    .footer { background:url('footer.jpg') center/cover no-repeat; background-color:#1a1a1a; color:rgba(255,255,255,0.55); padding:120px 80px 100px; }
+    .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:auto 1fr auto; gap:72px; align-items:center; }
+    .footer-logo img { height:220px; width:auto; display:block; }
+    .footer-tagline { font-family:'DMMono'; font-size:18px; line-height:1.8; }
+    .footer h3 { font-family:'HeronSansCond'; color:white; font-size:28px; font-weight:400; margin-bottom:20px; }
     .footer p { font-size:13px; line-height:1.6; }
     .footer-links { list-style:none; }
     .footer-links li { margin-bottom:10px; }
-    .footer-links a { color:#777; text-decoration:none; font-size:13px; } .footer-links a:hover { color:white; }
-    .footer-bottom { max-width:1100px; margin:40px auto 0; padding-top:24px; border-top:1px solid #222; font-size:12px; text-align:center; }
+    .footer-links li { margin-bottom:14px; }
+    .footer-links a { color:rgba(255,255,255,0.55); text-decoration:none; font-size:17px; } .footer-links a:hover { color:white; }
+    .footer-bottom { display:none; }
 
     /* heart popup */
     .heart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; align-items:center; justify-content:center; }
@@ -463,6 +561,14 @@
     .heart-popup .h-btn { margin-top:16px; width:100%; padding:14px; background:#E84393; color:white; border:none; border-radius:10px; font-family:'HeronSansCond'; font-weight:700; font-size:16px; cursor:pointer; }
     .floating-hearts { position:fixed; inset:0; pointer-events:none; z-index:199; overflow:hidden; }
     .float-heart { position:absolute; font-size:28px; animation:fUp 3s ease-out forwards; }
+    .heart-canvas-overlay {
+      position:fixed; inset:0; z-index:300; pointer-events:none;
+      opacity:0; transition:opacity 0.6s;
+      background:rgba(0,0,0,0.75);
+    }
+    .heart-canvas-overlay.show { opacity:1; }
+    .heart-canvas-overlay.fade-out { opacity:0; }
+    .heart-canvas-overlay canvas { width:100%; height:100%; }
     @keyframes fUp { 0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)} 100%{opacity:0;transform:translateY(-400px) scale(0.5) rotate(20deg)} }
 
     /* =============================================
@@ -508,8 +614,8 @@
       .story-card { width:280px; }
       .story-pullquote { font-size:24px; }
       .hunt-inner { gap:32px; }
-      .cards-row { gap:40px; }
-      .card { width:170px; }
+      .donate-grid { gap:24px; }
+      .donate-item { width:200px; }
     }
 
     /* --- SMALL TABLET / LARGE PHONE (max 768px) --- */
@@ -523,14 +629,14 @@
       .hero { height:auto; aspect-ratio:4/3; }
       .hero::after { height:80px; }
       .hero-card-group { display:none; }
-      .hero-led { display:none; }
+      .hero-led { display:block; }
       .hero-runners12 { background-size:auto 85%; background-position:35% bottom; }
       .hero-runner3 { background-size:auto 55%; background-position:75% bottom; }
 
       /* === MOBILE INTRO — vervangt glass panel === */
       .mobile-intro { display:block; }
       .mobile-intro-inner {
-        max-width:480px; margin:0 auto; padding:0 24px 32px; text-align:center;
+        max-width:480px; margin:0 auto; padding:24px 24px 32px; text-align:center;
       }
       .mobile-intro h2 {
         font-family:'HeronSansCond'; font-size:28px; font-weight:700;
@@ -552,10 +658,12 @@
       .mobile-stat .ms-label { font-size:11px; color:#888; }
 
       /* Logo onder hero, kleiner */
-      .logo-section { padding:32px 24px 24px; border-top:none; box-shadow:none; }
-      .logo-inner { flex-direction:column; gap:4px; }
-      .logo-section h2 { font-size:36px; }
-      .logo-parallax-wrap img { width:260px; }
+      .logo-section-mobile { display:block; padding:48px 24px 36px; border-top:none; box-shadow:none; }
+      .main-content .logo-section { display:none; }
+      .logo-section { padding:48px 24px 36px; border-top:none; box-shadow:none; }
+      .logo-inner { flex-direction:row; gap:16px; }
+      .logo-section h2 { font-size:44px; }
+      .logo-parallax-wrap img { width:320px; }
 
       /* Progress */
       .progress-section { padding:0 24px; margin-top:16px; margin-bottom:32px; }
@@ -571,14 +679,26 @@
       .story-inner { grid-template-columns:1fr; gap:32px; justify-items:center; }
       .story-card { width:min(280px,70vw); }
       .story-text { padding:28px; }
-      .story-pullquote { font-size:22px; }
-      .story-cta { font-size:24px; }
+      .story-pullquote { font-size:34px; }
+      .story-cta { font-size:28px; }
+      .story-cta br { display:none; }
+      .story-donate-wrap { width:50%; margin:0 auto; }
+      .story-donate-wrap .btn-content { padding:10px 44px; }
 
-      /* Huntington */
+      /* Huntington — naast elkaar zoals desktop */
       .hunt { padding:48px 24px; }
-      .hunt-inner { grid-template-columns:1fr; gap:24px; }
-      .hunt-photo img { min-height:300px; }
+      .hunt-inner { grid-template-columns:220px 1fr; gap:24px; align-items:start; }
+      .hunt-photo { min-height:auto; }
+      .hunt-photo img { min-height:auto; height:auto; }
       .hunt-text h2 { font-size:28px; }
+      .hunt-cards { grid-template-columns:1fr 1fr; gap:12px; }
+      .hunt-cards h3 { font-size:20px; }
+      .hunt-cards p { font-size:12px; }
+
+      /* En nu? */
+      .watnu { padding:48px 24px; }
+      .watnu h2 { font-size:36px; }
+      .watnu p { font-size:22px; }
 
       /* Blog — horizontal scroll carousel */
       .updates { padding:48px 0; }
@@ -597,22 +717,22 @@
         flex-shrink:0; scroll-snap-align:start;
         width:min(300px, 80vw);
       }
+      .update-card h3 { font-size:22px; }
 
       /* Donate — horizontal scroll */
       .donate { padding:48px 0; }
       .donate-header { padding:0 24px; }
       .donate-header h2 { font-size:48px; }
-      .cards-row {
-        flex-wrap:nowrap; gap:24px; justify-content:flex-start;
+      .donate-grid {
+        flex-wrap:nowrap; gap:20px; justify-content:flex-start;
         overflow-x:auto; scroll-snap-type:x mandatory;
         padding:0 24px 16px;
         -webkit-overflow-scrolling:touch;
       }
-      .cards-row::-webkit-scrollbar { height:4px; }
-      .cards-row::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:4px; }
-      .scene { flex-shrink:0; scroll-snap-align:center; padding:32px 0; }
-      .card { width:180px; }
-      .beam { display:none; }
+      .donate-grid::-webkit-scrollbar { height:4px; }
+      .donate-grid::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:4px; }
+      .donate-item { scroll-snap-align:center; width:160px; }
+      .donate-item-glow { display:none; }
 
       /* FAQ */
       .faq { padding:48px 24px; }
@@ -622,9 +742,15 @@
       /* Message / Footer */
       .message-section { padding:48px 24px; }
       .message-inner h2 { font-size:48px; }
+      .message-inner { text-align:center; }
+      .form-submit { margin:0 auto; }
       .form-row { grid-template-columns:1fr; }
-      .footer { padding:40px 24px 32px; }
-      .footer-inner { grid-template-columns:1fr; gap:32px; }
+      .footer { padding:48px 24px 36px; }
+      .footer-inner { grid-template-columns:1fr auto; gap:24px; }
+      .footer-logo { grid-column:1; }
+      .footer-tagline { grid-column:1; }
+      .footer-inner > div:last-child { grid-column:2; grid-row:1 / 3; text-align:right; align-self:center; }
+      .footer-logo img { height:120px; }
     }
 
     /* --- MOBILE (max 480px) --- */
@@ -653,6 +779,10 @@
       .hunt { padding:36px 16px; }
       .hunt-cards { grid-template-columns:1fr; }
 
+      .watnu { padding:36px 16px; }
+      .watnu h2 { font-size:28px; }
+      .watnu p { font-size:15px; }
+
       .updates { padding:36px 16px; }
       .updates-header h2 { font-size:36px; }
       .updates-grid { grid-template-columns:1fr; }
@@ -660,8 +790,8 @@
       .donate { padding:36px 0; }
       .donate-header { padding:0 16px; }
       .donate-header h2 { font-size:36px; }
-      .cards-row { padding:0 16px 12px; gap:16px; }
-      .card { width:160px; }
+      .donate-grid { padding:0 16px 12px; gap:14px; }
+      .donate-item { width:145px; }
 
       .faq { padding:36px 16px; }
       .faq > h2 { font-size:36px; }
@@ -669,7 +799,8 @@
 
       .message-section { padding:36px 16px; }
       .message-inner h2 { font-size:36px; }
-      .footer { padding:32px 16px 24px; }
+      .footer { padding:36px 16px 28px; }
+      .footer-logo img { height:100px; }
 
       .inline-supporters { margin:0 16px; }
     }
@@ -692,7 +823,7 @@
           <span class="hg-light">Steun G&eacute;rieke en Robert in</span>
           <span class="hg-bold">Run for Huntington</span>
         </h2>
-        <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
+        <p>Samen rennen we voor onderzoek tegen de ziekte van Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
         <div class="hero-stats">
           <div class="hero-stat"><div class="hs-number">&euro;1.247</div><div class="hs-label">opgehaald</div></div>
           <div class="hero-stat"><div class="hs-number">48</div><div class="hs-label">supporters</div></div>
@@ -710,11 +841,21 @@
     </div>
   </section>
 
+  <!-- LOGO SECTION (moved here for mobile-first: right after hero) -->
+  <section class="logo-section logo-section-mobile">
+    <div class="logo-inner">
+      <h2>Welkom bij</h2>
+      <div class="logo-parallax-wrap">
+        <img src="run_logo.png" alt="Run for Huntington">
+      </div>
+    </div>
+  </section>
+
   <!-- MOBILE INTRO (replaces glass panel on mobile) -->
   <section class="mobile-intro">
     <div class="mobile-intro-inner">
       <h2>Steun G&eacute;rieke en Robert in <span class="gh-pink">Run for Huntington</span></h2>
-      <p>Samen rennen we de marathon voor Stichting Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
+      <p>Samen rennen we voor onderzoek tegen de ziekte van Huntington. Elke stap telt, elke euro helpt, elk hartje doet ertoe.</p>
       <div class="mobile-stats">
         <div class="mobile-stat"><div class="ms-num">&euro;1.247</div><div class="ms-label">opgehaald</div></div>
         <div class="mobile-stat"><div class="ms-num">48</div><div class="ms-label">supporters</div></div>
@@ -742,14 +883,14 @@
   <section class="progress-section">
     <div class="progress-bar-track"><div class="progress-bar-fill"><div class="progress-dot"></div></div></div>
     <div class="milestones">
-      <div class="milestone passed"><span class="m-date">01/09</span>Start campagne</div>
-      <div class="milestone active"><span class="m-date">Nu</span>Week 2</div>
-      <div class="milestone"><span class="m-date">???</span>Eerste blessure</div>
-      <div class="milestone"><span class="m-date">???</span>Bijna opgegeven</div>
-      <div class="milestone"><span class="m-date">???</span>Doel bereikt!</div>
-      <div class="milestone"><span class="m-date">???</span>Nieuwe PR</div>
-      <div class="milestone"><span class="m-date">???</span>Laatste training</div>
-      <div class="milestone"><span class="m-date">15/11</span>Marathon</div>
+      <div class="milestone passed"><span class="m-date">01/06</span>Start campagne</div>
+      <div class="milestone active"><span class="m-date">Nu</span>Nog 167 dagen</div>
+      <div class="milestone"><span class="m-date">01/08</span>Nog 100 dagen</div>
+      <div class="milestone"><span class="m-date">15/08</span>Nog 3 maanden</div>
+      <div class="milestone"><span class="m-date">20/09</span>Nog 8 weken</div>
+      <div class="milestone"><span class="m-date">18/10</span>Nog 4 weken</div>
+      <div class="milestone"><span class="m-date">08/11</span>Nog 1 week</div>
+      <div class="milestone"><span class="m-date">15/11</span>Zevenheuvelenloop</div>
     </div>
   </section>
 
@@ -770,15 +911,15 @@
     <section class="story">
       <div class="story-inner">
         <div class="story-card-wrap">
-          <div class="story-card" id="storyCard" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-perspective="1800" data-tilt-glare data-tilt-max-glare="0.08" data-tilt-scale="1.02" data-tilt-reset="true">
-            <img src="story_portrait.png" alt="">
+          <div class="story-card" id="storyCard">
+            <img src="polaroid.png" alt="">
           </div>
         </div>
         <div class="story-text">
           <div class="story-pullquote">Ik had nooit een heel duidelijke bucketlist, maar ziek worden stond er in ieder geval <span class="accent-niet">ni&eacute;t</span> op.</div>
           <p class="story-intro">Ik ben drager van de ziekte van Huntington. Een behoorlijk waardeloze, erfelijke hersenziekte die helaas veel impact heeft op mijn familie.</p>
           <p class="story-intro">Maar in plaats van bij de pakken neer te zitten, komen we in beweging. Want er is hoop. Er zijn veelbelovende ontwikkelingen, maar onderzoek heeft meer geld en aandacht nodig om een echte doorbraak te forceren.</p>
-          <div class="story-cta">Maar dan moet jij ook <span class="marker">in beweging</span> komen!</div>
+          <div class="story-cta">Maar dan moet jij ook<br><span class="marker">in beweging</span> komen!</div>
           <a href="#pricing" class="story-donate-wrap">
             <div class="gradient-bg"></div>
             <div class="gradient-inner"></div>
@@ -795,27 +936,35 @@
         <div class="hunt-right">
           <div class="hunt-text">
             <h2>Wat is Huntington?</h2>
-            <p>Huntington tast langzaam alle hersenfuncties aan. Bewegen, denken en emoties worden steeds moeilijker. Er is momenteel geen behandeling, maar de wetenschap zit de ziekte op de hielen. En daarom rennen wij om dit te versnellen.</p>
+            <p>Huntington is een erfelijke hersenaandoening waarbij de ziekte langzaam controle krijgt over je bewegingen, gedrag en geheugen. Er is momenteel geen behandeling, maar de wetenschap zit de ziekte op de hielen. Daarom rennen wij om dit te versnellen.</p>
           </div>
           <div class="hunt-cards">
             <div class="hunt-card">
-              <div class="hc-title">30.000 Nederlanders</div>
-              <div class="hc-desc">zijn drager of lopen risico. De ziekte is zeldzaam, maar de impact op families is enorm.</div>
+              <div class="hc-title">300.000 Nederlanders</div>
+              <div class="hc-desc">zijn drager of lopen risico. De kans op overerving is 50%. De ziekte is zeldzaam, maar de impact op families is enorm.</div>
             </div>
             <div class="hunt-card">
-              <div class="hc-title">50% kans<br>op overerving</div>
-              <div class="hc-desc">als een ouder drager is. Kinderen groeien op met die onzekerheid.</div>
-            </div>
-            <div class="hunt-card">
-              <div class="hc-title">Campagneteam Huntington</div>
-              <div class="hc-desc">Financiert wetenschappelijk onderzoek naar een geneesmiddel. 100% van hun en onze donaties gaat naar onderzoek.</div>
+              <div class="hc-title">De klachten</div>
+              <div class="hc-desc">ontstaan vaak tussen het 30ste en 50ste levensjaar en hebben een progressief verloop.</div>
             </div>
             <div class="hunt-card">
               <div class="hc-title">Er is hoop</div>
-              <div class="hc-desc">In september 2025 werd voor het eerst aangetoond dat de ziekte van Huntington significant vertraagd kan worden. Veelbelovend, maar verder onderzoek is nodig.</div>
+              <div class="hc-desc">In september 2025 werd voor het eerst bij een kleine groep aangetoond dat de ziekte van Huntington significant vertraagd kan worden. Er lopen op dit moment verschillende onderzoeken die veelbelovend zijn, en een doorbraak is dichterbij dan ooit.</div>
+            </div>
+            <div class="hunt-card">
+              <div class="hc-title">Een behandeling</div>
+              <div class="hc-desc">is de enige kans op een gezonde toekomst voor mijzelf en mijn lotgenoten.</div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- EN NU? -->
+    <section class="watnu">
+      <div class="watnu-inner">
+        <h2><span style="font-weight:500">En nu?</span><span style="font-weight:100;text-transform:none">....... juist nu</span></h2>
+        <p>Drager zijn van deze erfelijke ziekte is geen fijn vooruitzicht, zul je denken. Ik weet dat ik ziek ga worden, maar ik weet niet hoeveel gezonde jaren ik nog heb. Dat is soms best zwaar en beangstigend. Het dwingt me wel om in het moment te leven. Geen plannen voor later, maar nu genieten en herinneringen maken.</p>
       </div>
     </section>
 
@@ -823,24 +972,24 @@
     <section class="updates">
       <div class="updates-inner">
         <div class="updates-header">
-          <h2 class="gh-green">Updates van de weg</h2>
-          <p>Volg ons trainingsavontuur richting de marathon</p>
+          <h2 class="gh-green">Updates van onderweg</h2>
+          <p>Volg ons trainingsavontuur richting de Zevenheuvelenloop</p>
         </div>
         <div class="updates-grid">
           <div class="update-card">
-            <div class="update-img" style="background-image:url('blog1.jpg')"></div>
+            <div class="update-img" style="background-image:url('blog1.png')"></div>
             <div class="update-body">
-              <div class="update-date">18 oktober 2026</div>
-              <h3>Nieuwe PR gehaald!</h3>
-              <p>Na weken van twijfel liepen we allebei een persoonlijk record op de 10 km.</p>
-              <span class="update-tag green">Training</span>
+              <div class="update-date">3 juni 2026</div>
+              <h3 style="color:#870E98">Tweede doorbraak in een jaar</h3>
+              <p>Na de gentherapie van vorig jaar lijkt nu ook een dagelijkse pil de ziekte te remmen. Na 12 maanden 69% minder van het schadelijke eiwit, en pati&euml;nten blijven stabiel waar achteruitgang werd verwacht.</p>
+              <span class="update-tag green">Onderzoek</span>
             </div>
           </div>
           <div class="update-card">
             <div class="update-img" style="background-image:url('blog2.jpg')"></div>
             <div class="update-body">
               <div class="update-date">12 september 2026</div>
-              <h3>De eerste blessure</h3>
+              <h3 style="color:#D9025B">De eerste blessure</h3>
               <p>Robert zijn knie speelde op. Even schrikken, maar de fysio geeft groen licht.</p>
               <span class="update-tag pink">Persoonlijk</span>
             </div>
@@ -849,7 +998,7 @@
             <div class="update-img" style="background-image:url('blog3.jpg')"></div>
             <div class="update-body">
               <div class="update-date">1 september 2026</div>
-              <h3>De campagne is live!</h3>
+              <h3 style="color:#F37C13">De campagne is live!</h3>
               <p>Vandaag lanceren we onze crowdfunding. Het doel: 15.000 euro voor Stichting Huntington.</p>
               <span class="update-tag blue">Mijlpaal</span>
             </div>
@@ -858,85 +1007,80 @@
       </div>
     </section>
 
-    <!-- DONATE (dark, qr cards) -->
+    <!-- DONATE (street art on asphalt) -->
     <section class="donate" id="pricing">
       <div class="donate-header">
         <h2 class="gh-pink">Doneer wat je wilt en kunt</h2>
         <p>Elke bijdrage maakt verschil</p>
       </div>
-      <div class="cards-row">
+      <div class="donate-grid">
 
-        <div class="scene tier-heart">
-          <div class="beam"></div>
-          <div class="card">
-            <div class="amount-top">&hearts;</div>
-            <div class="heart-zone" id="heart-zone"><canvas id="pinkboard"></canvas></div>
-            <div class="divider"></div>
-            <p class="tier-desc">Ik kan even niks missen, maar wil wel pure liefde sturen. Elk hartje telt en laat zien dat je er bent.</p>
-            <button class="tier-btn" onclick="showHeartPopup()">Stuur pure liefde &hearts;</button>
+        <div class="donate-item pink">
+          <div class="donate-item-glow"><img src="donate/glow-pink.png" alt=""></div>
+          <div class="donate-card-img" onclick="showHeartPopup()">
+            <img src="donate/donate_liefde.png" alt="Stuur liefde">
+          </div>
+          <div class="donate-btn-img" onclick="showHeartPopup()">
+            <img src="donate/donatebtn_pink.png" alt="Doneer liefde">
           </div>
         </div>
 
-        <div class="scene tier-25">
-          <div class="beam"></div>
-          <div class="card">
-            <div class="amount-top">&euro;25,-</div>
-            <div class="qr-wrap"><div id="qr-25"></div></div>
-            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-25" alt="Tikkie"></div>
-            <div class="divider"></div>
-            <p class="tier-desc">Financiert direct onderzoek naar Huntington. Je naam op de wall of fame.</p>
-            <button class="tier-btn">Doneer via Tikkie</button>
+        <div class="donate-item orange">
+          <div class="donate-item-glow"><img src="donate/glow-orange.png" alt=""></div>
+          <div class="donate-card-img" onclick="openDonateModal('25')">
+            <img src="donate/donate-25.png" alt="Doneer 25 euro">
+          </div>
+          <div class="donate-btn-img" onclick="openDonateModal('25')">
+            <img src="donate/donatebtn_orange.png" alt="Doneer €25">
           </div>
         </div>
 
-        <div class="scene tier-50">
-          <div class="beam"></div>
-          <div class="card">
-            <div class="amount-top">&euro;50,-</div>
-            <div class="qr-wrap"><div id="qr-50"></div></div>
-            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-50" alt="Tikkie"></div>
-            <div class="divider"></div>
-            <p class="tier-desc">Dubbele impact. Persoonlijk bedankje en foto-update na de finish op km&nbsp;42.</p>
-            <button class="tier-btn">Doneer via Tikkie</button>
+        <div class="donate-item turq">
+          <div class="donate-item-glow"><img src="donate/glow-turq.png" alt=""></div>
+          <div class="donate-card-img" onclick="openDonateModal('50')">
+            <img src="donate/donate-50.png" alt="Doneer 50 euro">
+          </div>
+          <div class="donate-btn-img" onclick="openDonateModal('50')">
+            <img src="donate/donatebtn_turq.png" alt="Doneer €50">
           </div>
         </div>
 
-        <div class="scene tier-free">
-          <div class="beam"></div>
-          <div class="card">
-            <div class="custom-amount-row"><span>&euro;</span><input class="custom-input" type="number" placeholder="..." min="1" id="customAmt"></div>
-            <div class="qr-wrap"><div id="qr-free"></div></div>
-            <div class="tikkie-row"><img class="tikkie-logo" id="tikkie-free" alt="Tikkie"></div>
-            <div class="divider"></div>
-            <p class="tier-desc">Elke euro helpt. Kies zelf wat je wilt geven &mdash; geen bedrag is te klein.</p>
-            <button class="tier-btn">Doneer via Tikkie</button>
+        <div class="donate-item purple">
+          <div class="donate-item-glow"><img src="donate/glow-purple.png" alt=""></div>
+          <div class="donate-card-img" onclick="openDonateModal('open')">
+            <img src="donate/donate-open.png" alt="Kies je eigen bedrag">
+          </div>
+          <div class="donate-btn-img" onclick="openDonateModal('open')">
+            <img src="donate/donatebtn_purple.png" alt="Kies je eigen bijdrage">
           </div>
         </div>
 
       </div>
     </section>
 
+    <!-- QR Modal (desktop) -->
+    <div class="qr-modal-overlay" id="qrModal" onclick="if(event.target===this)this.classList.remove('show')">
+      <div class="qr-modal">
+        <button class="qr-close" onclick="document.getElementById('qrModal').classList.remove('show')">&times;</button>
+        <img class="qr-modal-bg" src="donate/tikkie-pop.png" alt="">
+        <div class="qr-modal-heading" id="qrModalTitle">Doneer &euro;50 via Tikkie</div>
+        <div class="qr-modal-qr"><img id="qrModalQR" src="donate/Tikkie-50.png" alt="Scan QR code"></div>
+        <a class="qr-modal-link" id="qrModalLink" href="#" target="_blank">Open Tikkie <span class="arrow">&#8594;</span></a>
+      </div>
+    </div>
+
     <!-- FAQ -->
     <section class="faq">
-      <h2 class="gh-warm">Veelgestelde vragen</h2>
-      <p class="subtitle">Alles wat je wilt weten</p>
-      <div class="faq-tabs">
-        <button class="faq-tab active" onclick="switchTab(this,'general')">Algemeen</button>
-        <button class="faq-tab" onclick="switchTab(this,'donate')">Doneren</button>
-        <button class="faq-tab" onclick="switchTab(this,'marathon')">De marathon</button>
-      </div>
-      <div class="faq-group active" id="faq-general">
-        <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)">Wat is de ziekte van Huntington?<span class="faq-icon"></span></div><div class="faq-a">De ziekte van Huntington is een erfelijke hersenziekte die alle functies langzaam aantast. Bewegen, denken en emoties worden steeds moeilijker. Er is momenteel geen genezing. Wetenschappelijk onderzoek is onze grootste hoop.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wie zijn G&eacute;rieke en Robert?<span class="faq-icon"></span></div><div class="faq-a">Twee gepassioneerde lopers die de marathon rennen om geld en bewustwording op te halen voor Stichting Huntington. Ze trainen al maanden voor dit doel.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wat doet Stichting Huntington?<span class="faq-icon"></span></div><div class="faq-a">De stichting financiert wetenschappelijk onderzoek en biedt directe ondersteuning aan families die met de ziekte van Huntington leven.</div></div>
-      </div>
-      <div class="faq-group" id="faq-donate">
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Waar gaat mijn donatie naartoe?<span class="faq-icon"></span></div><div class="faq-a">100% van de donaties gaat naar Stichting Huntington voor onderzoek en familieondersteuning.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Kan ik ook zonder geld steunen?<span class="faq-icon"></span></div><div class="faq-a">Ja! Stuur een hartje. Je naam verschijnt in de supporters lijst. Delen op social media helpt ook enorm.</div></div>
-      </div>
-      <div class="faq-group" id="faq-marathon">
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Wanneer is de marathon?<span class="faq-icon"></span></div><div class="faq-a">De marathon vindt plaats op 15 november 2026. De campagne loopt tot die dag.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Hoe blijf ik op de hoogte?<span class="faq-icon"></span></div><div class="faq-a">Volg onze updates op deze pagina en social media. Na de marathon delen we foto's en een persoonlijk verslag met alle supporters.</div></div>
+      <h2 style="color:#6B7280;font-size:60px;line-height:1.3">Veelgestelde vragen</h2>
+      <div style="margin-top:40px">
+        <div class="faq-item open"><div class="faq-q" style="color:#870E98" onclick="toggleFaq(this)">Waar gaat mijn donatie naartoe?<span class="faq-icon"></span></div><div class="faq-a">100% naar Stichting Huntington. Het voornaamste doel van deze stichting is het financieren van fundamenteel wetenschappelijk onderzoek dat moet leiden tot een genezende therapie voor de ziekte. Dit doen zij door onder andere bekende landelijke campagnes zoals doorgezwegen.nl en de organisatie van verschillende (sport)evenementen. Zij stimuleren ook mensen zoals wij om een eigen actie op te zetten.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#A20A84" onclick="toggleFaq(this)">Wat is het verschil met de Vereniging van Huntington?<span class="faq-icon"></span></div><div class="faq-a">De Stichting Huntington focust zich op fondsenwerving &amp; onderzoek. De Vereniging van Huntington richt zich op breed ondersteunen van pati&euml;nten en families die met de ziekte te maken hebben. Beide organisaties werken samen en vullen elkaar aan: de een focust zich op de toekomst (genezing) en de vereniging zorgt voor de basis en de steun in het hier en nu.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#BD066F" onclick="toggleFaq(this)">Wie zijn Robert en G&eacute;rieke?<span class="faq-icon"></span></div><div class="faq-a">Robert is 37 jaar en woont samen in Utrecht. G&eacute;rieke is 38 jaar en woont in Heerenveen. Zij zijn de vriend en zus van Margit. Samen rennen ze de Zevenheuvelenloop om geld en bewustwording op te halen voor Stichting Huntington.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#D9025B" onclick="toggleFaq(this)">Wanneer is de Zevenheuvelenloop?<span class="faq-icon"></span></div><div class="faq-a">De Zevenheuvelenloop vindt plaats op 15 november 2026 in Nijmegen. De campagne loopt tot die dag.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#E81248" onclick="toggleFaq(this)">Kan ik ook op een andere manier geld overmaken?<span class="faq-icon"></span></div><div class="faq-a">Uiteraard, je kunt hieronder een berichtje achterlaten of een mail sturen naar info@runforhuntington.nl</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#EC3537" onclick="toggleFaq(this)">Kan ik ook zonder geld steunen?<span class="faq-icon"></span></div><div class="faq-a">Ja! Stuur een hartje. Je naam verschijnt in de supporters lijst. Delen op social media helpt ook enorm.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#EF5925" onclick="toggleFaq(this)">Kan ik als bedrijf geld overmaken?<span class="faq-icon"></span></div><div class="faq-a">Stichting Huntington heeft een ANBI-status. Dat betekent dat donaties onder voorwaarden aftrekbaar zijn van de inkomstenbelasting. Veel werkgevers matchen ook donaties aan goede doelen of hebben een budget voor maatschappelijke initiatieven &mdash; je bijdrage kan zo dubbel tellen. Neem contact op via info@runforhuntington.nl en we helpen je verder.</div></div>
+        <div class="faq-item"><div class="faq-q" style="color:#F37C13" onclick="toggleFaq(this)">Hoe blijf ik op de hoogte?<span class="faq-icon"></span></div><div class="faq-a">Volg onze updates op deze pagina en social media. Na de loop delen we foto's en een persoonlijk verslag met alle supporters.</div></div>
       </div>
     </section>
 
@@ -947,18 +1091,18 @@
         <p class="form-desc">Een aanmoediging, vraag, of gewoon een lief woord.</p>
         <div class="form-row"><input class="form-input" type="text" placeholder="Je naam"><input class="form-input" type="email" placeholder="E-mailadres"></div>
         <textarea class="form-textarea" placeholder="Je bericht..."></textarea>
-        <button class="form-submit">Verstuur bericht</button>
+        <button class="form-submit" disabled style="opacity:0.5;cursor:not-allowed">Verstuur bericht</button>
+        <p style="font-size:13px;color:#9CA3AF;margin-top:12px;text-align:center">Dit formulier is nog niet actief. Neem contact op via Instagram.</p>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-inner">
-        <div><h3>Run for Huntington</h3><p>Een initiatief van G&eacute;rieke en Robert voor Stichting Huntington.</p></div>
-        <div><h3>Links</h3><ul class="footer-links"><li><a href="#">Stichting Huntington</a></li><li><a href="#">Marathon event</a></li><li><a href="#">Contact</a></li></ul></div>
-        <div><h3>Volg ons</h3><ul class="footer-links"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">Twitter / X</a></li></ul></div>
+        <div class="footer-logo"><img src="logo_footer.png" alt="Run for Huntington"></div>
+        <div class="footer-tagline">is een initiatief van de<br>hele Familie de Groot, en hun<br>prachtige partners.</div>
+        <div><h3>Links</h3><ul class="footer-links"><li><a href="#">Algemene voorwaarden</a></li><li><a href="https://www.huntington.nl" target="_blank">Stichting Huntington</a></li><li><a href="#">Instagram</a></li></ul></div>
       </div>
-      <div class="footer-bottom">Gemaakt met liefde door G&eacute;rieke en Robert &middot; 2026</div>
     </footer>
 
   </div>
@@ -967,31 +1111,31 @@
   <aside class="sidebar">
     <div class="sidebar-header"><strong class="sh-gradient">Recente supporters</strong><small>48 mensen steunen ons</small></div>
     <div class="sidebar-list"><div class="sidebar-scroll">
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Heel veel sterkte en succes!</span></div><span class="si-time">2 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Marco</b><span class="si-sub">doneerde &euro;50</span><span class="si-msg">Go go go! Jullie kunnen dit</span></div><span class="si-time">5 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">8 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Piet</b><span class="si-sub">doneerde &euro;25</span><span class="si-msg">Voor het onderzoek!</span></div><span class="si-time">12 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Wat een mooi initiatief</span></div><span class="si-time">15 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Jan</b><span class="si-sub">doneerde &euro;100</span><span class="si-msg">Trots op jullie, rennen maar!</span></div><span class="si-time">18 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">22 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Thomas</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">30 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Dikke knuffel vanuit Breda</span></div><span class="si-time">35 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Bram</b><span class="si-sub">doneerde &euro;50</span><span class="si-msg">Samen sterk tegen Huntington</span></div><span class="si-time">42 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Roos</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">48 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Daan</b><span class="si-sub">doneerde &euro;25</span><span class="si-msg">Elke euro telt!</span></div><span class="si-time">55 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Mila</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Liefs vanuit Amsterdam</span></div><span class="si-time">1 uur</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Sem</b><span class="si-sub">doneerde &euro;100</span><span class="si-msg">Ik ken iemand met Huntington</span></div><span class="si-time">1 uur</span></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">2 min</span></div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Heel veel sterkte en succes!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">5 min</span></div><div><b>Marco</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Go go go! Jullie kunnen dit</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">8 min</span></div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">12 min</span></div><div><b>Piet</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Voor het onderzoek!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">15 min</span></div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Wat een mooi initiatief</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">18 min</span></div><div><b>Jan</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Trots op jullie, rennen maar!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">22 min</span></div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">30 min</span></div><div><b>Thomas</b><span class="si-sub">heeft gedoneerd</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">35 min</span></div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Dikke knuffel vanuit Breda</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">42 min</span></div><div><b>Bram</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Samen sterk tegen Huntington</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">48 min</span></div><div><b>Roos</b><span class="si-sub">stuurde een hartje</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">55 min</span></div><div><b>Daan</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Elke euro telt!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">1 uur</span></div><div><b>Mila</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Liefs vanuit Amsterdam</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">1 uur</span></div><div><b>Sem</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Ik ken iemand met Huntington</span></div></div></div>
       <!-- repeat -->
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Heel veel sterkte en succes!</span></div><span class="si-time">2 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Marco</b><span class="si-sub">doneerde &euro;50</span><span class="si-msg">Go go go! Jullie kunnen dit</span></div><span class="si-time">5 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">8 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Piet</b><span class="si-sub">doneerde &euro;25</span><span class="si-msg">Voor het onderzoek!</span></div><span class="si-time">12 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Wat een mooi initiatief</span></div><span class="si-time">15 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Jan</b><span class="si-sub">doneerde &euro;100</span><span class="si-msg">Trots op jullie, rennen maar!</span></div><span class="si-time">18 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div><span class="si-time">22 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Thomas</b><span class="si-sub">doneerde &euro;25</span></div><span class="si-time">30 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa h">&#10084;</div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Dikke knuffel vanuit Breda</span></div><span class="si-time">35 min</span></div></div>
-      <div class="si"><div class="si-content"><div class="sa d">&euro;</div><div><b>Bram</b><span class="si-sub">doneerde &euro;50</span><span class="si-msg">Samen sterk tegen Huntington</span></div><span class="si-time">42 min</span></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">2 min</span></div><div><b>Lisa</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Heel veel sterkte en succes!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">5 min</span></div><div><b>Marco</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Go go go! Jullie kunnen dit</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">8 min</span></div><div><b>Anna</b><span class="si-sub">stuurde een hartje</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">12 min</span></div><div><b>Piet</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Voor het onderzoek!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">15 min</span></div><div><b>Sophie</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Wat een mooi initiatief</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">18 min</span></div><div><b>Jan</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Trots op jullie, rennen maar!</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">22 min</span></div><div><b>Emma</b><span class="si-sub">stuurde een hartje</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">30 min</span></div><div><b>Thomas</b><span class="si-sub">heeft gedoneerd</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa h">&#10084;</div><span class="si-time">35 min</span></div><div><b>Fleur</b><span class="si-sub">stuurde een hartje</span><span class="si-msg">Dikke knuffel vanuit Breda</span></div></div></div>
+      <div class="si"><div class="si-content"><div class="si-icon-col"><div class="sa d">&euro;</div><span class="si-time">42 min</span></div><div><b>Bram</b><span class="si-sub">heeft gedoneerd</span><span class="si-msg">Samen sterk tegen Huntington</span></div></div></div>
     </div></div>
   </aside>
   </div>
@@ -1000,11 +1144,9 @@
     <div class="heart-popup"><h3>Wat lief!</h3><p class="h-sub">Laat zien dat je meeleeft.</p><input type="text" placeholder="Je naam" id="heartName"><textarea id="heartMsg" placeholder="Laat een berichtje achter (optioneel)" maxlength="50" oninput="document.getElementById('heartChars').textContent=this.value.length+'/50'"></textarea><div class="h-charcount" id="heartChars">0/50</div><button class="h-btn" onclick="submitHeart()">Verstuur hartje</button></div>
   </div>
   <div class="floating-hearts" id="floatingHearts"></div>
+  <div class="heart-canvas-overlay" id="heartCanvasOverlay"><canvas id="heartCanvas"></canvas></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-
-  <!-- Tikkie SVG template -->
-  <script type="text/plain" id="tikkie-tpl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2500 1082.284" xml:space="preserve"><switch><foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1"/><g><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#d6d6d6" d="M2004.082 78.824c-236.73 0-427.861 191.902-427.861 428.632 0 79.381 21.451 153.753 59.985 217.591v12.716c0 145.147-106.612 192.159-106.612 192.159s150.67 1.541 230.436-69.105c.771 0 1.67-1.028 2.697-1.028s1.927 1.028 2.697 1.028h.128c68.206 51.379 150.156 73.858 238.528 73.858 236.73 0 428.632-191.26 428.632-427.861s-191.9-427.99-428.63-427.99"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fafdfa" d="M1800.492 558.193c-16.827 0-24.919-7.45-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h.642v-11.817c0-6.808 0-14.386.642-21.708h-1.285c-16.827 0-24.919-7.578-24.919-24.277 0-14.386 8.092-22.992 24.919-22.992h8.092c8.863-36.993 27.36-70.903 53.563-98.391 41.746-44.186 94.024-66.022 156.835-66.022 36.736 0 69.105 7.45 96.465 22.992 28.002 14.9 41.746 32.883 42.388 53.563 0 26.717-16.827 50.994-41.104 51.636-11.817.642-25.561-4.367-41.103-13.744-15.542-9.89-34.296-14.9-56.004-14.9-35.452 0-63.453 12.459-84.005 36.736-6.936 8.606-12.845 17.983-17.469 28.002h95.18c15.542 0 24.919 8.735 24.919 22.992 0 16.827-9.377 24.277-24.919 24.277h-107.126c-.642 7.45-1.284 14.9-1.284 21.708v11.817h72.188c14.9 0 24.277 8.735 24.277 22.992 0 16.827-9.377 24.277-24.277 24.277h-62.297c4.881 12.845 11.817 24.791 20.552 35.452 20.552 24.277 48.553 36.736 84.005 36.736 21.836 0 40.461-5.01 56.003-14.386 15.542-9.89 29.286-14.9 41.104-14.258 24.277.642 41.103 25.561 41.103 50.994-.642 21.194-14.258 39.177-42.388 54.719-27.359 14.9-59.728 22.478-96.465 22.478-62.94 0-115.218-21.836-156.835-66.022-28.002-29.929-46.113-65.38-55.361-105.841h-6.037z"/><path style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff" d="M210.815 355.63H143.38c-33.782 0-53.691-17.854-53.691-50.866 0-33.782 19.909-51.636 53.691-51.636h245.593c33.653 0 53.691 17.854 53.691 50.866 0 33.782-19.909 51.636-53.691 51.636h-66.665v319.194c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V355.63zm334.994-102.502c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c0-55.618 22.735-73.601 55.747-73.601m247.776 296.587v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.554-34.424 83.877-17.212 22.093 17.212 27.488 52.278-3.468 85.29L873.994 493.327l159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm444.432 0v125.109c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435v-354.26c0-47.526 22.735-67.435 55.747-67.435 32.369 0 55.747 19.909 55.747 67.435V436.81l149.257-151.954c32.369-35.709 62.683-34.424 84.005-17.212 21.965 17.212 27.488 52.278-3.468 85.29l-149.257 140.394 159.661 148.615c17.854 17.212 26.846 33.782 26.846 48.168.128 13.615-4.753 26.974-13.744 37.122-9.762 10.019-23.249 15.414-37.122 15.157-14.386 0-30.314-8.221-47.526-25.433zm388.684-296.587c32.369 0 55.747 19.909 55.747 67.435v354.26c0 47.526-23.378 67.435-55.747 67.435-33.011 0-55.747-19.909-55.747-67.435V326.729c.129-55.618 22.736-73.601 55.747-73.601"/></g></switch></svg></script>
 
   <script>
     /* Gradient button — mouse tracking */
@@ -1063,17 +1205,111 @@
       btn.textContent=isOpen?'Lees het hele verhaal':'Inklappen';
     }
 
-    function showHeartPopup(){const c=document.getElementById('floatingHearts');for(let i=0;i<40;i++){const h=document.createElement('div');h.className='float-heart';h.innerHTML=['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC97','\u2764\uFE0F','\uD83E\uDE77'][Math.floor(Math.random()*5)];h.style.left=(10+Math.random()*80)+'%';h.style.bottom=(10+Math.random()*40)+'%';h.style.fontSize=(28+Math.random()*48)+'px';h.style.animationDelay=(Math.random()*1.2)+'s';h.style.animationDuration=(2.5+Math.random()*3)+'s';c.appendChild(h)}setTimeout(()=>document.getElementById('heartOverlay').classList.add('show'),800);setTimeout(()=>c.innerHTML='',5000)}
+    function showHeartPopup(){
+      document.getElementById('heartOverlay').classList.add('show');
+    }
+
+    /* Particle heart animation — V5 burst with pulse */
+    var heartAnimRunning = false;
+    function playHeartAnimation(duration) {
+      if (heartAnimRunning) return;
+      heartAnimRunning = true;
+      var overlay = document.getElementById('heartCanvasOverlay');
+      var canvas = document.getElementById('heartCanvas');
+      var ctx = canvas.getContext('2d');
+      overlay.classList.remove('fade-out');
+      overlay.classList.add('show');
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      var settings = {
+        length: 8000, duration: 1.5, velocity: 120, effect: -2.0, size: 7,
+        baseScaleX: 128, baseScaleY: 104
+      };
+      var colors = ['#ff1493','#ff3366','#f50b02','#ff69b4','#e84393'];
+
+      var Point = function(x,y){this.x=x||0;this.y=y||0};
+      Point.prototype.clone=function(){return new Point(this.x,this.y)};
+      Point.prototype.length=function(l){if(typeof l==='undefined')return Math.sqrt(this.x*this.x+this.y*this.y);this.normalize();this.x*=l;this.y*=l;return this};
+      Point.prototype.normalize=function(){var l=this.length();this.x/=l;this.y/=l;return this};
+
+      var Particle=function(){this.position=new Point;this.velocity=new Point;this.acceleration=new Point;this.age=0;this.color=0};
+      Particle.prototype.initialize=function(x,y,dx,dy,ci){this.position.x=x;this.position.y=y;this.velocity.x=dx;this.velocity.y=dy;this.acceleration.x=dx*settings.effect;this.acceleration.y=dy*settings.effect;this.age=0;this.color=ci};
+      Particle.prototype.update=function(dt){this.position.x+=this.velocity.x*dt;this.position.y+=this.velocity.y*dt;this.velocity.x+=this.acceleration.x*dt;this.velocity.y+=this.acceleration.y*dt;this.age+=dt};
+
+      var particles=new Array(settings.length);
+      for(var i=0;i<particles.length;i++)particles[i]=new Particle;
+      var firstActive=0,firstFree=0;
+
+      // Create particle images for each color
+      var images = colors.map(function(color) {
+        var c2=document.createElement('canvas'),cx=c2.getContext('2d');
+        c2.width=settings.size;c2.height=settings.size;
+        function to(t){var sx=settings.baseScaleX,sy=settings.baseScaleY;var p=new Point(sx*Math.pow(Math.sin(t),3),sy*Math.cos(t)-50*Math.cos(2*t)-20*Math.cos(3*t)-10*Math.cos(4*t)+25);return new Point(settings.size/2+p.x*settings.size/350,settings.size/2-p.y*settings.size/350)}
+        cx.beginPath();var t=-Math.PI,p=to(t);cx.moveTo(p.x,p.y);while(t<Math.PI){t+=0.01;p=to(t);cx.lineTo(p.x,p.y)}cx.closePath();cx.fillStyle=color;cx.fill();
+        var img=new Image;img.src=c2.toDataURL();return img;
+      });
+
+      var particleRate=settings.length/settings.duration;
+      var time, startTime = Date.now()/1000;
+
+      function pointOnHeart(t,sx,sy){
+        return new Point(sx*Math.pow(Math.sin(t),3),sy*Math.cos(t)-50*Math.cos(2*t)-20*Math.cos(3*t)-10*Math.cos(4*t)+25);
+      }
+
+      function render(){
+        var now=Date.now()/1000,elapsed=now-startTime;
+        if(elapsed>duration){
+          overlay.classList.add('fade-out');
+          overlay.classList.remove('show');
+          setTimeout(function(){ctx.clearRect(0,0,canvas.width,canvas.height);heartAnimRunning=false;},700);
+          return;
+        }
+        requestAnimationFrame(render);
+        var dt=now-(time||now);time=now;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        // Pulse: oscillate scale between 0.7x and 1.3x
+        var pulse = 1.0 + 0.3 * Math.sin(elapsed * 2.5);
+        var sx = settings.baseScaleX * pulse;
+        var sy = settings.baseScaleY * pulse;
+
+        var amount=particleRate*dt;
+        for(var i=0;i<amount;i++){
+          var pos=pointOnHeart(Math.PI-2*Math.PI*Math.random(),sx,sy);
+          var dir=pos.clone().length(settings.velocity);
+          var ci=Math.floor(Math.random()*colors.length);
+          particles[firstFree].initialize(canvas.width/2+pos.x,canvas.height/2-pos.y,dir.x,-dir.y,ci);
+          firstFree++;if(firstFree===particles.length)firstFree=0;
+          if(firstActive===firstFree)firstActive++;
+          if(firstActive===particles.length)firstActive=0;
+        }
+
+        // Update
+        if(firstActive<firstFree){for(var i=firstActive;i<firstFree;i++)particles[i].update(dt)}
+        else if(firstFree<firstActive){for(var i=firstActive;i<particles.length;i++)particles[i].update(dt);for(var i=0;i<firstFree;i++)particles[i].update(dt)}
+        while(particles[firstActive].age>=settings.duration&&firstActive!==firstFree){firstActive++;if(firstActive===particles.length)firstActive=0}
+
+        // Draw
+        function drawP(p){
+          var ease=function(t){return(--t)*t*t+1};
+          var s=images[0].width*ease(p.age/settings.duration);
+          ctx.globalAlpha=1-p.age/settings.duration;
+          ctx.drawImage(images[p.color],p.position.x-s/2,p.position.y-s/2,s,s);
+        }
+        if(firstActive<firstFree){for(var i=firstActive;i<firstFree;i++)drawP(particles[i])}
+        else if(firstFree<firstActive){for(var i=firstActive;i<particles.length;i++)drawP(particles[i]);for(var i=0;i<firstFree;i++)drawP(particles[i])}
+      }
+      render();
+    }
+
     function submitHeart(){
       var name=document.getElementById('heartName').value.trim()||'Anoniem';
       var msg=document.getElementById('heartMsg').value.trim();
       document.getElementById('heartOverlay').classList.remove('show');
-      /* Nog een ronde hartjes na sluiten popup */
-      setTimeout(function(){
-        var c=document.getElementById('floatingHearts');
-        for(var i=0;i<25;i++){var h=document.createElement('div');h.className='float-heart';h.innerHTML=['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC97'][Math.floor(Math.random()*3)];h.style.left=(10+Math.random()*80)+'%';h.style.bottom=(10+Math.random()*40)+'%';h.style.fontSize=(32+Math.random()*52)+'px';h.style.animationDelay=(Math.random()*0.8)+'s';h.style.animationDuration=(2+Math.random()*2.5)+'s';c.appendChild(h)}
-        setTimeout(function(){c.innerHTML='';},4000);
-      },100);
+      /* Play heart particle animation for 5 seconds */
+      setTimeout(function(){ playHeartAnimation(5); }, 200);
       /* Voeg toe aan ticker + scroll ernaartoe */
       var scroll=document.querySelector('.sidebar-scroll');
       if(scroll){
@@ -1100,26 +1336,40 @@
     }
     document.getElementById('heartOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
     function switchTab(btn,group){document.querySelectorAll('.faq-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.faq-group').forEach(g=>g.classList.remove('active'));btn.classList.add('active');document.getElementById('faq-'+group).classList.add('active')}
+
+    /* Donate modal — QR on desktop, link on mobile */
+    var tikkieLinks = {
+      '25': 'https://tikkie.me/pay/GerkeEvents/aGZAtpDe2TYbZik328NpKc',
+      '50': 'https://tikkie.me/pay/GerkeEvents/5cPXCZFTsdciQmiFHc5Jty',
+      'open': 'https://tikkie.me/pay/GerkeEvents/c6qqsfs5Y5ukT8kdUJCn5o'
+    };
+    var tikkieTitles = {
+      '25': 'Doneer \u20AC25 via Tikkie',
+      '50': 'Doneer \u20AC50 via Tikkie',
+      'open': 'Kies je eigen bedrag via Tikkie'
+    };
+    var tikkieQRs = {
+      '25': 'donate/Tikkie-25.png',
+      '50': 'donate/Tikkie-50.png',
+      'open': 'donate/Tikkie-open.png'
+    };
+    function openDonateModal(tier) {
+      var isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = tikkieLinks[tier] || tikkieLinks['open'];
+        return;
+      }
+      document.getElementById('qrModalTitle').textContent = tikkieTitles[tier] || 'Doneer via Tikkie';
+      document.getElementById('qrModalQR').src = tikkieQRs[tier] || tikkieQRs['open'];
+      document.getElementById('qrModalLink').href = tikkieLinks[tier] || tikkieLinks['open'];
+      document.getElementById('qrModal').classList.add('show');
+    }
     function toggleFaq(el){el.parentElement.classList.toggle('open')}
   </script>
 
-  <!-- QR codes + Tikkie logos + Heart particles -->
+  <!-- QR + Heart particles -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    /* QR codes */
-    var qrBase={text:'https://tikkie.me/runforhuntington',width:180,height:180,colorDark:'#ffffff',colorLight:'#111118',correctLevel:QRCode.CorrectLevel.H};
-    new QRCode(document.getElementById('qr-25'),qrBase);
-    new QRCode(document.getElementById('qr-50'),qrBase);
-    new QRCode(document.getElementById('qr-free'),qrBase);
-
-    /* Tikkie SVG logos */
-    var svgTpl=document.getElementById('tikkie-tpl').textContent;
-    [{id:'tikkie-25',color:'#3B82F6'},{id:'tikkie-50',color:'#F97316'},{id:'tikkie-free',color:'#FBBF24'}].forEach(function(c){
-      var svg=svgTpl.replace(/fill:#d6d6d6/gi,'fill:'+c.color);
-      var blob=new Blob([svg],{type:'image/svg+xml'});
-      document.getElementById(c.id).src=URL.createObjectURL(blob);
-    });
-
     /* Heart particle canvas */
     var S={length:1500,duration:2,velocity:55,effect:-1.3,size:7};
     (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}})();
